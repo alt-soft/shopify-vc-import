@@ -27,11 +27,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtoCommerce.CatalogModule
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Referenced projects", "vc-community\PLATFORM\Referenced projects", "{EAE05907-1BEE-47FA-890A-40C84B879B1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommerceFoundation", "Core\vc-community\PLATFORM\CommerceFoundation\CommerceFoundation.csproj", "{E7FC9A51-1B39-4BDC-983A-8A059C5FC58B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommerceFoundation", "vc-community\PLATFORM\Core\CommerceFoundation\CommerceFoundation.csproj", "{E7FC9A51-1B39-4BDC-983A-8A059C5FC58B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommerceFoundation.Data", "vc-community\PLATFORM\Core\CommerceFoundation.Data\CommerceFoundation.Data.csproj", "{BB168A74-0F1E-43BE-A616-134902238B80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElasticSearchProvider", "Extensions\vc-community\PLATFORM\Search\ElasticSearchProvider\ElasticSearchProvider.csproj", "{039E7914-2925-44C4-ACAD-6BCCFA2A370E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElasticSearchProvider", "vc-community\PLATFORM\Extensions\Search\ElasticSearchProvider\ElasticSearchProvider.csproj", "{039E7914-2925-44C4-ACAD-6BCCFA2A370E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommerceFoundation.Data.Azure", "vc-community\PLATFORM\Extensions\Azure\CommerceFoundation.Data.Azure\CommerceFoundation.Data.Azure.csproj", "{E3769352-34C8-41A9-A6C8-DA95D7DFF903}"
 EndProject
@@ -121,9 +121,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtoCommerce.Content.Data"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtoCommerce.Content.Tests", "vc-community\PLATFORM\Modules\CMS\VirtoCommerce.Content.Tests\VirtoCommerce.Content.Tests.csproj", "{8CD7D981-DFAB-4DA6-80C9-9C661FA831B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtoCommerce.Content.vc-community\PLATFORM\Pages.Data", "Modules\CMS\VirtoCommerce.Content.Pages.Data\VirtoCommerce.Content.Pages.Data.csproj", "{8F9F26FC-344E-4599-B2F3-CB560F1D5499}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtoCommerce.Content.Pages.Data", "vc-community\PLATFORM\Modules\CMS\VirtoCommerce.Content.Pages.Data\VirtoCommerce.Content.Pages.Data.csproj", "{8F9F26FC-344E-4599-B2F3-CB560F1D5499}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtoCommerce.Content.vc-community\PLATFORM\Menu.Data", "Modules\CMS\VirtoCommerce.Content.Menu.Data\VirtoCommerce.Content.Menu.Data.csproj", "{4021578C-A4A9-4C1F-BFA3-D10532533C5F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtoCommerce.Content.Menu.Data", "vc-community\PLATFORM\Modules\CMS\VirtoCommerce.Content.Menu.Data\VirtoCommerce.Content.Menu.Data.csproj", "{4021578C-A4A9-4C1F-BFA3-D10532533C5F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtoCommerce.MenuModule.Web", "vc-community\PLATFORM\Modules\CMS\VirtoCommerce.MenuModule.Web\VirtoCommerce.MenuModule.Web.csproj", "{80A936A0-D611-4296-A22C-78183E8A1B4D}"
 EndProject
@@ -133,9 +133,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailChimp.MailingModule.Web
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtoCommerce.PowerShell", "vc-community\PLATFORM\Extensions\Setup\VirtoCommerce.PowerShell\VirtoCommerce.PowerShell.csproj", "{98748B0A-4C04-4E70-A4EF-7CBAE5959D18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LuceneSearchProvider", "Extensions\vc-community\PLATFORM\Search\LuceneSearchProvider\LuceneSearchProvider.csproj", "{4882F43B-AE8D-489B-911B-7F9A1D526715}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LuceneSearchProvider", "vc-community\PLATFORM\Extensions\Search\LuceneSearchProvider\LuceneSearchProvider.csproj", "{4882F43B-AE8D-489B-911B-7F9A1D526715}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureSearchProvider", "Extensions\vc-community\PLATFORM\Search\AzureSearchProvider\AzureSearchProvider.csproj", "{B7A061D8-6D0A-4996-B222-6611715F516B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureSearchProvider", "vc-community\PLATFORM\Extensions\Search\AzureSearchProvider\AzureSearchProvider.csproj", "{B7A061D8-6D0A-4996-B222-6611715F516B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtoCommerce.Search.Index", "vc-community\PLATFORM\Extensions\Search\IndexingProviders\VirtoCommerce.Search.Index.csproj", "{9F5493C4-0080-4BB5-9C12-25D0CDBEA2DD}"
 EndProject
