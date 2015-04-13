@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<module>
+    <id>Altsoft.ShopifyImport</id>
+    <version>1.0.0.0</version>
+    <dependencies>
+        <dependency>VirtoCommerce.Core</dependency>
+    </dependencies>
+  
+    <title>Import from Shopify module</title>
+    <description>That module allows you to import existing data from your Shopify</description>
+    <authors>
+        <author>Altsoft</author>
+    </authors>
+    <owners>
+        <owner>Altsoft</owner>
+    </owners>
+    <projectUrl>https://github.com/alt-soft/shopify-vc-import</projectUrl>
+    <iconUrl>http://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
+    <licenseUrl>http://virtocommerce.com/terms</licenseUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <releaseNotes>First version.</releaseNotes>
+    <copyright>Copyright © 2015 Altsoft. All rights reserved</copyright>
+    <tags>shopify import</tags>
+  
+    <assemblyFile>Altsoft.ShopifyImportModule.Web.dll</assemblyFile>
+    <moduleType>Altsoft.ShopifyImportModule.Web.Module,Altsoft.ShopifyImportModule.Web</moduleType>
+    <styles>
+        <directory virtualPath="$/Content/css" searchPattern="*.css" searchSubdirectories="true" />
+    </styles>
+    <scripts>
+        <directory virtualPath="$/Scripts" searchPattern="*.js" searchSubdirectories="true" />
+    </scripts>
+</module>
