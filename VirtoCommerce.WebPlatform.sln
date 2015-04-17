@@ -157,6 +157,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ShopifyImport", "ShopifyImp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Altsoft.ShopifyImportModule.Web", "Altsoft.ShopifyImportModule.Web\Altsoft.ShopifyImportModule.Web.csproj", "{8185D3E9-A0B7-4F2E-87C5-5D3C8728296F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomExpression", "vc-community\PLATFORM\Modules\Marketing\CustomExpression\CustomExpression.csproj", "{D2F0BB53-716C-46C9-8B20-DDCD4042CEEF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -391,6 +393,10 @@ Global
 		{8185D3E9-A0B7-4F2E-87C5-5D3C8728296F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8185D3E9-A0B7-4F2E-87C5-5D3C8728296F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8185D3E9-A0B7-4F2E-87C5-5D3C8728296F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2F0BB53-716C-46C9-8B20-DDCD4042CEEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2F0BB53-716C-46C9-8B20-DDCD4042CEEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2F0BB53-716C-46C9-8B20-DDCD4042CEEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2F0BB53-716C-46C9-8B20-DDCD4042CEEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -467,5 +473,6 @@ Global
 		{9E4301FC-541E-4880-A28C-4F617D272B69} = {BDE02651-90AE-43E2-AFBC-F40E51064938}
 		{FDAC4103-80B2-45E3-B6C0-9E5A432340A9} = {A4C0D164-BF77-4B57-8970-B5459B100AC3}
 		{8185D3E9-A0B7-4F2E-87C5-5D3C8728296F} = {FDAC4103-80B2-45E3-B6C0-9E5A432340A9}
+		{D2F0BB53-716C-46C9-8B20-DDCD4042CEEF} = {BDE02651-90AE-43E2-AFBC-F40E51064938}
 	EndGlobalSection
 EndGlobal

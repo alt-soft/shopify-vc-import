@@ -6,7 +6,7 @@ if (AppDependencies != undefined) {
 }
 
 angular.module(moduleTemplateName, [
-    'altsoft.shopifyImportModule.blades.blade1'
+    'altsoft.shopifyImportModule.blades.shopify-import-job-list'
 ])
 .config(
   ['$stateProvider', '$urlRouterProvider',
@@ -18,9 +18,9 @@ angular.module(moduleTemplateName, [
                 controller: [
                     '$scope', 'bladeNavigationService', function ($scope, bladeNavigationService) {
                         var blade = {
-                            id: 'blade1',
-                            controller: 'blade1Controller',
-                            template: 'Modules/Shopify/Scripts/blades/blade1.tpl.html',
+                            id: 'shopify-import-job-list',
+                            controller: 'shopifyImportJobListController',
+                            template: 'Modules/Shopify/Scripts/blades/shopify-import-job-list.tpl.html',
                             isClosingDisabled: true
                         };
                         bladeNavigationService.showBlade(blade);

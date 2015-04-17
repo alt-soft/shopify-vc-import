@@ -80,8 +80,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\blades\blade1.js" />
-    <Content Include="Scripts\blades\blade1.tpl.html" />
+    <Content Include="Scripts\blades\shopify-import-job-list.js" />
+    <Content Include="Scripts\blades\shopify-import-job-list.tpl.html" />
     <Content Include="Scripts\home\home.tpl.html" />
     <Content Include="Scripts\resources\shopifyImportResources.js" />
     <Content Include="Scripts\shopifyImport.js" />

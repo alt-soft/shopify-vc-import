@@ -10,5 +10,11 @@ namespace Altsoft.ShopifyImportModule.Web.Controllers.Api
         {
             return Ok(new[] { "Hello world!" });
         }
+
+        [HttpPost]
+        public IHttpActionResult StartImport(string parameter)
+        {
+            return Ok(new {status = "started with parameter" + parameter});
+        }
     }
 }
