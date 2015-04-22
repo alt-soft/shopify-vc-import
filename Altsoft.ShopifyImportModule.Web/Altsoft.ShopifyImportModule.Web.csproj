@@ -80,6 +80,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\blades\import-job-wizard.js" />
+    <Content Include="Scripts\blades\import-job-wizard.tpl.html" />
     <Content Include="Scripts\blades\shopify-import-job-list.js" />
     <Content Include="Scripts\blades\shopify-import-job-list.tpl.html" />
     <Content Include="Scripts\home\home.tpl.html" />
@@ -93,12 +95,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\vc-community\PLATFORM\VirtoCommerce.Framework.Web\VirtoCommerce.Framework.Web.csproj">
-      <Project>{f7c9313b-522e-4619-abc9-8c7d4600d6b5}</Project>
-      <Name>VirtoCommerce.Framework.Web</Name>
+    <ProjectReference Include="..\vc-community\PLATFORM\VirtoCommerce.Platform.Core\VirtoCommerce.Platform.Core.csproj">
+      <Project>{F7C9313B-522E-4619-ABC9-8C7D4600D6B5}</Project>
+      <Name>VirtoCommerce.Platform.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

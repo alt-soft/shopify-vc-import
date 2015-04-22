@@ -14,13 +14,13 @@ angular.module(moduleTemplateName, [
         $stateProvider
             .state('workspace.shopifyImportModuleTemplate', {
                 url: '/shopifyImportModuleTemplate',
-                templateUrl: 'Modules/Shopify/Scripts/home/home.tpl.html',
+                templateUrl: 'Modules/$(Altsoft.ShopifyImport)/Scripts/home/home.tpl.html',
                 controller: [
                     '$scope', 'bladeNavigationService', function ($scope, bladeNavigationService) {
                         var blade = {
                             id: 'shopify-import-job-list',
                             controller: 'shopifyImportJobListController',
-                            template: 'Modules/Shopify/Scripts/blades/shopify-import-job-list.tpl.html',
+                            template: 'Modules/$(Altsoft.ShopifyImport)/Scripts/blades/shopify-import-job-list.tpl.html',
                             isClosingDisabled: true
                         };
                         bladeNavigationService.showBlade(blade);

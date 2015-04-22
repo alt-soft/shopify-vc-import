@@ -1,4 +1,5 @@
-﻿using VirtoCommerce.Framework.Web.Modularity;
+﻿
+using VirtoCommerce.Platform.Core.Modularity;
 
 namespace Altsoft.ShopifyImportModule.Web
 {
