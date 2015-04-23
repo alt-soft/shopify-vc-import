@@ -95,6 +95,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Altsoft.ShopifyImportModule.Data\Altsoft.ShopifyImportModule.Data.csproj">
+      <Project>{534d3e86-c505-47c4-a6f7-c31bede3c905}</Project>
+      <Name>Altsoft.ShopifyImportModule.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\vc-community\PLATFORM\VirtoCommerce.Platform.Core\VirtoCommerce.Platform.Core.csproj">
       <Project>{F7C9313B-522E-4619-ABC9-8C7D4600D6B5}</Project>
       <Name>VirtoCommerce.Platform.Core</Name>
