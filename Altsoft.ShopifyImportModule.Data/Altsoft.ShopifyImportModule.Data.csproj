@@ -40,12 +40,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IShopifyImportService.cs" />
+    <Compile Include="Interfaces\IShopifyRepository.cs" />
     <Compile Include="Interfaces\IVirtoCatalogService.cs" />
+    <Compile Include="Interfaces\IVirtoRepository.cs" />
+    <Compile Include="Models\PaginationResult.cs" />
+    <Compile Include="Models\ServiceResponseBase.cs" />
+    <Compile Include="Models\ShopifyCategory.cs" />
+    <Compile Include="Models\ShopifyProduct.cs" />
+    <Compile Include="Models\ShopifyProductSearchCriteria.cs" />
+    <Compile Include="Models\VirtoCatalogSearchCriteria.cs" />
+    <Compile Include="Models\VirtoCategorySearchCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
     <Folder Include="Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\vc-community\PLATFORM\Core\CommerceFoundation\CommerceFoundation.csproj">
+      <Project>{E7FC9A51-1B39-4BDC-983A-8A059C5FC58B}</Project>
+      <Name>CommerceFoundation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\vc-community\PLATFORM\Modules\Core\VirtoCommerce.Domain\VirtoCommerce.Domain.csproj">
+      <Project>{67C58A78-DDEA-4FA3-A969-1CAB582918E4}</Project>
+      <Name>VirtoCommerce.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
