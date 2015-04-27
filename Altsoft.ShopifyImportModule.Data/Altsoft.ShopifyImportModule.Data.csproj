@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IShopifyConverter.cs" />
     <Compile Include="Interfaces\IShopifyImportService.cs" />
     <Compile Include="Interfaces\IShopifyRepository.cs" />
     <Compile Include="Interfaces\IVirtoCatalogService.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Converters\" />
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
