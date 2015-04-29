@@ -39,6 +39,22 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CommonServiceLocator.1.2\lib\portable-windows8+net40+sl5+windowsphone8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -59,6 +75,10 @@
     <Reference Include="System.Web.Http">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\vc-community\PLATFORM\VirtoCommerce.Platform.Web\App_Data\Modules\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
@@ -85,12 +105,16 @@
     <Content Include="Scripts\blades\shopify-import-job-list.js" />
     <Content Include="Scripts\blades\shopify-import-job-list.tpl.html" />
     <Content Include="Scripts\home\home.tpl.html" />
+    <Content Include="Scripts\resources\shopifyAuthorizationResources.js" />
     <Content Include="Scripts\resources\shopifyImportResources.js" />
     <Content Include="Scripts\shopifyImport.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\Api\ShopifyImportController.cs" />
+    <Compile Include="Authorize\ShopifyAuthorize.cs" />
+    <Compile Include="Controllers\Api\AuthorizationController.cs" />
+    <Compile Include="Controllers\Api\ImportController.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -98,6 +122,10 @@
     <ProjectReference Include="..\Altsoft.ShopifyImportModule.Data\Altsoft.ShopifyImportModule.Data.csproj">
       <Project>{534d3e86-c505-47c4-a6f7-c31bede3c905}</Project>
       <Name>Altsoft.ShopifyImportModule.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\shopify.net\Source\DotNet4.5\ShopifyAPIAdapterLibrary\ShopifyAPIAdapterLibrary.csproj">
+      <Project>{6FF5A961-591A-47FC-BA85-00B8F44750D0}</Project>
+      <Name>ShopifyAPIAdapterLibrary</Name>
     </ProjectReference>
     <ProjectReference Include="..\vc-community\PLATFORM\VirtoCommerce.Platform.Core\VirtoCommerce.Platform.Core.csproj">
       <Project>{F7C9313B-522E-4619-ABC9-8C7D4600D6B5}</Project>

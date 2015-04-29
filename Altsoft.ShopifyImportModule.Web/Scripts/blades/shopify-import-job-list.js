@@ -1,15 +1,15 @@
 ﻿angular.module('altsoft.shopifyImportModule.blades.shopify-import-job-list', [
-    'altsoft.shopifyImportModule.resources.shopifyImportResources'])
-.controller('shopifyImportJobListController', ['$scope', 'shopifyImportResources', 'bladeNavigationService', 'dialogService', 'imports', function ($scope, shopifyImportResources, bladeNavigationService, dialogService, imports) {
+    'altsoft.shopifyImportModule.resources.shopifyImportResources',
+    'altsoft.shopifyImportModule.resources.shopifyAuthorizationResources'])
+.controller('shopifyImportJobListController', ['$scope', 'shopifyImportResources','shopifyAuthorizationResources', 'bladeNavigationService', 'dialogService',  function ($scope, shopifyImportResources, shopifyAuthorizationResources, bladeNavigationService, dialogService) {
     $scope.selectedAll = false;
     $scope.selectedItem = null;
 
-    $scope.blade.refresh = function () {
-        $scope.blade.isLoading = true;
+    $scope.isAuthorized = false;
 
-        imports.list({ catalogId: $scope.blade.catalogId }, function (results) {
-            $scope.blade.isLoading = false;
-            $scope.items = results;
+    $scope.blade.refresh = function () {
+        shopifyAuthorizationResources.isAuthorized({}, function (data) {
+            $scope.isAuthorized = data.isAuthorized;
         });
     };
 
@@ -70,6 +70,7 @@
     function isAnyChecked() {
         return _.some($scope.items, { selected: true });
     };
+  
 
     function deleteChecked() {
         var dialog = {
@@ -104,6 +105,7 @@
     }
 
     $scope.bladeToolbarCommands = [
+
           {
               name: "Refresh", icon: 'fa fa-refresh',
               executeMethod: function () {
@@ -160,7 +162,16 @@
             canExecuteMethod: function () {
                 return isAnyChecked();
             }
+        },
+    {
+        name: "Login", icon: 'fa fa-plus',
+        executeMethod: function () {
+            $scope.isAuthorized = true;
+        },
+        canExecuteMethod: function () {
+            return !$scope.isAuthorized;
         }
+    }
     ];
 
 

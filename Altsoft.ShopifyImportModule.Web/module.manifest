@@ -30,4 +30,37 @@
     <scripts>
         <directory virtualPath="$/Scripts" searchPattern="*.js" searchSubdirectories="true" />
     </scripts>
+
+  <settings>
+    <group name="Credentials">
+      <setting>
+        <name>Altsoft.ShopifyImport.Credentials.ConsumerKey</name>
+        <valueType>string</valueType>
+        <defaultValue>qwerty</defaultValue>
+        <title>Consumer Key</title>
+        <description>Shopify consumer key</description>
+      </setting>
+      <setting>
+        <name>Altsoft.ShopifyImport.Credentials.ConsumerSecret</name>
+        <valueType>string</valueType>
+        <defaultValue>qwerty</defaultValue>
+        <title>Consumer secret</title>
+        <description>Shopify consumer secret</description>
+      </setting>
+      <setting>
+        <name>Altsoft.ShopifyImport.Credentials.ShopName</name>
+        <valueType>string</valueType>
+        <defaultValue>qwerty</defaultValue>
+        <title>Shop name</title>
+        <description>Shopify shop name</description>
+      </setting>
+      <setting>
+        <name>Altsoft.ShopifyImport.Credentials.AuthCode</name>
+        <valueType>string</valueType>
+        <defaultValue>qwerty</defaultValue>
+        <title>Auth code</title>
+        <description>Shopify auth code</description>
+      </setting>
+    </group>
+  </settings>
 </module>

@@ -30,7 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CommonServiceLocator.1.2\lib\portable-windows8+net40+sl5+windowsphone8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -39,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IShopifyAuthorizationService.cs" />
     <Compile Include="Interfaces\IShopifyConverter.cs" />
     <Compile Include="Interfaces\IShopifyImportService.cs" />
     <Compile Include="Interfaces\IShopifyRepository.cs" />
@@ -52,12 +58,17 @@
     <Compile Include="Models\VirtoCatalogSearchCriteria.cs" />
     <Compile Include="Models\VirtoCategorySearchCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ShopifyRepository.cs" />
+    <Compile Include="Services\ShopifyAuthorizationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
-    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\shopify.net\Source\DotNet4.5\ShopifyAPIAdapterLibrary\ShopifyAPIAdapterLibrary.csproj">
+      <Project>{6ff5a961-591a-47fc-ba85-00b8f44750d0}</Project>
+      <Name>ShopifyAPIAdapterLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\vc-community\PLATFORM\Core\CommerceFoundation\CommerceFoundation.csproj">
       <Project>{E7FC9A51-1B39-4BDC-983A-8A059C5FC58B}</Project>
       <Name>CommerceFoundation</Name>
@@ -66,6 +77,13 @@
       <Project>{67C58A78-DDEA-4FA3-A969-1CAB582918E4}</Project>
       <Name>VirtoCommerce.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\vc-community\PLATFORM\VirtoCommerce.Platform.Core\VirtoCommerce.Platform.Core.csproj">
+      <Project>{F7C9313B-522E-4619-ABC9-8C7D4600D6B5}</Project>
+      <Name>VirtoCommerce.Platform.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

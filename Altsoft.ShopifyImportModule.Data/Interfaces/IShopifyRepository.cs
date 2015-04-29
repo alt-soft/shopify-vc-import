@@ -9,7 +9,7 @@ namespace Altsoft.ShopifyImportModule.Data.Interfaces
 
         PaginationResult<ShopifyProduct> GetShopifyProductsFromSource(ShopifyProductSearchCriteria searchCriteria);
 
-        IEnumerable<ShopifyCategory> GetShopifyCategoriesTreeFromSource();
+        IEnumerable<ShopifyCategory> GetShopifyCategoriesTree();
 
         #endregion 
     }
