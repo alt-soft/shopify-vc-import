@@ -1,0 +1,34 @@
+﻿<div class="blade-content">
+    <div class="blade-inner">
+        <div class="inner-block">
+            <form name="importJobForm" class="form">
+                <fieldset ng-init="setForm(importJobForm)">
+                    <div class="form-group">
+                        <label class="form-label">User name:</label>
+                        <div class="form-input">
+                            <input required class="form-control" ng-model="userName" placeholder="Enter your shopify username"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Password:</label>
+                        <div class="form-input">
+                            <input required class="form-control" type="password" ng-model="password" placeholder="Enter your shopify password"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Shop Name:</label>
+                        <div class="form-input">
+                            <input required class="form-control" ng-model="shopName" placeholder="Enter your shopify shop name"/>
+                        </div>
+                    </div>
+
+                </fieldset>
+            </form>
+        </div>
+        <div class="blade-static __bottom">
+            <button class=" btn" ng-click="login(userName, password, shopName)" ng-disabled="formScope != undefined && formScope.$invalid">Login</button>
+        </div>
+    </div>
+</div>

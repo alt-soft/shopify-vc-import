@@ -100,21 +100,22 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\blades\import-job-wizard.js" />
-    <Content Include="Scripts\blades\import-job-wizard.tpl.html" />
+    <Content Include="Scripts\blades\shopify-login.js" />
+    <Content Include="Scripts\blades\shopify-login.tpl.html" />
     <Content Include="Scripts\blades\shopify-import-job-list.js" />
     <Content Include="Scripts\blades\shopify-import-job-list.tpl.html" />
     <Content Include="Scripts\home\home.tpl.html" />
     <Content Include="Scripts\resources\shopifyAuthorizationResources.js" />
     <Content Include="Scripts\resources\shopifyImportResources.js" />
     <Content Include="Scripts\shopifyImport.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authorize\ShopifyAuthorize.cs" />
     <Compile Include="Controllers\Api\AuthorizationController.cs" />
     <Compile Include="Controllers\Api\ImportController.cs" />
-    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -131,6 +132,9 @@
       <Project>{F7C9313B-522E-4619-ABC9-8C7D4600D6B5}</Project>
       <Name>VirtoCommerce.Platform.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

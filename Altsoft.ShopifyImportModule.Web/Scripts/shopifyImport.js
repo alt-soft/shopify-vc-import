@@ -5,9 +5,7 @@ if (AppDependencies != undefined) {
     AppDependencies.push(moduleTemplateName);
 }
 
-angular.module(moduleTemplateName, [
-    'altsoft.shopifyImportModule.blades.shopify-import-job-list'
-])
+angular.module(moduleTemplateName,[])
 .config(
   ['$stateProvider', '$urlRouterProvider',
     function ($stateProvider, $urlRouterProvider) {
