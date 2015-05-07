@@ -1,0 +1,3 @@
+[submodule "vc-community"]
+path = vc-community
+url = https://github.com/VirtoCommerce/vc-community
