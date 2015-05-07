@@ -1,5 +1,4 @@
 ﻿using Altsoft.ShopifyImportModule.Data.Interfaces;
-using Altsoft.ShopifyImportModule.Data.Services;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using VirtoCommerce.Platform.Core.Modularity;
@@ -21,7 +20,6 @@ namespace Altsoft.ShopifyImportModule.Web
 
         public void Initialize()
         {
-            _container.RegisterType<IShopifyAuthorizationService, ShopifyAuthorizationService>();
         }
 
         public void PostInitialize()

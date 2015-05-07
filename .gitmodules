@@ -1,6 +1,3 @@
 [submodule "vc-community"]
 	path = vc-community
 	url = https://github.com/VirtoCommerce/vc-community
-[submodule "shopify.net"]
-	path = shopify.net
-	url = https://github.com/cmcdonaldca/shopify.net

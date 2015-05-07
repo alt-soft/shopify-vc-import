@@ -45,7 +45,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\IShopifyAuthorizationService.cs" />
     <Compile Include="Interfaces\IShopifyConverter.cs" />
     <Compile Include="Interfaces\IShopifyImportService.cs" />
     <Compile Include="Interfaces\IShopifyRepository.cs" />
@@ -61,16 +60,12 @@
     <Compile Include="Models\VirtoCategorySearchCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ShopifyRepository.cs" />
-    <Compile Include="Services\ShopifyAuthorizationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\shopify.net\Source\DotNet4.5\ShopifyAPIAdapterLibrary\ShopifyAPIAdapterLibrary.csproj">
-      <Project>{6ff5a961-591a-47fc-ba85-00b8f44750d0}</Project>
-      <Name>ShopifyAPIAdapterLibrary</Name>
-    </ProjectReference>
     <ProjectReference Include="..\vc-community\PLATFORM\Core\CommerceFoundation\CommerceFoundation.csproj">
       <Project>{E7FC9A51-1B39-4BDC-983A-8A059C5FC58B}</Project>
       <Name>CommerceFoundation</Name>
