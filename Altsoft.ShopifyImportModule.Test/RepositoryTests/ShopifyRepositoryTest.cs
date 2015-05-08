@@ -10,7 +10,7 @@ namespace Altsoft.ShopifyImportModule.Test.RepositoryTests
         [TestMethod]
         public void GetGetShopifyCategoriesTreeTest()
         {
-            var repository = new ShopifyRepository();
+            var repository = new ShopifyRepository(null);
 
             var tree = repository.GetShopifyCategoriesTree();
 

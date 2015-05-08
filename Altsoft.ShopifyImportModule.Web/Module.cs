@@ -20,6 +20,7 @@ namespace Altsoft.ShopifyImportModule.Web
 
         public void Initialize()
         {
+            _container.RegisterType<IShopifyRepository, IShopifyRepository>();
         }
 
         public void PostInitialize()

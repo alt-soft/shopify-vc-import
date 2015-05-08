@@ -34,11 +34,25 @@
   <settings>
     <group name="Credentials">
       <setting>
-        <name>Altsoft.ShopifyImport.Credentials.AccessToken</name>
+        <name>Altsoft.ShopifyImport.Credentials.ShopName</name>
         <valueType>string</valueType>
         <defaultValue></defaultValue>
-        <title>Access token</title>
-        <description>Shopify API access token</description>
+        <title>Shop name</title>
+        <description>Shopify shop name</description>
+      </setting>
+      <setting>
+        <name>Altsoft.ShopifyImport.Credentials.APIKey</name>
+        <valueType>string</valueType>
+        <defaultValue></defaultValue>
+        <title>Private app API Key</title>
+        <description>Shopify private app API key</description>
+      </setting>
+      <setting>
+        <name>Altsoft.ShopifyImport.Credentials.Password</name>
+        <valueType>string</valueType>
+        <defaultValue></defaultValue>
+        <title>Private app Password</title>
+        <description>Shopify private app Password</description>
       </setting>
     </group>
   </settings>

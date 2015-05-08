@@ -1,7 +1,11 @@
 ﻿angular.module('altsoft.shopifyImportModule')
-.controller('shopifyImportJobListController', ['$scope', 'shopifyImportResources', 'shopifyAuthorizationResources', 'bladeNavigationService', 'dialogService', function ($scope, shopifyImportResources, shopifyAuthorizationResources, bladeNavigationService, dialogService) {
-
+.controller('shopifyImportJobListController', ['$scope', 'shopifyImportResources', 'bladeNavigationService', 'dialogService', function ($scope, shopifyImportResources, bladeNavigationService, dialogService) {
+    
     $scope.blade.refresh = function () {
+        $scope.blade.isLoading = true;
+        shopifyImportResources.get({}, function(result) {
+            $scope.products = result;
+        });
         $scope.blade.isLoading = false;
     };
 

@@ -110,6 +110,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Api\AuthorizationController.cs" />
     <Compile Include="Controllers\Api\ImportController.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
