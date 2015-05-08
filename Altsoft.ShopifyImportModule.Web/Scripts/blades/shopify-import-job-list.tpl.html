@@ -2,9 +2,9 @@
     <div class="blade-inner">
         <div class="inner-block">
             <div class="form">
-                <p class="text" ng-if="items.product == false">An error ocured: {{product.ErrorMessage}}</p>
+                <p class="text" ng-if="products.isSuccess == false">An error ocured: {{product.ErrorMessage}}</p>
             </div>
-            <div class="table-wrapper" ng-if="product.IsSuccess">
+            <div class="table-wrapper" ng-if="products.isSuccess">
                 <table class="table">
                     <thead>
                         <tr>
@@ -16,22 +16,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="table-item" ng-repeat="product in products.Items" >
+                        <tr class="table-item" ng-repeat="product in products.items">
                             <td class="table-col">
                                 <label class="form-control __checkbox">
                                     <input type="checkbox" ng-model="data.selected">
                                     <span class="check"></span>
                                 </label>
-                             
+
                             </td>
                             <td class="table-col" ng-click='setSelectedItem(data)'>
                                 <i class="table-ico fa fa-sign-in"></i>
-                                <span title="{{product.Title}}">{{product.Title}}</span>
+                                <span title="{{product.title}}">{{product.title}}</span>
                             </td>
                             <td class="table-col" ng-click='setSelectedItem(data)'>
-                                <span title="{{product.BodyHtml}}">{{product.BodyHtml}}</span>
+                                <span title="{{product.body_html}}">{{product.body_html}}</span>
                             </td>
-                           
+
                         </tr>
                     </tbody>
                 </table>

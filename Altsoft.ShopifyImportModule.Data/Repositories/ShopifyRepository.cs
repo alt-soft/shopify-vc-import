@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using Altsoft.ShopifyImportModule.Data.Interfaces;
@@ -24,18 +25,23 @@ namespace Altsoft.ShopifyImportModule.Data.Repositories
             try
             {
                 var requestUrl = GetRequestUrl("products.json");
-                
+                var cridentials = GetCridentials();
                 using (var webClient = new System.Net.WebClient())
                 {
+                    webClient.Credentials = cridentials;
+
                     var json = webClient.DownloadString(requestUrl);
                     byte[] byteArray = Encoding.Unicode.GetBytes(json);
                     var stream = new MemoryStream(byteArray);
-                    var serializer = new DataContractJsonSerializer(typeof(ShopifyProduct[]));
-                    var sdopifyProcProducts = (ShopifyProduct[])serializer.ReadObject(stream);
+                    var serializer = new DataContractJsonSerializer(typeof(ShopifyProductList));
+
+                    var shopifyProductList= (ShopifyProductList)serializer.ReadObject(stream);
+
                     return new PaginationResult<ShopifyProduct>()
                     {
-                        Items = sdopifyProcProducts,
-                        TotalCount = sdopifyProcProducts.Length
+                        Items = shopifyProductList.Products,
+                        TotalCount = shopifyProductList.Products.Length,
+                        IsSuccess = true
                     };
                 }
             }
@@ -49,14 +55,10 @@ namespace Altsoft.ShopifyImportModule.Data.Repositories
             }
         }
 
-        private string GetRequestUrl(string param)
+        private ICredentials GetCridentials()
         {
-            var shopName = _settingsManager.GetValue("Altsoft.ShopifyImport.Credentials.ShopName", string.Empty);
             var apiKey = _settingsManager.GetValue("Altsoft.ShopifyImport.Credentials.APIKey", string.Empty);
             var password = _settingsManager.GetValue("Altsoft.ShopifyImport.Credentials.Password", string.Empty);
-
-            if (string.IsNullOrWhiteSpace(shopName))
-                throw new ArgumentException("Shop name is empty!");
 
             if (string.IsNullOrWhiteSpace(apiKey))
                 throw new ArgumentException("Api key is empty!");
@@ -64,7 +66,19 @@ namespace Altsoft.ShopifyImportModule.Data.Repositories
             if (string.IsNullOrWhiteSpace(password))
                 throw new ArgumentException("Password is empty!");
 
-            var initialUrl = string.Format("https://{0}:{1}@{2}.myshopify.com/admin/{3}", apiKey, password, shopName, param);
+            var result = new NetworkCredential(apiKey, password);
+
+            return result;
+        }
+
+        private string GetRequestUrl(string param)
+        {
+            var shopName = _settingsManager.GetValue("Altsoft.ShopifyImport.Credentials.ShopName", string.Empty);
+            
+            if (string.IsNullOrWhiteSpace(shopName))
+                throw new ArgumentException("Shop name is empty!");
+
+            var initialUrl = string.Format("https://{0}.myshopify.com/admin/{1}",  shopName, param);
             return initialUrl;
         }
 

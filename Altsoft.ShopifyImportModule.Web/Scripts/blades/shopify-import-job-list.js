@@ -4,9 +4,10 @@
     $scope.blade.refresh = function () {
         $scope.blade.isLoading = true;
         shopifyImportResources.get({}, function(result) {
-            $scope.products = result;
+            $scope.products = result.products;
+            $scope.blade.isLoading = false;
         });
-        $scope.blade.isLoading = false;
+        
     };
 
     function closeChildrenBlades() {

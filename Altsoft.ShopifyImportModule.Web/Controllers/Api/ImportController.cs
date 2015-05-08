@@ -24,7 +24,7 @@ namespace Altsoft.ShopifyImportModule.Web.Controllers.Api
             {
 
             });
-            return Ok(new{products});
+            return Ok(products);
         }
 
         [HttpPost]
