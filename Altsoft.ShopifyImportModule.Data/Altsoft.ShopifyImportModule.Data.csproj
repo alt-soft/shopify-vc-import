@@ -60,9 +60,13 @@
     <Compile Include="Models\PaginationResult.cs" />
     <Compile Include="Models\ServiceResponseBase.cs" />
     <Compile Include="Models\ShopifyCategory.cs" />
+    <Compile Include="Models\ShopifyImage.cs" />
+    <Compile Include="Models\ShopifyMetafield.cs" />
+    <Compile Include="Models\ShopifyOption.cs" />
     <Compile Include="Models\ShopifyProduct.cs" />
     <Compile Include="Models\ShopifyProductList.cs" />
     <Compile Include="Models\ShopifyProductSearchCriteria.cs" />
+    <Compile Include="Models\ShopifyVariant.cs" />
     <Compile Include="Models\VirtoCatalogSearchCriteria.cs" />
     <Compile Include="Models\VirtoCategorySearchCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
