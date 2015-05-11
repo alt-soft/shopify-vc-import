@@ -4,7 +4,7 @@
     $scope.blade.refresh = function () {
         $scope.blade.isLoading = true;
         shopifyImportResources.get({}, function(result) {
-            $scope.products = result.products;
+            $scope.products = result;
             $scope.blade.isLoading = false;
         });
         
