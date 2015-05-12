@@ -2,6 +2,7 @@
 
 namespace Altsoft.ShopifyImportModule.Data.Models
 {
+    [DataContract]
     public class ShopifyOption
     {
         [DataMember(Name = "id")]

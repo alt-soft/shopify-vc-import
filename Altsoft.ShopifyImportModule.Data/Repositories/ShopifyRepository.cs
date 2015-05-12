@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using Altsoft.ShopifyImportModule.Data.Interfaces;
 using Altsoft.ShopifyImportModule.Data.Models;
+using Newtonsoft.Json;
 using VirtoCommerce.Platform.Core.Settings;
 
 namespace Altsoft.ShopifyImportModule.Data.Repositories
@@ -32,10 +33,7 @@ namespace Altsoft.ShopifyImportModule.Data.Repositories
 
                     var json = webClient.DownloadString(requestUrl);
                     byte[] byteArray = Encoding.Unicode.GetBytes(json);
-                    var stream = new MemoryStream(byteArray);
-                    var serializer = new DataContractJsonSerializer(typeof(ShopifyProductList));
-
-                    var shopifyProductList= (ShopifyProductList)serializer.ReadObject(stream);
+                    var shopifyProductList = JsonConvert.DeserializeObject<ShopifyProductList>(json);
 
                     return new PaginationResult<ShopifyProduct>()
                     {

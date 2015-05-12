@@ -18,6 +18,9 @@ namespace Altsoft.ShopifyImportModule.Data.Models
         [DataMember(Name = "id")]
         public long Id { get; set; } 
 
+        [DataMember(Name="image")]
+        public ShopifyImage Image { get; set; }
+
         [DataMember(Name = "images")]
         public ShopifyImage[] Images { get; set; }
 

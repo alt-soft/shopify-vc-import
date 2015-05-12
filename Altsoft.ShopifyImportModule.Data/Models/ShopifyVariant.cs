@@ -3,6 +3,7 @@ using System.Runtime.Serialization;
 
 namespace Altsoft.ShopifyImportModule.Data.Models
 {
+    [DataContract]
     public class ShopifyVariant
     {
         [DataMember(Name = "barcode")]
@@ -81,6 +82,6 @@ namespace Altsoft.ShopifyImportModule.Data.Models
         public string WeightUnit { get; set; }
 
         [DataMember(Name = "image_id")]
-        public long ImageId { get; set; }
+        public long? ImageId { get; set; }
     }
 }
