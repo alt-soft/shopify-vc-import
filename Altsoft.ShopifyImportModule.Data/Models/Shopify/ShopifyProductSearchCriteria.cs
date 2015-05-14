@@ -1,5 +1,5 @@
 ﻿
-namespace Altsoft.ShopifyImportModule.Data.Models
+namespace Altsoft.ShopifyImportModule.Data.Models.Shopify
 {
     public class ShopifyProductSearchCriteria
     {

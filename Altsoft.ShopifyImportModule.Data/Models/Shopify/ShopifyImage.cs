@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Altsoft.ShopifyImportModule.Data.Models
+namespace Altsoft.ShopifyImportModule.Data.Models.Shopify
 {
     [DataContract]
     public class ShopifyImage

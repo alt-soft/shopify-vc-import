@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using Altsoft.ShopifyImportModule.Data.Interfaces;
 using Altsoft.ShopifyImportModule.Data.Models;
+using Altsoft.ShopifyImportModule.Data.Models.Shopify;
 using Newtonsoft.Json;
 using VirtoCommerce.Platform.Core.Settings;
 
@@ -32,7 +33,6 @@ namespace Altsoft.ShopifyImportModule.Data.Repositories
                     webClient.Credentials = cridentials;
 
                     var json = webClient.DownloadString(requestUrl);
-                    byte[] byteArray = Encoding.Unicode.GetBytes(json);
                     var shopifyProductList = JsonConvert.DeserializeObject<ShopifyProductList>(json);
 
                     return new PaginationResult<ShopifyProduct>()
@@ -80,10 +80,36 @@ namespace Altsoft.ShopifyImportModule.Data.Repositories
             return initialUrl;
         }
 
-        public IEnumerable<ShopifyCategory> GetShopifyCategoriesTree()
+        public PaginationResult<ShopifyCustomCollection> GetShopifyCollections()
         {
-          
-            throw new NotImplementedException();
+
+            try
+            {
+                var requestUrl = GetRequestUrl("custom_collections.json");
+                var cridentials = GetCridentials();
+                using (var webClient = new WebClient())
+                {
+                    webClient.Credentials = cridentials;
+
+                    var json = webClient.DownloadString(requestUrl);
+                    var shopifyProductList = JsonConvert.DeserializeObject<ShopifyCustomCollectionList>(json);
+
+                    return new PaginationResult<ShopifyCustomCollection>()
+                    {
+                        Items = shopifyProductList.CustomCollections,
+                        TotalCount = shopifyProductList.CustomCollections.Length,
+                        IsSuccess = true
+                    };
+                }
+            }
+            catch (ArgumentException e)
+            {
+                return new PaginationResult<ShopifyCustomCollection>()
+                {
+                    IsSuccess = false,
+                    ErrorMessage = e.Message
+                };
+            }
         }
     }
 }

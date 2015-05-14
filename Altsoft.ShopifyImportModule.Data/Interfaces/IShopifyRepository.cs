@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Altsoft.ShopifyImportModule.Data.Models;
+using Altsoft.ShopifyImportModule.Data.Models.Shopify;
 
 namespace Altsoft.ShopifyImportModule.Data.Interfaces
 {
@@ -9,7 +10,7 @@ namespace Altsoft.ShopifyImportModule.Data.Interfaces
 
         PaginationResult<ShopifyProduct> GetShopifyProductsFromSource(ShopifyProductSearchCriteria searchCriteria);
 
-        IEnumerable<ShopifyCategory> GetShopifyCategoriesTree();
+        PaginationResult<ShopifyCustomCollection> GetShopifyCollections();
 
         #endregion 
     }

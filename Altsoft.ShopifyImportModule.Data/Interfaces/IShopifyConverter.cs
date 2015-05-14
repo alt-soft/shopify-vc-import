@@ -1,4 +1,5 @@
 ﻿using Altsoft.ShopifyImportModule.Data.Models;
+using Altsoft.ShopifyImportModule.Data.Models.Shopify;
 using VirtoCommerce.Foundation.Catalogs.Model;
 
 namespace Altsoft.ShopifyImportModule.Data.Interfaces
@@ -9,6 +10,6 @@ namespace Altsoft.ShopifyImportModule.Data.Interfaces
         Product Convert(ShopifyProduct product);
 
         //ShopifyCategory Convert(catalogCategoryEntity category);
-        Category Convert(ShopifyCategory category);
+        Category Convert(ShopifyCustomCollection category);
     }
 }

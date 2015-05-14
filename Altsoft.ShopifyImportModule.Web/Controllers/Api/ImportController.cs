@@ -2,6 +2,7 @@
 using System.Web.Http.Description;
 using Altsoft.ShopifyImportModule.Data.Interfaces;
 using Altsoft.ShopifyImportModule.Data.Models;
+using Altsoft.ShopifyImportModule.Data.Models.Shopify;
 
 namespace Altsoft.ShopifyImportModule.Web.Controllers.Api
 {
