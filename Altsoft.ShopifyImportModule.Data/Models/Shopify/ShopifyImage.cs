@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using Altsoft.ShopifyImportModule.Data.Models.Shopify.Base;
 
 namespace Altsoft.ShopifyImportModule.Data.Models.Shopify
 {
     [DataContract]
-    public class ShopifyImage
+    public class ShopifyImage : ShopifyCreatableEntity
     {
-        [DataMember(Name = "created_at")]
-        public DateTime CreatedAt { get; set; }
-
-        [DataMember(Name = "id")]
-        public long Id { get; set; }
-
         [DataMember(Name = "position")]
         public int Position { get; set; }
 
@@ -23,9 +18,5 @@ namespace Altsoft.ShopifyImportModule.Data.Models.Shopify
 
         [DataMember(Name = "src")]
         public string Src { get; set; }
-
-        [DataMember(Name = "updated_at")]
-        public DateTime UpdatedAt { get; set; }
-
     }
 }

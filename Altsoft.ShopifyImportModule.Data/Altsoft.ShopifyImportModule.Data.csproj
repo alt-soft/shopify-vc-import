@@ -63,8 +63,13 @@
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PaginationResult.cs" />
     <Compile Include="Models\ServiceResponseBase.cs" />
+    <Compile Include="Models\Shopify\Base\ShopifyCreatableEntity.cs" />
+    <Compile Include="Models\Shopify\Base\ShopifyUpdatableEntity.cs" />
+    <Compile Include="Models\Shopify\ShopifyCollect.cs" />
+    <Compile Include="Models\Shopify\ShopifyCollectList.cs" />
     <Compile Include="Models\Shopify\ShopifyCustomCollection.cs" />
     <Compile Include="Models\Shopify\ShopifyCustomCollectionList.cs" />
+    <Compile Include="Models\Shopify\Base\ShopifyEntity.cs" />
     <Compile Include="Models\Shopify\ShopifyImage.cs" />
     <Compile Include="Models\Shopify\ShopifyMetafield.cs" />
     <Compile Include="Models\Shopify\ShopifyOption.cs" />

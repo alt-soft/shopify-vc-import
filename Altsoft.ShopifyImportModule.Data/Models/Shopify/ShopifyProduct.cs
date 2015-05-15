@@ -1,24 +1,19 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using Altsoft.ShopifyImportModule.Data.Models.Shopify.Base;
 
 namespace Altsoft.ShopifyImportModule.Data.Models.Shopify
 {
     [DataContract]
-    public class ShopifyProduct
+    public class ShopifyProduct : ShopifyCreatableEntity
     {
-        [DataMember(Name="body_html")]
+        [DataMember(Name = "body_html")]
         public string BodyHtml { get; set; }
-        
-        [DataMember(Name = "created_at")]
-        public DateTime CreatedAt { get; set; } 
 
         [DataMember(Name = "handle")]
         public string Handle { get; set; }
 
-        [DataMember(Name = "id")]
-        public long Id { get; set; } 
-
-        [DataMember(Name="image")]
+        [DataMember(Name = "image")]
         public ShopifyImage Image { get; set; }
 
         [DataMember(Name = "images")]
@@ -44,9 +39,6 @@ namespace Altsoft.ShopifyImportModule.Data.Models.Shopify
 
         [DataMember(Name = "title")]
         public string Title { get; set; }
-
-        [DataMember(Name = "updated_at")]
-        public DateTime UpdatedAt { get; set; }
 
         [DataMember(Name = "variants")]
         public ShopifyVariant[] Variants { get; set; }

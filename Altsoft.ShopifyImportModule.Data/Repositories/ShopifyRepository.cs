@@ -33,12 +33,12 @@ namespace Altsoft.ShopifyImportModule.Data.Repositories
                     webClient.Credentials = cridentials;
 
                     var json = webClient.DownloadString(requestUrl);
-                    var shopifyProductList = JsonConvert.DeserializeObject<ShopifyProductList>(json);
+                    var result = JsonConvert.DeserializeObject<ShopifyProductList>(json);
 
                     return new PaginationResult<ShopifyProduct>()
                     {
-                        Items = shopifyProductList.Products,
-                        TotalCount = shopifyProductList.Products.Length,
+                        Items = result.Products,
+                        TotalCount = result.Products.Length,
                         IsSuccess = true
                     };
                 }
@@ -92,12 +92,12 @@ namespace Altsoft.ShopifyImportModule.Data.Repositories
                     webClient.Credentials = cridentials;
 
                     var json = webClient.DownloadString(requestUrl);
-                    var shopifyProductList = JsonConvert.DeserializeObject<ShopifyCustomCollectionList>(json);
+                    var result = JsonConvert.DeserializeObject<ShopifyCustomCollectionList>(json);
 
                     return new PaginationResult<ShopifyCustomCollection>()
                     {
-                        Items = shopifyProductList.CustomCollections,
-                        TotalCount = shopifyProductList.CustomCollections.Length,
+                        Items = result.CustomCollections,
+                        TotalCount = result.CustomCollections.Length,
                         IsSuccess = true
                     };
                 }
@@ -105,6 +105,37 @@ namespace Altsoft.ShopifyImportModule.Data.Repositories
             catch (ArgumentException e)
             {
                 return new PaginationResult<ShopifyCustomCollection>()
+                {
+                    IsSuccess = false,
+                    ErrorMessage = e.Message
+                };
+            }
+        }
+
+        public PaginationResult<ShopifyCollect> GetShopifyCollects()
+        {
+            try
+            {
+                var requestUrl = GetRequestUrl("collects.json");
+                var cridentials = GetCridentials();
+                using (var webClient = new WebClient())
+                {
+                    webClient.Credentials = cridentials;
+
+                    var json = webClient.DownloadString(requestUrl);
+                    var result = JsonConvert.DeserializeObject<ShopifyCollectList>(json);
+
+                    return new PaginationResult<ShopifyCollect>()
+                    {
+                        Items = result.Collects,
+                        TotalCount = result.Collects.Length,
+                        IsSuccess = true
+                    };
+                }
+            }
+            catch (ArgumentException e)
+            {
+                return new PaginationResult<ShopifyCollect>()
                 {
                     IsSuccess = false,
                     ErrorMessage = e.Message

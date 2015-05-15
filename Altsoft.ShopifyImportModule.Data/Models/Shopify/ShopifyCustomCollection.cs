@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using Altsoft.ShopifyImportModule.Data.Models.Shopify.Base;
 
 namespace Altsoft.ShopifyImportModule.Data.Models.Shopify
 {
     [DataContract]
-    public class ShopifyCustomCollection
+    public class ShopifyCustomCollection:ShopifyUpdatableEntity
     {
         [DataMember(Name = "body_html")]
         public string BodyHtml { get; set; }
@@ -14,9 +15,6 @@ namespace Altsoft.ShopifyImportModule.Data.Models.Shopify
 
         [DataMember(Name = "image")]
         public string Image { get; set; }
-
-        [DataMember(Name = "id")]
-        public long Id { get; set; }
 
         [DataMember(Name = "metafield")]
         public ShopifyMetafield Metafield { get; set; }
@@ -38,10 +36,5 @@ namespace Altsoft.ShopifyImportModule.Data.Models.Shopify
 
         [DataMember(Name = "title")]
         public string Title { get; set; }
-
-        [DataMember(Name = "updated_at")]
-        public DateTime UpdatedAt { get; set; }
-
-
     }
 }

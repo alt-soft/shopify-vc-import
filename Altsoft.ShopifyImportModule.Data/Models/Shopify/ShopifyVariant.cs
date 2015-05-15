@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using Altsoft.ShopifyImportModule.Data.Models.Shopify.Base;
 
 namespace Altsoft.ShopifyImportModule.Data.Models.Shopify
 {
     [DataContract]
-    public class ShopifyVariant
+    public class ShopifyVariant:ShopifyCreatableEntity
     {
         [DataMember(Name = "barcode")]
         public string Barcode { get; set; }
@@ -12,17 +13,11 @@ namespace Altsoft.ShopifyImportModule.Data.Models.Shopify
         [DataMember(Name = "compare_at_price")]
         public string CompareAtPrice { get; set; }
 
-        [DataMember(Name = "created_at")]
-        public DateTime CreatedAt { get; set; }
-
         [DataMember(Name = "fulfillment_service")]
         public string FulfillmentService { get; set; }
 
         [DataMember(Name = "grams")]
         public double Grams { get; set; }
-
-        [DataMember(Name = "id")]
-        public long Id { get; set; }
 
         [DataMember(Name = "inventory_management")]
         public string InventoryManagement { get; set; }
@@ -71,9 +66,6 @@ namespace Altsoft.ShopifyImportModule.Data.Models.Shopify
 
         [DataMember(Name = "title")]
         public string Title { get; set; }
-
-        [DataMember(Name = "updated_at")]
-        public DateTime UpdatedAt { get; set; }
 
         [DataMember(Name = "weight")]
         public double Weight { get; set; }

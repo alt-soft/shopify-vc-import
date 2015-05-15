@@ -12,6 +12,8 @@ namespace Altsoft.ShopifyImportModule.Data.Interfaces
 
         PaginationResult<ShopifyCustomCollection> GetShopifyCollections();
 
-        #endregion 
+        PaginationResult<ShopifyCollect> GetShopifyCollects();
+
+        #endregion
     }
 }
