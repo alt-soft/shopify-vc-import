@@ -11,6 +11,22 @@ namespace Altsoft.ShopifyImportModule.Test.RepositoryTests
     public class ShopifyRepositoryTest
     {
         [TestMethod]
+        public void GetShopifyCollectsTest()
+        {
+            var settingsServiceMock = GetSettingsServiceMock();
+
+            var settingsManager = settingsServiceMock.Object;
+            var repository = new ShopifyRepository(settingsManager);
+
+            var collects = repository.GetShopifyCollects();
+
+            Assert.IsNotNull(collects);
+            Assert.IsTrue(collects.IsSuccess);
+            Assert.IsNotNull(collects.Items);
+            Assert.IsTrue(collects.Items.Any());
+        }
+
+        [TestMethod]
         public void GetShopifyCollectionsTest()
         {
             var settingsServiceMock = GetSettingsServiceMock();
