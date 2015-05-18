@@ -14,7 +14,7 @@ angular.module(moduleTemplateName,[])
                 url: '/shopifyImportModuleTemplate',
                 templateUrl: 'Modules/$(Altsoft.ShopifyImport)/Scripts/home/home.tpl.html',
                 controller: [
-                    '$scope', 'bladeNavigationService', function ($scope, bladeNavigationService) {
+                    '$scope', 'platformWebApp.bladeNavigationService', function ($scope, bladeNavigationService) {
                         var blade = {
                             id: 'shopify-import-job-list',
                             controller: 'shopifyImportJobListController',
@@ -29,7 +29,7 @@ angular.module(moduleTemplateName,[])
   ]
 )
 .run(
-  ['$rootScope', 'mainMenuService', 'widgetService', '$state', function ($rootScope, mainMenuService, widgetService, $state) {
+  ['$rootScope', 'platformWebApp.mainMenuService', 'platformWebApp.widgetService', '$state', function ($rootScope, mainMenuService, widgetService, $state) {
       //Register module in main menu
       var menuItem = {
           path: 'browse/shopifyImportModule',

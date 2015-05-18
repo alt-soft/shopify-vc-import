@@ -1,5 +1,5 @@
 ﻿angular.module('altsoft.shopifyImportModule')
-.controller('shopifyImportJobListController', ['$scope', 'shopifyImportResources', 'bladeNavigationService', 'dialogService', function ($scope, shopifyImportResources, bladeNavigationService, dialogService) {
+.controller('shopifyImportJobListController', ['$scope', 'shopifyImportResources', 'platformWebApp.bladeNavigationService', function ($scope, shopifyImportResources, bladeNavigationService) {
     
     $scope.blade.refresh = function () {
         $scope.blade.isLoading = true;
