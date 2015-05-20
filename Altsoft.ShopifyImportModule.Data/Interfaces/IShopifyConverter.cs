@@ -1,6 +1,6 @@
 ﻿using Altsoft.ShopifyImportModule.Data.Models;
 using Altsoft.ShopifyImportModule.Data.Models.Shopify;
-using VirtoCommerce.Foundation.Catalogs.Model;
+using VirtoCommerce.CatalogModule.Data.Model;
 
 namespace Altsoft.ShopifyImportModule.Data.Interfaces
 {

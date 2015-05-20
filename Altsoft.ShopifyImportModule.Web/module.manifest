@@ -3,7 +3,7 @@
     <id>Altsoft.ShopifyImport</id>
     <version>1.0.0.0</version>
     <dependencies>
-        <dependency>VirtoCommerce.Core</dependency>
+      <dependency id="VirtoCommerce.Core" version="1.0.0" />
     </dependencies>
   
     <title>Import from Shopify module</title>
