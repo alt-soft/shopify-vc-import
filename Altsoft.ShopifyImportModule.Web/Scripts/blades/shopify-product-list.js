@@ -1,5 +1,5 @@
 ﻿angular.module('altsoft.shopifyImportModule')
-.controller('shopifyImportJobListController', ['$scope', 'shopifyImportResources', 'platformWebApp.bladeNavigationService', function ($scope, shopifyImportResources, bladeNavigationService) {
+.controller('shopifyProductListController', ['$scope', 'shopifyImportResources', 'platformWebApp.bladeNavigationService', function ($scope, shopifyImportResources, bladeNavigationService) {
     
     $scope.blade.refresh = function () {
         $scope.blade.isLoading = true;
@@ -9,12 +9,6 @@
         });
         
     };
-
-    function closeChildrenBlades() {
-        angular.forEach($scope.blade.childrenBlades.slice(), function (child) {
-            bladeNavigationService.closeBlade(child);
-        });
-    }
 
     $scope.bladeToolbarCommands = [
         {
