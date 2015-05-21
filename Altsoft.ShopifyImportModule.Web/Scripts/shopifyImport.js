@@ -18,7 +18,7 @@ angular.module(moduleTemplateName,[])
                         var blade = {
                             id: 'shopify-import-job-list',
                             controller: 'shopifyProductListController',
-                            template: 'Modules/$(Altsoft.ShopifyImport)/Scripts/blades/shopify-import-job-list.tpl.html',
+                            template: 'Modules/$(Altsoft.ShopifyImport)/Scripts/blades/shopify-product-list.tpl.html',
                             isClosingDisabled: true
                         };
                         bladeNavigationService.showBlade(blade);
