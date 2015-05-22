@@ -6,7 +6,7 @@
                     <thead>
                         <tr>
                             <th class="table-col">
-                                <input type="checkbox" ng-model="selectedAll" ng-change="checkAll(selectedAll)"/>
+                               
                             </th>
                             <th class="table-col">Image</th>
                             <th class="table-col">Title</th>
@@ -17,7 +17,7 @@
                         <tr class="table-item" ng-repeat="product in products">
                             <td class="table-col">
                                 <label class="form-control __checkbox">
-                                    <input type="checkbox" ng-model="data.isSelected">
+                                    <input type="checkbox" ng-model="product.isSelected" ng-change="changeSelection(product)" >
                                     <span class="check"></span>
                                 </label>
                             </td>
