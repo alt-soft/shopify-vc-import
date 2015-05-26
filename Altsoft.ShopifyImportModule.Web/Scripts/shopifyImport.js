@@ -16,6 +16,8 @@ angular.module(moduleTemplateName,[])
                 controller: [
                     '$scope', 'platformWebApp.bladeNavigationService', function ($scope, bladeNavigationService) {
                         var blade = {
+                            title: 'Shopify Import — Step 1',
+                            subtitle: 'Shopify products selection',
                             id: 'shopify-import-job-list',
                             controller: 'shopifyProductListController',
                             template: 'Modules/$(Altsoft.ShopifyImport)/Scripts/blades/shopify-product-list.tpl.html',

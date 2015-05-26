@@ -1,0 +1,40 @@
+﻿<div class="blade-content">
+    <div class="blade-inner">
+        <div class="inner-block">
+            <div class="table-wrapper" >
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="table-col">
+                               
+                            </th>
+                            <th class="table-col">Image</th>
+                            <th class="table-col">Title</th>
+                            <th class="table-col">Body Html</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="table-item" ng-repeat="product in products">
+                            <td class="table-col">
+                                <label class="form-control __checkbox">
+                                    <input type="checkbox" ng-model="product.isSelected" ng-change="changeSelection(product)" >
+                                    <span class="check"></span>
+                                </label>
+                            </td>
+                            <td class="table-col" ng-click='showChildren(product)'>
+                                <img width="50" height="50" ng-src="{{product.image}}"/>
+                            </td>
+                            <td class="table-col" ng-click='showChildren(product)'>
+                                <span title="{{product.title}}">{{product.title}}</span>
+                            </td>
+                            <td class="table-col" ng-click='showChildren(product)'>
+                                <span title="{{product.body_html}}">{{product.body_html}}</span>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

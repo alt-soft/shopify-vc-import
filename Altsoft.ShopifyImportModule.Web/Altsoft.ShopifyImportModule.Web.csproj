@@ -97,7 +97,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\blades\shopify-import-progress.js" />
+    <Content Include="Scripts\blades\virto-target-catalog.js" />
     <Content Include="Scripts\blades\shopify-product-list.js" />
+    <Content Include="Scripts\blades\shopify-import-progress.tpl.html" />
+    <Content Include="Scripts\blades\virto-target-catalog.tpl.html" />
     <Content Include="Scripts\blades\shopify-product-list.tpl.html" />
     <Content Include="Scripts\home\home.tpl.html" />
     <Content Include="Scripts\resources\shopifyImportResources.js" />

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Altsoft.ShopifyImportModule.Data.Interfaces;
@@ -51,10 +52,11 @@ namespace Altsoft.ShopifyImportModule.Web.Controllers.Api
         }
 
         [HttpPost]
-        [Route("startimport")]
-        public IHttpActionResult StartImport(string parameter)
+        [Route("start-import")]
+        [ResponseType(typeof(bool))]
+        public IHttpActionResult StartImport(IEnumerable<ShopifyProductItem> products)
         {
-            return Ok(new { status = "started with parameter" + parameter });
+            return Ok(new { status = "started with parameter" + products });
         }
     }
 }
