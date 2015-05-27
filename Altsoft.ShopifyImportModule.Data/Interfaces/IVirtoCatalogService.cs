@@ -5,7 +5,7 @@ namespace Altsoft.ShopifyImportModule.Data.Interfaces
 {
     public interface IVirtoCatalogService
     {
-        PaginationResult<Catalog> GetCatalogs(VirtoCatalogSearchCriteria searchCriteria);
-        PaginationResult<Category> GetCategories(VirtoCategorySearchCriteria searchCriteria); 
+        PaginationResult<Catalog> GetCatalogs();
+        PaginationResult<VirtoCommerce.Domain.Catalog.Model.Category> GetCategories(VirtoCategorySearchCriteria searchCriteria); 
     }
 }

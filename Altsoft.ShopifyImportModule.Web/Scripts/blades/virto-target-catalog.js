@@ -41,7 +41,7 @@
     $scope.isRetainCategoryHierarchy = true;
     $scope.blade.isLoading = true;
 
-    virtoCatalogService.getCatalogs(
+    shopifyImportResources.getCatalogs(
         {},
         function (result) {
             if (result.isSuccess) {

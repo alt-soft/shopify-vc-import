@@ -2,6 +2,6 @@
 {
     public class VirtoCategorySearchCriteria
     {
-        public string CategoryId { get; set; }
+        public string CatalogId { get; set; }
     }
 }
