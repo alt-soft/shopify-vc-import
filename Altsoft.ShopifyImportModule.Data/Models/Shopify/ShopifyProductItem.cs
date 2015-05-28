@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Altsoft.ShopifyImportModule.Web.Models
+namespace Altsoft.ShopifyImportModule.Data.Models.Shopify
 {
     //Can be either product or collection
     public class ShopifyProductItem

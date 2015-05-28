@@ -16,14 +16,12 @@ namespace Altsoft.ShopifyImportModule.Test.RepositoryTests
             var settingsServiceMock = GetSettingsServiceMock();
 
             var settingsManager = settingsServiceMock.Object;
-            var repository = new ShopifyRepository(settingsManager);
+            var repository = new ShopifyRepository(settingsManager,null);
 
             var collects = repository.GetShopifyCollects();
 
             Assert.IsNotNull(collects);
-            Assert.IsTrue(collects.IsSuccess);
-            Assert.IsNotNull(collects.Items);
-            Assert.IsTrue(collects.Items.Any());
+            Assert.IsTrue(collects.Any());
         }
 
         [TestMethod]
@@ -32,14 +30,12 @@ namespace Altsoft.ShopifyImportModule.Test.RepositoryTests
             var settingsServiceMock = GetSettingsServiceMock();
 
             var settingsManager = settingsServiceMock.Object;
-            var repository = new ShopifyRepository(settingsManager);
+            var repository = new ShopifyRepository(settingsManager, null);
 
             var collections = repository.GetShopifyCollections();
 
             Assert.IsNotNull(collections);
-            Assert.IsTrue(collections.IsSuccess);
-            Assert.IsNotNull(collections.Items);
-            Assert.IsTrue(collections.Items.Any());
+            Assert.IsTrue(collections.Any());
         }
 
       
@@ -50,14 +46,12 @@ namespace Altsoft.ShopifyImportModule.Test.RepositoryTests
             var settingsServiceMock = GetSettingsServiceMock();
 
             var settingsManager = settingsServiceMock.Object;
-            var repository = new ShopifyRepository(settingsManager);
+            var repository = new ShopifyRepository(settingsManager, null);
 
             var products = repository.GetShopifyProductsFromSource(new ShopifyProductSearchCriteria());
 
             Assert.IsNotNull(products);
-            Assert.IsTrue(products.IsSuccess);
-            Assert.IsNotNull(products.Items);
-            Assert.IsTrue(products.Items.Any());
+            Assert.IsTrue(products.Any());
 
         }
 

@@ -1,35 +1,19 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Http.Description;
 using Altsoft.ShopifyImportModule.Data.Interfaces;
 using Altsoft.ShopifyImportModule.Data.Models;
 using Altsoft.ShopifyImportModule.Data.Models.Shopify;
-using Altsoft.ShopifyImportModule.Web.Converters;
-using Altsoft.ShopifyImportModule.Web.Models;
 
 namespace Altsoft.ShopifyImportModule.Web.Controllers.Api
 {
     [RoutePrefix("api/shopifyImport")]
     public class ImportController : ApiController
     {
-        private IShopifyRepository _shopifyRepository;
+        private readonly IShopifyService _shopifyService;
 
-        public ImportController(IShopifyRepository shopifyRepository)
+        public ImportController(IShopifyService shopifyService)
         {
-            _shopifyRepository = shopifyRepository;
-        }
-
-        [HttpGet]
-        [ResponseType(typeof(PaginationResult<ShopifyProduct>))]
-        [Route("get")]
-        public IHttpActionResult Get()
-        {
-            var products = _shopifyRepository.GetShopifyProductsFromSource(new ShopifyProductSearchCriteria()
-            {
-
-            });
-            return Ok(products);
+            _shopifyService = shopifyService;
         }
 
         [HttpGet]
@@ -37,26 +21,9 @@ namespace Altsoft.ShopifyImportModule.Web.Controllers.Api
         [Route("get-collections")]
         public IHttpActionResult GetCollections()
         {
-            var products = _shopifyRepository.GetShopifyProductsFromSource(new ShopifyProductSearchCriteria()
-            {
-
-            });
-
-            var collections = _shopifyRepository.GetShopifyCollections();
-            var collects = _shopifyRepository.GetShopifyCollects();
-
-            var converter = new ShopifyProductItemConverter();
-            var result = collections.Items.Select(collection => converter.Convert(collection,collects.Items,products.Items));
+            var result = _shopifyService.GetShopifyCollections();
 
             return Ok(result);
-        }
-
-        [HttpPost]
-        [Route("start-import")]
-        [ResponseType(typeof(bool))]
-        public IHttpActionResult StartImport(IEnumerable<ShopifyProductItem> products)
-        {
-            return Ok(new { status = "started with parameter" + products });
         }
     }
 }

@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Altsoft.ShopifyImportModule.Data.Models.Shopify;
-using Altsoft.ShopifyImportModule.Web.Models;
 
-namespace Altsoft.ShopifyImportModule.Web.Converters
+namespace Altsoft.ShopifyImportModule.Data.Converters
 {
     public class ShopifyProductItemConverter
     {
-        public ShopifyProductItem Convert(ShopifyProduct product)
+        public static ShopifyProductItem Convert(ShopifyProduct product)
         {
             var result = new ShopifyProductItem()
             {
@@ -23,7 +22,7 @@ namespace Altsoft.ShopifyImportModule.Web.Converters
             return result;
         }
 
-        public ShopifyProductItem Convert(ShopifyCustomCollection collection, IEnumerable<ShopifyCollect> collects, IEnumerable<ShopifyProduct> products)
+        public static ShopifyProductItem Convert(ShopifyCustomCollection collection, IEnumerable<ShopifyCollect> collects, IEnumerable<ShopifyProduct> products)
         {
             var result = new ShopifyProductItem()
             {

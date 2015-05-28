@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Net;
-using System.Runtime.Serialization.Json;
-using System.Text;
 using Altsoft.ShopifyImportModule.Data.Interfaces;
-using Altsoft.ShopifyImportModule.Data.Models;
 using Altsoft.ShopifyImportModule.Data.Models.Shopify;
 using Newtonsoft.Json;
 using VirtoCommerce.Platform.Core.Settings;
@@ -15,41 +10,35 @@ namespace Altsoft.ShopifyImportModule.Data.Repositories
 {
     public class ShopifyRepository:IShopifyRepository
     {
-        private ISettingsManager _settingsManager;
-
-        public ShopifyRepository(ISettingsManager settingsManager)
+        private readonly ISettingsManager _settingsManager;
+        private readonly ILoggerFacade _loggerFacade;
+        public ShopifyRepository(ISettingsManager settingsManager, ILoggerFacade loggerFacade)
         {
             _settingsManager = settingsManager;
+            _loggerFacade = loggerFacade;
         }
 
-        public PaginationResult<ShopifyProduct> GetShopifyProductsFromSource(ShopifyProductSearchCriteria searchCriteria)
+        public IEnumerable<ShopifyProduct> GetShopifyProductsFromSource(ShopifyProductSearchCriteria searchCriteria)
         {
             try
             {
                 var requestUrl = GetRequestUrl("products.json");
                 var cridentials = GetCridentials();
-                using (var webClient = new System.Net.WebClient())
+                using (var webClient = new WebClient())
                 {
                     webClient.Credentials = cridentials;
 
                     var json = webClient.DownloadString(requestUrl);
                     var result = JsonConvert.DeserializeObject<ShopifyProductList>(json);
 
-                    return new PaginationResult<ShopifyProduct>()
-                    {
-                        Items = result.Products,
-                        TotalCount = result.Products.Length,
-                        IsSuccess = true
-                    };
+                    return result.Products;
                 }
             }
             catch (ArgumentException e)
             {
-                return new PaginationResult<ShopifyProduct>()
-                {
-                    IsSuccess = false,
-                    ErrorMessage = e.Message
-                };
+                _loggerFacade.Log(string.Format("Error in getting Shopify products: {0}", e), Category.Exception,
+                    Priority.High);
+                return null;
             }
         }
 
@@ -80,7 +69,7 @@ namespace Altsoft.ShopifyImportModule.Data.Repositories
             return initialUrl;
         }
 
-        public PaginationResult<ShopifyCustomCollection> GetShopifyCollections()
+        public IEnumerable<ShopifyCustomCollection> GetShopifyCollections()
         {
 
             try
@@ -94,25 +83,19 @@ namespace Altsoft.ShopifyImportModule.Data.Repositories
                     var json = webClient.DownloadString(requestUrl);
                     var result = JsonConvert.DeserializeObject<ShopifyCustomCollectionList>(json);
 
-                    return new PaginationResult<ShopifyCustomCollection>()
-                    {
-                        Items = result.CustomCollections,
-                        TotalCount = result.CustomCollections.Length,
-                        IsSuccess = true
-                    };
+                    return result.CustomCollections;
                 }
             }
             catch (ArgumentException e)
             {
-                return new PaginationResult<ShopifyCustomCollection>()
-                {
-                    IsSuccess = false,
-                    ErrorMessage = e.Message
-                };
+                _loggerFacade.Log(string.Format("Error in getting Shopify Collections: {0}", e), Category.Exception,
+                    Priority.High);
+
+                return null;
             }
         }
 
-        public PaginationResult<ShopifyCollect> GetShopifyCollects()
+        public IEnumerable<ShopifyCollect> GetShopifyCollects()
         {
             try
             {
@@ -125,21 +108,15 @@ namespace Altsoft.ShopifyImportModule.Data.Repositories
                     var json = webClient.DownloadString(requestUrl);
                     var result = JsonConvert.DeserializeObject<ShopifyCollectList>(json);
 
-                    return new PaginationResult<ShopifyCollect>()
-                    {
-                        Items = result.Collects,
-                        TotalCount = result.Collects.Length,
-                        IsSuccess = true
-                    };
+                    return result.Collects;
                 }
             }
             catch (ArgumentException e)
             {
-                return new PaginationResult<ShopifyCollect>()
-                {
-                    IsSuccess = false,
-                    ErrorMessage = e.Message
-                };
+                _loggerFacade.Log(string.Format("Error in getting Shopify Collects: {0}", e), Category.Exception,
+                     Priority.High);
+
+                return null;
             }
         }
     }
