@@ -1,4 +1,5 @@
 ﻿using Altsoft.ShopifyImportModule.Data.Interfaces;
+using Altsoft.ShopifyImportModule.Data.Log;
 using Altsoft.ShopifyImportModule.Data.Repositories;
 using Altsoft.ShopifyImportModule.Data.Services;
 using Microsoft.Practices.Unity;
@@ -20,7 +21,10 @@ namespace Altsoft.ShopifyImportModule.Web
 
         public void Initialize()
         {
+            _container.RegisterType<ILoggerFacade, DebugLoggerFacade>();
+
             _container.RegisterType<IShopifyRepository, ShopifyRepository>();
+            _container.RegisterType<IShopifyService, ShopifyService>();
             _container.RegisterType<IVirtoCatalogService, VirtoCatalogService>();
         }
 

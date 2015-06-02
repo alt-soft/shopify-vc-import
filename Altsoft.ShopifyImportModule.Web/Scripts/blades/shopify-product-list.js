@@ -29,7 +29,7 @@
             closeChildrenBlades();
             $scope.blade.isLoading = true;
             shopifyImportResources.getCollections({}, function (result) {
-                $scope.products = result;
+                $scope.products = result.items;
                 $scope.blade.isLoading = false;
             });
         }

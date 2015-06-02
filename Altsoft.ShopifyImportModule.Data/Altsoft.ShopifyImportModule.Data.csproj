@@ -62,6 +62,7 @@
     <Compile Include="Interfaces\IShopifyRepository.cs" />
     <Compile Include="Interfaces\IShopifyService.cs" />
     <Compile Include="Interfaces\IVirtoCatalogService.cs" />
+    <Compile Include="Log\DebugLoggerFacade.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PaginationResult.cs" />
     <Compile Include="Models\ServiceResponseBase.cs" />
