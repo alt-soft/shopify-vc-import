@@ -32,7 +32,7 @@ namespace Altsoft.ShopifyImportModule.Web.Controllers.Api
 
         [HttpGet]
         [ResponseType(typeof(PaginationResult<Catalog>))]
-        [Route("get")]
+        [Route("get-catalogs")]
         public IHttpActionResult GetCatalogs()
         {
             try
@@ -49,7 +49,7 @@ namespace Altsoft.ShopifyImportModule.Web.Controllers.Api
 
         [HttpGet]
         [ResponseType(typeof(PaginationResult<VirtoCommerce.Domain.Catalog.Model.Category>))]
-        [Route("get")]
+        [Route("get-categories")]
         public IHttpActionResult GetCategories([FromUri]VirtoCategorySearchCriteria virtoCategorySearchCriteria)
         {
             try

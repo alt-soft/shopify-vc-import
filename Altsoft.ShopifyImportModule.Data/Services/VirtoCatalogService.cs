@@ -68,7 +68,7 @@ namespace Altsoft.ShopifyImportModule.Data.Services
                     TotalCount = 0
                 };
 
-            var virtoCategories = new List<Category> { new Category() };
+            var virtoCategories = new List<Category>();
 
             try
             {
@@ -76,6 +76,7 @@ namespace Altsoft.ShopifyImportModule.Data.Services
                 {
                     CatalogId = searchCriteria.CatalogId,
                     GetAllCategories = true,
+                    ResponseGroup = ResponseGroup.WithCategories
                 });
                 virtoCategories.AddRange(
                    categories.Categories

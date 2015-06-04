@@ -56,11 +56,16 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryTests\ShopifyRepositoryTest.cs" />
+    <Compile Include="ServicesTests\VirtoCatalogServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Altsoft.ShopifyImportModule.Data\Altsoft.ShopifyImportModule.Data.csproj">
       <Project>{534d3e86-c505-47c4-a6f7-c31bede3c905}</Project>
       <Name>Altsoft.ShopifyImportModule.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\vc-community\PLATFORM\Modules\Core\VirtoCommerce.Domain\VirtoCommerce.Domain.csproj">
+      <Project>{67C58A78-DDEA-4FA3-A969-1CAB582918E4}</Project>
+      <Name>VirtoCommerce.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\vc-community\PLATFORM\VirtoCommerce.Platform.Core\VirtoCommerce.Platform.Core.csproj">
       <Project>{F7C9313B-522E-4619-ABC9-8C7D4600D6B5}</Project>
