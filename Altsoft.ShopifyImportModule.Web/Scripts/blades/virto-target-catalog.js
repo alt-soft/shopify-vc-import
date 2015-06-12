@@ -9,7 +9,7 @@
             { catalogId: selectedCatalog.id },
             function (result) {
                 if (result.isSuccess) {
-                    $scope.categories = result.categories;
+                    $scope.categories = result.items;
                     $scope.selectedCategory = $scope.categories[0];
                 } else {
                     $scope.errorMessage = result.errorMessage;
@@ -25,14 +25,15 @@
 
     $scope.nextStep = function () {
         var newBlade = {
-            id: "magentoImport",
-            title: 'Magento Import — Step 4',
-            subtitle: 'Magento Import',
-            template: 'Modules/MagentoImport/VirtoCommerce.MagentoImportModule.Web/Scripts/blades/magento-import.tpl.html',
+            id: "shopifyImportProgress",
+            title: 'Shopify Import — Step 3',
+            subtitle: 'Import Progress',
+            template: 'Modules/$(Altsoft.ShopifyImport)/Scripts/blades/shopify-import-progress.tpl.html',
             selectedProductIds: $scope.blade.selectedProductIds,
             selectedCatalogId: $scope.selectedCatalog.id,
             selectedCategoryId: $scope.selectedCategory.virtoId,
-            isRetainCategoryHierarchy: $scope.isRetainCategoryHierarchy
+            isRetainCategoryHierarchy: $scope.isRetainCategoryHierarchy,
+            controller: 'shopifyImportProgressController'
         };
 
         bladeNavigationService.showBlade(newBlade, $scope.blade);
@@ -45,7 +46,7 @@
         {},
         function (result) {
             if (result.isSuccess) {
-                $scope.catalogs = result.catalogs;
+                $scope.catalogs = result.items;
                 $scope.selectedCatalog = $scope.catalogs[0];
             } else {
                 $scope.errorMessage = result.errorMessage;
@@ -55,5 +56,6 @@
         },
         function (error) {
             $scope.errorMessage = error;
+            $scope.blade.isLoading = false;
         });
 }]);

@@ -96,7 +96,7 @@
         processProductId(product);
     }
 
-    $scope.bladeToolbarCommands = [
+    $scope.blade.toolbarCommands = [
         {
             name: "Refresh",
             icon: 'fa fa-refresh',

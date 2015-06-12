@@ -1,17 +1,17 @@
 ﻿namespace Altsoft.ShopifyImportModule.Data.Interfaces
 {
-    public enum Category
+    public enum LogCategory
     {
         Exception
     }
 
-    public enum Priority
+    public enum LogPriority
     {
         High,
         Low
     }
     public interface ILoggerFacade
     {
-        void Log(string message, Category logCategory, Priority priority);
+        void Log(string message, LogCategory logCategory, LogPriority logPriority);
     }
 }

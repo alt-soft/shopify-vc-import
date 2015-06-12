@@ -10,6 +10,6 @@ namespace Altsoft.ShopifyImportModule.Data.Interfaces
         Product Convert(ShopifyProduct product);
 
         //ShopifyCategory Convert(catalogCategoryEntity category);
-        Category Convert(ShopifyCustomCollection category);
+        VirtoCategory Convert(ShopifyCustomCollection category);
     }
 }

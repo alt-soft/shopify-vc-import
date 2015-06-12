@@ -1,7 +1,31 @@
-﻿<div class="blade-content">
+﻿<div class="blade-content blade-medium">
     <div class="blade-inner">
         <div class="inner-block">
-            <p>Import progress</p>
+            <div class="container-fluid" ng-controller="shopifyImportProgressController">
+                <div class="margin20" style="width: 500px;">
+                    <h4 class="margin20 text-muted">Import products</h4>
+                    <hr />
+
+                    <h5 class="margin20">{{currentOperationDescription}}</h5>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="{{progressPercentage}}" aria-valuemin="0" aria-valuemax="100" style="background-image: none; background-color: blue;" ng-style="{width : ( progressPercentage + '%' ) }">
+                            {{addedItemsCount}}/{{totalItemsCount}}
+                        </div>
+                    </div>
+
+                    <!-- Import -->
+                    <button class="btn btn-default margin10" ng-disabled="blade.isLoading" ng-click="import()">
+                        Import
+                        <span class="glyphicon glyphicon-log-in margin5"></span>
+                    </button>
+
+                    <h5 class="margin20 bg-success" ng-show="isSuccess && isCompleted">Products import completed successfully.</h5>
+                    <h5 class="margin20 bg-danger" ng-show="!isSuccess && isCompleted">Errors was occured during products import.</h5>
+
+                    <hr ng-show="errorMessage" />
+                    <pre class="bg-danger padding5" ng-show="errorMessage">{{errorMessage}}</pre>
+                </div>
+            </div>
         </div>
     </div>
 </div>

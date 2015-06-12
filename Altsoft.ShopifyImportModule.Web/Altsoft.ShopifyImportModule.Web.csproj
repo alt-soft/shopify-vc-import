@@ -111,7 +111,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\Api\ImportController.cs" />
+    <Compile Include="Controllers\Api\ShopifyImportController.cs" />
+    <Compile Include="Controllers\Api\ShopifyCatalogController.cs" />
     <Compile Include="Controllers\Api\VirtoCatalogController.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

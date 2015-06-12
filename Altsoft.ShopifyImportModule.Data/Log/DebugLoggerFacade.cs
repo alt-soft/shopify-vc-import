@@ -5,9 +5,9 @@ namespace Altsoft.ShopifyImportModule.Data.Log
 {
     public class DebugLoggerFacade:ILoggerFacade
     {
-        public void Log(string message, Category logCategory, Priority priority)
+        public void Log(string message, LogCategory logCategory, LogPriority logPriority)
         {
-            Debug.WriteLine("Logger: message:'{0}', category:'{1}', priority:'{2}'",message,logCategory,priority);
+            Debug.WriteLine("Logger: message:'{0}', category:'{1}', LogPriority:'{2}'",message,logCategory,logPriority);
         }
     }
 }

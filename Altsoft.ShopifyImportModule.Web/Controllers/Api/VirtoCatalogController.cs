@@ -4,7 +4,6 @@ using System.Web.Http.Description;
 using Altsoft.ShopifyImportModule.Data.Interfaces;
 using Altsoft.ShopifyImportModule.Data.Models;
 using VirtoCommerce.Domain.Catalog.Model;
-using Category = Altsoft.ShopifyImportModule.Data.Interfaces.Category;
 
 namespace Altsoft.ShopifyImportModule.Web.Controllers.Api
 {
@@ -42,7 +41,7 @@ namespace Altsoft.ShopifyImportModule.Web.Controllers.Api
             }
             catch (Exception e)
             {
-                _loggerFacade.Log(e.Message + e.StackTrace, Category.Exception, Priority.High);
+                _loggerFacade.Log(e.Message + e.StackTrace, LogCategory.Exception, LogPriority.High);
                 return InternalServerError(e);
             }
         }
@@ -59,7 +58,7 @@ namespace Altsoft.ShopifyImportModule.Web.Controllers.Api
             }
             catch (Exception e)
             {
-                _loggerFacade.Log(e.Message + e.StackTrace, Category.Exception, Priority.High);
+                _loggerFacade.Log(e.Message + e.StackTrace, LogCategory.Exception, LogPriority.High);
                 return InternalServerError(e);
             }
         }

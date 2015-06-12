@@ -6,15 +6,16 @@ using Altsoft.ShopifyImportModule.Data.Models.Shopify;
 
 namespace Altsoft.ShopifyImportModule.Web.Controllers.Api
 {
-    [RoutePrefix("api/shopifyImport")]
-    public class ImportController : ApiController
+    [RoutePrefix("api/shopifyCatalog")]
+    public class ShopifyCatalogController:ApiController
     {
         private readonly IShopifyService _shopifyService;
 
-        public ImportController(IShopifyService shopifyService)
+        public ShopifyCatalogController(IShopifyService shopifyService)
         {
             _shopifyService = shopifyService;
         }
+
 
         [HttpGet]
         [ResponseType(typeof(PaginationResult<ShopifyProductItem>))]

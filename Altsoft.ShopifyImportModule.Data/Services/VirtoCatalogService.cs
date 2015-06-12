@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Altsoft.ShopifyImportModule.Data.Interfaces;
 using Altsoft.ShopifyImportModule.Data.Models;
+using VirtoCommerce.CatalogModule.Data.Model;
 using VirtoCommerce.Domain.Catalog.Model;
 using VirtoCommerce.Domain.Catalog.Services;
+using Catalog = VirtoCommerce.Domain.Catalog.Model.Catalog;
 using Category = VirtoCommerce.Domain.Catalog.Model.Category;
 
 namespace Altsoft.ShopifyImportModule.Data.Services
@@ -43,7 +45,7 @@ namespace Altsoft.ShopifyImportModule.Data.Services
             }
             catch (Exception e)
             {
-                _loggerFacade.Log(e.Message + e.StackTrace, Interfaces.Category.Exception, Priority.High);
+                _loggerFacade.Log(e.Message + e.StackTrace, Interfaces.LogCategory.Exception, LogPriority.High);
                 return new PaginationResult<Catalog>
                 {
                     IsSuccess = false,
@@ -85,7 +87,7 @@ namespace Altsoft.ShopifyImportModule.Data.Services
             }
             catch (Exception e)
             {
-                _loggerFacade.Log(e.Message + e.StackTrace, Interfaces.Category.Exception, Priority.High);
+                _loggerFacade.Log(e.Message + e.StackTrace, Interfaces.LogCategory.Exception, LogPriority.High);
                 return new PaginationResult<Category>
                 {
                     IsSuccess = false,
@@ -101,8 +103,21 @@ namespace Altsoft.ShopifyImportModule.Data.Services
             };
         }
 
+        public void AddCategory(VirtoCategory virtoCategory)
+        {
+            throw new NotImplementedException();
+        }
 
-        
+        public void AddProduct(Product virtoProduct, string virtoCatalogId, IEnumerable<string> virtoCategoryIds)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CommitChanges()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

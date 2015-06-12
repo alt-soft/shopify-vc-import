@@ -36,8 +36,8 @@ namespace Altsoft.ShopifyImportModule.Data.Repositories
             }
             catch (ArgumentException e)
             {
-                _loggerFacade.Log(string.Format("Error in getting Shopify products: {0}", e), Category.Exception,
-                    Priority.High);
+                _loggerFacade.Log(string.Format("Error in getting Shopify products: {0}", e), LogCategory.Exception,
+                    LogPriority.High);
                 return null;
             }
         }
@@ -88,8 +88,8 @@ namespace Altsoft.ShopifyImportModule.Data.Repositories
             }
             catch (ArgumentException e)
             {
-                _loggerFacade.Log(string.Format("Error in getting Shopify Collections: {0}", e), Category.Exception,
-                    Priority.High);
+                _loggerFacade.Log(string.Format("Error in getting Shopify Collections: {0}", e), LogCategory.Exception,
+                    LogPriority.High);
 
                 return null;
             }
@@ -113,8 +113,8 @@ namespace Altsoft.ShopifyImportModule.Data.Repositories
             }
             catch (ArgumentException e)
             {
-                _loggerFacade.Log(string.Format("Error in getting Shopify Collects: {0}", e), Category.Exception,
-                     Priority.High);
+                _loggerFacade.Log(string.Format("Error in getting Shopify Collects: {0}", e), LogCategory.Exception,
+                     LogPriority.High);
 
                 return null;
             }
