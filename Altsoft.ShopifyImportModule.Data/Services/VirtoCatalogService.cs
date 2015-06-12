@@ -4,6 +4,7 @@ using System.Linq;
 using Altsoft.ShopifyImportModule.Data.Interfaces;
 using Altsoft.ShopifyImportModule.Data.Models;
 using VirtoCommerce.CatalogModule.Data.Model;
+using VirtoCommerce.CatalogModule.Data.Repositories;
 using VirtoCommerce.Domain.Catalog.Model;
 using VirtoCommerce.Domain.Catalog.Services;
 using Catalog = VirtoCommerce.Domain.Catalog.Model.Catalog;
@@ -11,23 +12,25 @@ using Category = VirtoCommerce.Domain.Catalog.Model.Category;
 
 namespace Altsoft.ShopifyImportModule.Data.Services
 {
-    public class VirtoCatalogService : IVirtoCatalogService
+    public class VirtoCatalogService :CatalogRepositoryImpl, IVirtoCatalogService
     {
         #region Private Fields
 
         private readonly ICatalogService _catalogService;
         private readonly ILoggerFacade _loggerFacade;
         private readonly ICatalogSearchService _searchService;
+        private readonly IVirtoConverter _virtoConverter;
 
         #endregion
 
         #region Constructors
 
-        public VirtoCatalogService(ILoggerFacade loggerFacade, ICatalogService catalogService, ICatalogSearchService searchService)
+        public VirtoCatalogService(ILoggerFacade loggerFacade, ICatalogService catalogService, ICatalogSearchService searchService, Func<ICatalogRepository> catalogRepositoryFactory, IVirtoConverter virtoConverter)
         {
             _loggerFacade = loggerFacade;
             _catalogService = catalogService;
             _searchService = searchService;
+            _virtoConverter = virtoConverter;
         }
 
         #endregion
@@ -87,7 +90,7 @@ namespace Altsoft.ShopifyImportModule.Data.Services
             }
             catch (Exception e)
             {
-                _loggerFacade.Log(e.Message + e.StackTrace, Interfaces.LogCategory.Exception, LogPriority.High);
+                _loggerFacade.Log(e.Message + e.StackTrace, LogCategory.Exception, LogPriority.High);
                 return new PaginationResult<Category>
                 {
                     IsSuccess = false,
@@ -105,19 +108,50 @@ namespace Altsoft.ShopifyImportModule.Data.Services
 
         public void AddCategory(VirtoCategory virtoCategory)
         {
-            throw new NotImplementedException();
+            var category = new Category
+            {
+                Id = virtoCategory.VirtoId,
+                Name = virtoCategory.Name,
+                CreatedDate = DateTime.Now,
+                Code = virtoCategory.Code,
+                IsActive = true,
+                Priority = virtoCategory.Priority,
+                CatalogId = virtoCategory.CatalogId,
+                ParentId = virtoCategory.ParentCategoryId
+            };
+            Add(category);
         }
 
         public void AddProduct(Product virtoProduct, string virtoCatalogId, IEnumerable<string> virtoCategoryIds)
         {
-            throw new NotImplementedException();
+            var product = _virtoConverter.Convert(virtoProduct, virtoCatalogId);
+            Add(product);
+
+            if (virtoCategoryIds != null)
+            {
+                foreach (var categoryId in virtoCategoryIds)
+                {
+                    AddCategoryItemRelation(product.Id, categoryId, virtoCatalogId);
+                }
+            }
         }
 
         public void CommitChanges()
         {
-            throw new NotImplementedException();
+            SaveChanges();
         }
 
         #endregion
+
+        private void AddCategoryItemRelation(string productId, string categoryId, string catalogId)
+        {
+            var categoryItemRelation = new CategoryItemRelation
+            {
+                ItemId = productId,
+                CategoryId = categoryId,
+                CatalogId = catalogId
+            };
+            Add(categoryItemRelation);
+        }
     }
 }
