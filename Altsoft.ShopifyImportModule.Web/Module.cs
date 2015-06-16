@@ -1,4 +1,5 @@
-﻿using Altsoft.ShopifyImportModule.Data.Interfaces;
+﻿using Altsoft.ShopifyImportModule.Data.Converters;
+using Altsoft.ShopifyImportModule.Data.Interfaces;
 using Altsoft.ShopifyImportModule.Data.Log;
 using Altsoft.ShopifyImportModule.Data.Repositories;
 using Altsoft.ShopifyImportModule.Data.Services;
@@ -26,6 +27,13 @@ namespace Altsoft.ShopifyImportModule.Web
             _container.RegisterType<IShopifyRepository, ShopifyRepository>();
             _container.RegisterType<IShopifyService, ShopifyService>();
             _container.RegisterType<IVirtoCatalogService, VirtoCatalogService>();
+            _container.RegisterType<IShopifyImportService, ShopifyImportService>();
+            _container.RegisterType<IShopifyConverter, ShopifyConverter>();
+
+            var shopifyImportProggressService = new ShopifyImportProgressService();
+            _container.RegisterInstance<IShopifyImportProgressService>(shopifyImportProggressService);
+
+            
         }
 
         public void PostInitialize()

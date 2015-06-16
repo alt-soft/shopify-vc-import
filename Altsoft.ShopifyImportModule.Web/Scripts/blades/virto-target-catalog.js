@@ -31,7 +31,7 @@
             template: 'Modules/$(Altsoft.ShopifyImport)/Scripts/blades/shopify-import-progress.tpl.html',
             selectedProductIds: $scope.blade.selectedProductIds,
             selectedCatalogId: $scope.selectedCatalog.id,
-            selectedCategoryId: $scope.selectedCategory.virtoId,
+            selectedCategoryId: $scope.selectedCategory.id,
             isRetainCategoryHierarchy: $scope.isRetainCategoryHierarchy,
             controller: 'shopifyImportProgressController'
         };

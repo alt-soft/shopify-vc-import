@@ -21,8 +21,8 @@ namespace Altsoft.ShopifyImportModule.Web.Controllers.Api
 
         [HttpPost]
         [ResponseType(typeof(ServiceResponseBase))]
-        [Route("import-products")]
-        public IHttpActionResult ImportProducts(ShopifyImportParams importParams)
+        [Route("start-import")]
+        public IHttpActionResult StartImport(ShopifyImportParams importParams)
         {
             try
             {

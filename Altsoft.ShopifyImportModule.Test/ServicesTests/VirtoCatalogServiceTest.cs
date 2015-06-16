@@ -23,7 +23,7 @@ namespace Altsoft.ShopifyImportModule.Test.ServicesTests
             });
 
             var searchService = new Mock<ICatalogSearchService>();
-            var virtoCatalogService = new VirtoCatalogService(null, catalogService.Object, searchService.Object, null, null);
+            var virtoCatalogService = new VirtoCatalogService(null, catalogService.Object, searchService.Object, null);
 
             var catalogs = virtoCatalogService.GetCatalogs();
 
@@ -47,7 +47,7 @@ namespace Altsoft.ShopifyImportModule.Test.ServicesTests
                 }
             });
 
-            var virtoCatalogService = new VirtoCatalogService(null, catalogService.Object, searchService.Object, null, null);
+            var virtoCatalogService = new VirtoCatalogService(null, catalogService.Object, searchService.Object, null);
 
             var categories = virtoCatalogService.GetCategories(new VirtoCategorySearchCriteria(){CatalogId = "123"});
 

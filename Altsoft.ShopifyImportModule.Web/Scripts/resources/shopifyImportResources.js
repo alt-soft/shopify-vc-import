@@ -6,7 +6,7 @@
         getCatalogs: { method: 'GET', url: 'api/virtoCatalog/get-catalogs/' },
         getCategories: { method: 'GET', url: 'api/virtoCatalog/get-categories/' },
 
-        importProducts: { method: 'GET', url: 'api/shopifyImport/start-import/' },
+        startImport: { method: 'POST', url: 'api/shopifyImport/start-import/' },
         getProgress: { method: 'GET', url: 'api/shopifyImport/get-progress/' }
     });
 }]);
