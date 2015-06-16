@@ -31,7 +31,7 @@
                         </div>
 
                         <!-- Next Step -->
-                        <button class="btn btn-default pull-right margin10" ng-hide="errorMessage" ng-disabled="form.$invalid || blade.isLoading" ng-click="nextStep()">
+                        <button class="btn btn-default pull-right margin10" ng-hide="errorMessage" ng-disabled="form.$invalid || blade.isLoading && selectedCategory" ng-click="nextStep()">
                             Proceed to Next Step
                             <span class="glyphicon glyphicon-log-in margin5"></span>
                         </button>

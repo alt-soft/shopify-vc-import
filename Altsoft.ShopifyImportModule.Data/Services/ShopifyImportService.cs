@@ -4,6 +4,7 @@ using System.Linq;
 using Altsoft.ShopifyImportModule.Data.Interfaces;
 using Altsoft.ShopifyImportModule.Data.Models;
 using Altsoft.ShopifyImportModule.Data.Models.Shopify;
+using VirtoCommerce.CatalogModule.Data.Model;
 
 namespace Altsoft.ShopifyImportModule.Data.Services
 {
@@ -68,7 +69,7 @@ namespace Altsoft.ShopifyImportModule.Data.Services
             _shopifyImportProgressService.StoreCurrentProgress(shopifyImportProgress);
 
             var virtoCategories = new List<VirtoCategory>();
-
+            var newCategories = new List<CategoryBase>();
             if (importParams.IsRetainCategoryHierarchy)
             {
                 foreach (var shopifyCategory in _shopifyRepository.GetShopifyCollections())
@@ -81,10 +82,7 @@ namespace Altsoft.ShopifyImportModule.Data.Services
                     virtoCategory.CatalogId = importParams.VirtoCatalogId;
                 }
 
-                foreach (var virtoCategory in virtoCategories)
-                {
-                    _virtoRepository.AddCategory(virtoCategory);
-                }
+                newCategories.AddRange(virtoCategories.Select(virtoCategory => _virtoRepository.AddCategory(virtoCategory)));
             }
 
             shopifyImportProgress.CurrentOperationDescription = "Adding items…";
@@ -114,8 +112,10 @@ namespace Altsoft.ShopifyImportModule.Data.Services
                             ? new List<string> {importParams.VirtoCategoryId}
                             : null;
                     }
-                    
-                    _virtoRepository.AddProduct(virtoProduct, importParams.VirtoCatalogId, virtoCategoryIds);
+
+                    virtoProduct.CatalogId = importParams.VirtoCatalogId;
+
+                    _virtoRepository.AddProduct(virtoProduct, newCategories, virtoCategoryIds);
 
                     shopifyImportProgress.AddedItemsCount++;
                     _shopifyImportProgressService.StoreCurrentProgress(shopifyImportProgress);

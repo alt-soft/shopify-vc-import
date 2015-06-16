@@ -11,11 +11,11 @@ namespace Altsoft.ShopifyImportModule.Data.Converters
         public Product Convert(ShopifyProduct product)
         {
             var result = new Product();
-            result.Id = product.Id.ToString();
             result.Name = product.Title;
             result.Code = product.Handle;
             result.CreatedDate = DateTime.Now;
             result.StartDate = product.PublishedAt;
+            result.IsActive = true;
 
             return result;
         }
@@ -26,7 +26,7 @@ namespace Altsoft.ShopifyImportModule.Data.Converters
             result.ShopifyId = category.Id;
             result.Code = category.Handle;
             result.Name = category.Title;
-            result.VirtoId = category.Handle;
+            result.VirtoId = Guid.NewGuid().ToString();
 
             return result;
         }

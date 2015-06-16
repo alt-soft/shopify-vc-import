@@ -11,6 +11,7 @@ using VirtoCommerce.Domain.Catalog.Model;
 using VirtoCommerce.Domain.Catalog.Services;
 using Catalog = VirtoCommerce.Domain.Catalog.Model.Catalog;
 using Category = VirtoCommerce.Domain.Catalog.Model.Category;
+using dataModel = VirtoCommerce.CatalogModule.Data.Model;
 
 namespace Altsoft.ShopifyImportModule.Data.Services
 {
@@ -106,7 +107,7 @@ namespace Altsoft.ShopifyImportModule.Data.Services
             };
         }
 
-        public void AddCategory(VirtoCategory virtoCategory)
+        public CategoryBase AddCategory(VirtoCategory virtoCategory)
         {
             var category = new Category
             {
@@ -122,9 +123,11 @@ namespace Altsoft.ShopifyImportModule.Data.Services
             };
             var dbCategory = category.ToDataModel();
             Add(dbCategory);
+
+            return dbCategory;
         }
 
-        public void AddProduct(Product virtoProduct, string virtoCatalogId, IEnumerable<string> virtoCategoryIds)
+        public void AddProduct(Product virtoProduct, List<CategoryBase> newCategories, IEnumerable<string> virtoCategoryIds)
         {
             Add(virtoProduct);
 
@@ -132,7 +135,13 @@ namespace Altsoft.ShopifyImportModule.Data.Services
             {
                 foreach (var categoryId in virtoCategoryIds)
                 {
-                    AddCategoryItemRelation(virtoProduct.Id, categoryId, virtoCatalogId);
+                    var dbCategory = GetCategoryById(categoryId) ??
+                                     newCategories.FirstOrDefault(category => category.Id == categoryId) as dataModel.Category;
+                    if (dbCategory == null)
+                    {
+                        throw new NullReferenceException("dbCategory");
+                    }
+                    SetItemCategoryRelation(virtoProduct, dbCategory);
                 }
             }
         }
@@ -163,15 +172,6 @@ namespace Altsoft.ShopifyImportModule.Data.Services
 
         #endregion
 
-        private void AddCategoryItemRelation(string productId, string categoryId, string catalogId)
-        {
-            var categoryItemRelation = new CategoryItemRelation
-            {
-                ItemId = productId,
-                CategoryId = categoryId,
-                CatalogId = catalogId
-            };
-            Add(categoryItemRelation);
-        }
+       
     }
 }

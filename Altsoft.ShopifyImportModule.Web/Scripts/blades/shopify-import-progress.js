@@ -3,17 +3,19 @@
     $scope.blade.isLoading = false;
     $scope.isCompleted = false;
 
-    $scope.currentOperationDescription = "";
+    $scope.currentOperationDescription = "Import not started yet";
     $scope.progressPercentage = 0;
     $scope.addedItemsCount = 0;
     $scope.totalItemsCount = 0;
 
     $scope.updateProgress = function () {
         shopifyImportResources.getProgress({}, function (result) {
-            $scope.currentOperationDescription = result.ShopifyImportProgress.currentOperationDescription;
-            $scope.progressPercentage = result.ShopifyImportProgress.progressPercentage;
-            $scope.addedItemsCount = result.ShopifyImportProgress.addedItemsCount;
-            $scope.totalItemsCount = result.ShopifyImportProgress.totalItemsCount;
+            if (result.shopifyImportProgress) {
+                $scope.currentOperationDescription = result.shopifyImportProgress.currentOperationDescription;
+                $scope.progressPercentage = result.shopifyImportProgress.progressPercentage;
+                $scope.addedItemsCount = result.shopifyImportProgress.addedItemsCount;
+                $scope.totalItemsCount = result.shopifyImportProgress.totalItemsCount;
+            } 
         }, function (error) {
             $scope.isSuccess = false;
             $scope.errorMessage = error;
