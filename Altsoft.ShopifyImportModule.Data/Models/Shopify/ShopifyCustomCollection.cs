@@ -14,7 +14,7 @@ namespace Altsoft.ShopifyImportModule.Data.Models.Shopify
         public string Handle { get; set; }
 
         [DataMember(Name = "image")]
-        public string Image { get; set; }
+        public ShopifyImage Image { get; set; }
 
         [DataMember(Name = "metafield")]
         public ShopifyMetafield Metafield { get; set; }

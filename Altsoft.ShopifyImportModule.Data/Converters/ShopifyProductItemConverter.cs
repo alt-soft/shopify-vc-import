@@ -32,7 +32,7 @@ namespace Altsoft.ShopifyImportModule.Data.Converters
                 Id = collection.Id,
                 Title = collection.Title,
                 BodyHtml = collection.BodyHtml,
-                Image = collection.Image,
+                Image = collection.Image.Src,
 
                 Children = collects
                 .Where(collect => collect.CollectionId == collection.Id)
