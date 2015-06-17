@@ -38,8 +38,10 @@
     var selectChildren = function (product) {
         if (product.children && product.children.length > 0) {
             $(product.children).each(function (index, child) {
-                child.isSelected = product.isSelected;
-                processProductId(child);
+                if (!child.isImported) {
+                    child.isSelected = product.isSelected;
+                    processProductId(child);
+                }
             });
         }
     }
@@ -65,7 +67,7 @@
     var allProductsChecked = function (products) {
         var result = true;
         $(products).each(function (index, product) {
-            if (!product.isSelected)
+            if (!product.isSelected && !product.isImported)
                 result = false;
         });
 

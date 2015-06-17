@@ -15,5 +15,6 @@ namespace Altsoft.ShopifyImportModule.Data.Models.Shopify
         public bool? IsSelected { get; set; }
 
         public long Id { get; set; }
+        public bool IsImported { get; set; }
     }
 }

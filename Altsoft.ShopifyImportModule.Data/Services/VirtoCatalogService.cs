@@ -170,6 +170,13 @@ namespace Altsoft.ShopifyImportModule.Data.Services
             }
         }
 
+        public List<string> CheckCodesExistance(List<string> codes)
+        {
+            var existingCodes = Items.Select(item => item.Code).Intersect(codes).ToList();
+
+            return existingCodes;
+        }
+
         #endregion
 
        

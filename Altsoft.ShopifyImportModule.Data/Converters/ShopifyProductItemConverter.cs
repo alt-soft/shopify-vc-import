@@ -12,6 +12,7 @@ namespace Altsoft.ShopifyImportModule.Data.Converters
             {
                 IsCollection = false,
                 IsSelected = false,
+                IsImported = product.IsImported,
 
                 Title = product.Title,
                 BodyHtml = product.BodyHtml,
@@ -38,6 +39,8 @@ namespace Altsoft.ShopifyImportModule.Data.Converters
                 .Where(collect => collect.CollectionId == collection.Id)
                 .Select(collect => Convert(products.First(product => product.Id == collect.ProductId))).ToList()
             };
+
+            result.IsImported = result.Children.All(child => child.IsImported);
 
             return result;
         }

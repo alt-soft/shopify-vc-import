@@ -12,5 +12,6 @@ namespace Altsoft.ShopifyImportModule.Data.Interfaces
         CategoryBase AddCategory(VirtoCategory virtoCategory);
         void AddProduct(Product virtoProduct, List<CategoryBase> virtoCatalogId, IEnumerable<string> virtoCategoryIds);
         void CommitChanges();
+        List<string> CheckCodesExistance(List<string> code);
     }
 }

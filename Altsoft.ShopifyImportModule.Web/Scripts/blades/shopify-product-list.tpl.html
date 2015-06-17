@@ -15,19 +15,19 @@
                     </thead>
                     <tbody>
                     <tr class="table-item" ng-repeat="product in products">
-                        <td class="table-col">
+                        <td class="table-col" ng-class="{'already-imported': product.isImported}">
                             <label class="form-control __checkbox">
-                                <input type="checkbox" ng-model="product.isSelected" ng-change="changeSelection(product)">
+                                <input type="checkbox" ng-model="product.isSelected" ng-change="changeSelection(product)" ng-disabled="product.isImported">
                                 <span class="check"></span>
                             </label>
                         </td>
-                        <td class="table-col" ng-click='showChildren(product)'>
-                            <img width="50" height="50" ng-src="{{product.image}}"/>
+                        <td class="table-col" ng-click='showChildren(product)' ng-class="{'already-imported': product.isImported}">
+                            <img width="50" height="50" ng-src="{{product.image}}" />
                         </td>
-                        <td class="table-col" ng-click='showChildren(product)'>
+                        <td class="table-col" ng-click='showChildren(product)' ng-class="{'already-imported': product.isImported}">
                             <span title="{{product.title}}">{{product.title}}</span>
                         </td>
-                        <td class="table-col" ng-click='showChildren(product)'>
+                        <td class="table-col" ng-click='showChildren(product)' ng-class="{'already-imported': product.isImported}">
                             <span title="{{product.body_html}}">{{product.body_html}}</span>
                         </td>
 

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Altsoft.ShopifyImportModule.Data.Converters;
 using Altsoft.ShopifyImportModule.Data.Interfaces;
 using Altsoft.ShopifyImportModule.Data.Models;
@@ -9,10 +10,11 @@ namespace Altsoft.ShopifyImportModule.Data.Services
     public class ShopifyService : IShopifyService
     {
         private readonly IShopifyRepository _shopifyRepository;
-
-        public ShopifyService(IShopifyRepository shopifyRepository)
+        private readonly IVirtoCatalogService _virtoCatalogService;
+        public ShopifyService(IShopifyRepository shopifyRepository, IVirtoCatalogService virtoCatalogService)
         {
             _shopifyRepository = shopifyRepository;
+            _virtoCatalogService = virtoCatalogService;
         }
 
         public PaginationResult<ShopifyProductItem> GetShopifyCollections()
@@ -52,11 +54,22 @@ namespace Altsoft.ShopifyImportModule.Data.Services
                     }
                     else
                     {
+                        var productList = products as IList<ShopifyProduct> ?? products.ToList();
+
+                        var productHandles = productList.Select(product => product.Handle).ToList();
+                        var existingProductsHandles = _virtoCatalogService.CheckCodesExistance(productHandles);
+
+                        foreach (var product in productList)
+                        {
+                            product.IsImported = existingProductsHandles.Contains(product.Handle);
+                        }
 
                         var productItems =
                             collections.Select(
-                                collection => ShopifyProductItemConverter.Convert(collection, collects, products))
+                                collection => ShopifyProductItemConverter.Convert(collection, collects, productList))
                                 .ToList();
+
+                        
 
                         result = new PaginationResult<ShopifyProductItem>()
                         {
