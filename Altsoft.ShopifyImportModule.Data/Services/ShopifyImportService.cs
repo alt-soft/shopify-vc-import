@@ -44,6 +44,22 @@ namespace Altsoft.ShopifyImportModule.Data.Services
         {
             IEnumerable<ShopifyProduct> productsToImport;
 
+            List<ShopifyCollect> shopifyCollects;
+            
+            try
+            {
+                shopifyCollects = _shopifyRepository.GetShopifyCollects().ToList();
+            }
+            catch (Exception e)
+            {
+                _loggerFacade.Log(e.Message + e.StackTrace, LogCategory.Exception, LogPriority.High);
+                return new ServiceResponseBase
+                {
+                    IsSuccess = false,
+                    ErrorMessage = "Can't retrieve Shopify collects. See log files for more information."
+                };
+            }
+
             try
             {
                 productsToImport =
@@ -72,23 +88,35 @@ namespace Altsoft.ShopifyImportModule.Data.Services
             var newCategories = new List<CategoryBase>();
             if (importParams.IsRetainCategoryHierarchy)
             {
+                var collectionsToImport =
+                    productsToImport.Select(
+                        product => shopifyCollects.First(collect => collect.ProductId == product.Id).CollectionId)
+                        .ToList();
+
                 foreach (var shopifyCategory in _shopifyRepository.GetShopifyCollections())
                 {
-                    AddToVirtoCategoriesList(shopifyCategory, importParams.VirtoCategoryId,
-                        virtoCategories);
+                    if (collectionsToImport.Contains(shopifyCategory.Id))
+                        AddToVirtoCategoriesList(shopifyCategory, importParams.VirtoCategoryId,
+                            virtoCategories);
                 }
+
                 foreach (var virtoCategory in virtoCategories)
                 {
                     virtoCategory.CatalogId = importParams.VirtoCatalogId;
                 }
 
-                newCategories.AddRange(virtoCategories.Select(virtoCategory => _virtoRepository.AddCategory(virtoCategory)));
+                var shopifyCollectionCodes = virtoCategories.Select(category => category.Code).ToList();
+
+                var existingCategoriesCodes =
+                    _virtoRepository.CheckCategoriesCodesExistance(shopifyCollectionCodes);
+
+                newCategories.AddRange(virtoCategories.Where(category=>!existingCategoriesCodes.Contains(category.Code)).Select(virtoCategory => _virtoRepository.AddCategory(virtoCategory)));
             }
 
             shopifyImportProgress.CurrentOperationDescription = "Adding items…";
             _shopifyImportProgressService.StoreCurrentProgress(shopifyImportProgress);
 
-            var shopifyCollects = _shopifyRepository.GetShopifyCollects().ToList();
+            
 
             try
             {
@@ -96,26 +124,26 @@ namespace Altsoft.ShopifyImportModule.Data.Services
                 {
                     var virtoProduct = _shopifyConverter.Convert(product);
                     
-                    IEnumerable<string> virtoCategoryIds;
+                    IEnumerable<string> virtoCategoryCodes;
                     if (importParams.IsRetainCategoryHierarchy && shopifyCollects.Any(collect => collect.ProductId == product.Id))
                     {
-                        virtoCategoryIds =
+                        virtoCategoryCodes =
                             shopifyCollects.Where(collect => collect.ProductId == product.Id)
                                 .Select(
                                     collect =>
                                         virtoCategories.First(
-                                            virtoCategory => virtoCategory.ShopifyId == collect.CollectionId).VirtoId);
+                                            virtoCategory => virtoCategory.ShopifyId == collect.CollectionId).Code);
                     }
                     else
                     {
-                        virtoCategoryIds = !string.IsNullOrEmpty(importParams.VirtoCategoryId)
+                        virtoCategoryCodes = !string.IsNullOrEmpty(importParams.VirtoCategoryId)
                             ? new List<string> {importParams.VirtoCategoryId}
                             : null;
                     }
 
                     virtoProduct.CatalogId = importParams.VirtoCatalogId;
 
-                    _virtoRepository.AddProduct(virtoProduct, newCategories, virtoCategoryIds);
+                    _virtoRepository.AddProduct(virtoProduct, newCategories, virtoCategoryCodes);
 
                     shopifyImportProgress.AddedItemsCount++;
                     _shopifyImportProgressService.StoreCurrentProgress(shopifyImportProgress);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using Altsoft.ShopifyImportModule.Data.Interfaces;
@@ -127,16 +128,19 @@ namespace Altsoft.ShopifyImportModule.Data.Services
             return dbCategory;
         }
 
-        public void AddProduct(Product virtoProduct, List<CategoryBase> newCategories, IEnumerable<string> virtoCategoryIds)
+        public void AddProduct(Product virtoProduct, List<CategoryBase> newCategories, IEnumerable<string> virtoCategoryCodes)
         {
             Add(virtoProduct);
 
-            if (virtoCategoryIds != null)
+            if (virtoCategoryCodes != null)
             {
-                foreach (var categoryId in virtoCategoryIds)
+                foreach (var categoryCode in virtoCategoryCodes)
                 {
-                    var dbCategory = GetCategoryById(categoryId) ??
-                                     newCategories.FirstOrDefault(category => category.Id == categoryId) as dataModel.Category;
+                    var dbCategory =
+                        newCategories.FirstOrDefault(category => category.Code == categoryCode) as dataModel.Category ??
+                        GetCategoryByCode(categoryCode) ??
+                        GetCategoryById(categoryCode);
+
                     if (dbCategory == null)
                     {
                         throw new NullReferenceException("dbCategory");
@@ -145,7 +149,18 @@ namespace Altsoft.ShopifyImportModule.Data.Services
                 }
             }
         }
+        public dataModel.Category GetCategoryByCode(string categoryCode)
+        {
+            var retVal = Categories.OfType<dataModel.Category>()
+                                        .Include(x => x.CategoryPropertyValues)
+                                        .Include(x => x.OutgoingLinks)
+                                        .Include(x => x.IncommingLinks)
+                                        .Include(x => x.PropertySet.PropertySetProperties.Select(y => y.Property))
+                                        .FirstOrDefault(x => x.Code == categoryCode);
 
+
+            return retVal;
+        } 
         public void CommitChanges()
         {
             try
@@ -170,9 +185,16 @@ namespace Altsoft.ShopifyImportModule.Data.Services
             }
         }
 
-        public List<string> CheckCodesExistance(List<string> codes)
+        public List<string> CheckItemsCodesExistance(List<string> codes)
         {
             var existingCodes = Items.Select(item => item.Code).Intersect(codes).ToList();
+
+            return existingCodes;
+        }
+
+        public List<string> CheckCategoriesCodesExistance(List<string> codes)
+        {
+            var existingCodes = Categories.Select(item => item.Code).Intersect(codes).ToList();
 
             return existingCodes;
         }

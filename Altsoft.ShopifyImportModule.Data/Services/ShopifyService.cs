@@ -57,7 +57,7 @@ namespace Altsoft.ShopifyImportModule.Data.Services
                         var productList = products as IList<ShopifyProduct> ?? products.ToList();
 
                         var productHandles = productList.Select(product => product.Handle).ToList();
-                        var existingProductsHandles = _virtoCatalogService.CheckCodesExistance(productHandles);
+                        var existingProductsHandles = _virtoCatalogService.CheckItemsCodesExistance(productHandles);
 
                         foreach (var product in productList)
                         {

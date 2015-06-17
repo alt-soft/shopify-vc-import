@@ -10,8 +10,9 @@ namespace Altsoft.ShopifyImportModule.Data.Interfaces
         PaginationResult<Catalog> GetCatalogs();
         PaginationResult<VirtoCommerce.Domain.Catalog.Model.Category> GetCategories(VirtoCategorySearchCriteria searchCriteria);
         CategoryBase AddCategory(VirtoCategory virtoCategory);
-        void AddProduct(Product virtoProduct, List<CategoryBase> virtoCatalogId, IEnumerable<string> virtoCategoryIds);
+        void AddProduct(Product virtoProduct, List<CategoryBase> virtoCatalogId, IEnumerable<string> virtoCategoryCodes);
         void CommitChanges();
-        List<string> CheckCodesExistance(List<string> code);
+        List<string> CheckItemsCodesExistance(List<string> code);
+        List<string> CheckCategoriesCodesExistance(List<string> code);
     }
 }
