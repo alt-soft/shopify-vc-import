@@ -13,6 +13,6 @@
 .factory('shopifyAuthenticationResources', ['$resource', function ($resource) {
     return $resource('api/shopifyAuthentication/', {}, {
         isAuthenticated: { method: 'GET', url: 'api/shopifyAuthentication/is-authenticated/' },
-        authenticate: { method: 'GET', url: 'api/shopifyAuthentication/authenticate'}
+        authenticate: { method: 'POST', url: 'api/shopifyAuthentication/authenticate'}
     });
 }]);

@@ -13,10 +13,7 @@ namespace Altsoft.ShopifyImportModule.Test.RepositoryTests
         [TestMethod]
         public void GetShopifyCollectsTest()
         {
-            var settingsServiceMock = GetSettingsServiceMock();
-
-            var settingsManager = settingsServiceMock.Object;
-            var repository = new ShopifyRepository(settingsManager,null);
+            var repository = new ShopifyRepository(null,null);
 
             var collects = repository.GetShopifyCollects();
 
@@ -27,10 +24,7 @@ namespace Altsoft.ShopifyImportModule.Test.RepositoryTests
         [TestMethod]
         public void GetShopifyCollectionsTest()
         {
-            var settingsServiceMock = GetSettingsServiceMock();
-
-            var settingsManager = settingsServiceMock.Object;
-            var repository = new ShopifyRepository(settingsManager, null);
+            var repository = new ShopifyRepository(null,null);
 
             var collections = repository.GetShopifyCollections();
 
@@ -43,10 +37,8 @@ namespace Altsoft.ShopifyImportModule.Test.RepositoryTests
         [TestMethod]
         public void GetShopifyProductsFromSource()
         {
-            var settingsServiceMock = GetSettingsServiceMock();
-
-            var settingsManager = settingsServiceMock.Object;
-            var repository = new ShopifyRepository(settingsManager, null);
+       
+            var repository = new ShopifyRepository(null,null);
 
             var products = repository.GetShopifyProductsFromSource(new ShopifyProductSearchCriteria());
 

@@ -58,6 +58,7 @@
     <Compile Include="Converters\ShopifyConverter.cs" />
     <Compile Include="Converters\ShopifyProductItemConverter.cs" />
     <Compile Include="Interfaces\ILoggerFacade.cs" />
+    <Compile Include="Interfaces\IShopifyAuthenticationService.cs" />
     <Compile Include="Interfaces\IShopifyConverter.cs" />
     <Compile Include="Interfaces\IShopifyImportProgressService.cs" />
     <Compile Include="Interfaces\IShopifyImportService.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Models\VirtoCategorySearchCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ShopifyRepository.cs" />
+    <Compile Include="Services\ShopifyAuthenticationService.cs" />
     <Compile Include="Services\ShopifyImportProgressService.cs" />
     <Compile Include="Services\ShopifyImportService.cs" />
     <Compile Include="Services\ShopifyService.cs" />

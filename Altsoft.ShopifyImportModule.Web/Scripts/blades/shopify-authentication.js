@@ -37,9 +37,15 @@
 
     $scope.save = function() {
         $scope.blade.isLoading = false;
-        shopifyAuthenticationResources.authenticate({}, function () {
+        shopifyAuthenticationResources.authenticate({
+            apiKey: $scope.apiKey,
+            password: $scope.password,
+            shopName: $scope.shopName
+        }, function () {
             $scope.blade.isLoading = false;
             $scope.refresh();
         });
     }
+
+    $scope.refresh();
 }]);

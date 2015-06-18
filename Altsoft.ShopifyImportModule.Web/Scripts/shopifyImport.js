@@ -44,7 +44,6 @@ angular.module(moduleTemplateName,[])
           name: 'Shopify import',
           description: 'Native catalog data import from Shopify',
           icon: 'fa fa-file-archive-o',
-          controller: 'altsoft.shopifyImportModule.shopifyAuthenticationController',
           template: 'Modules/$(Altsoft.ShopifyImport)/Scripts/blades/shopify-authentication.tpl.html'
       });
 
