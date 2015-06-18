@@ -1,6 +1,8 @@
 ﻿using System.Linq;
+using Altsoft.ShopifyImportModule.Data.Interfaces;
 using Altsoft.ShopifyImportModule.Data.Models.Shopify;
 using Altsoft.ShopifyImportModule.Data.Repositories;
+using Altsoft.ShopifyImportModule.Data.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using VirtoCommerce.Platform.Core.Settings;
@@ -13,7 +15,9 @@ namespace Altsoft.ShopifyImportModule.Test.RepositoryTests
         [TestMethod]
         public void GetShopifyCollectsTest()
         {
-            var repository = new ShopifyRepository(null,null);
+            var shopifyAuthenticationService = GetAuthService();
+
+            var repository = new ShopifyRepository(null,shopifyAuthenticationService);
 
             var collects = repository.GetShopifyCollects();
 
@@ -21,10 +25,13 @@ namespace Altsoft.ShopifyImportModule.Test.RepositoryTests
             Assert.IsTrue(collects.Any());
         }
 
+       
         [TestMethod]
         public void GetShopifyCollectionsTest()
         {
-            var repository = new ShopifyRepository(null,null);
+            var shopifyAuthenticationService = GetAuthService();
+
+            var repository = new ShopifyRepository(null, shopifyAuthenticationService);
 
             var collections = repository.GetShopifyCollections();
 
@@ -37,8 +44,9 @@ namespace Altsoft.ShopifyImportModule.Test.RepositoryTests
         [TestMethod]
         public void GetShopifyProductsFromSource()
         {
-       
-            var repository = new ShopifyRepository(null,null);
+            var shopifyAuthenticationService = GetAuthService();
+
+            var repository = new ShopifyRepository(null, shopifyAuthenticationService);
 
             var products = repository.GetShopifyProductsFromSource(new ShopifyProductSearchCriteria());
 
@@ -46,6 +54,15 @@ namespace Altsoft.ShopifyImportModule.Test.RepositoryTests
             Assert.IsTrue(products.Any());
 
         }
+        private IShopifyAuthenticationService GetAuthService()
+        {
+            var settingsManagerMock = GetSettingsServiceMock();
+            var settingsManager = settingsManagerMock.Object;
+            var shopifyAuthenticationService = new ShopifyAuthenticationService(settingsManager);
+
+            return shopifyAuthenticationService;
+        }
+
 
         private static Mock<ISettingsManager> GetSettingsServiceMock()
         {
