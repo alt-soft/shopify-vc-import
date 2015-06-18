@@ -101,7 +101,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\blades\shopify-authentication.js" />
     <Content Include="Scripts\blades\shopify-import-progress.js" />
+    <Content Include="Scripts\blades\shopify-authentication.tpl.html" />
     <Content Include="Scripts\blades\virto-target-catalog.js" />
     <Content Include="Scripts\blades\shopify-product-list.js" />
     <Content Include="Scripts\blades\shopify-import-progress.tpl.html" />
@@ -115,6 +117,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Api\ShopifyAuthenticationController.cs" />
     <Compile Include="Controllers\Api\ShopifyImportController.cs" />
     <Compile Include="Controllers\Api\ShopifyCatalogController.cs" />
     <Compile Include="Controllers\Api\VirtoCatalogController.cs" />
