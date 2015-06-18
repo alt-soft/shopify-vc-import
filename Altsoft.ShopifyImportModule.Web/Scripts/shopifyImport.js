@@ -6,41 +6,47 @@ if (AppDependencies != undefined) {
 }
 
 angular.module(moduleTemplateName,[])
-.config(
-  ['$stateProvider', '$urlRouterProvider',
-    function ($stateProvider, $urlRouterProvider) {
-        $stateProvider
-            .state('workspace.shopifyImportModuleTemplate', {
-                url: '/shopifyImportModuleTemplate',
-                templateUrl: 'Modules/$(Altsoft.ShopifyImport)/Scripts/home/home.tpl.html',
-                controller: [
-                    '$scope', 'platformWebApp.bladeNavigationService', function ($scope, bladeNavigationService) {
-                        var blade = {
-                            title: 'Shopify Import — Step 1',
-                            subtitle: 'Shopify products selection',
-                            id: 'shopify-import-job-list',
-                            controller: 'shopifyProductListController',
-                            template: 'Modules/$(Altsoft.ShopifyImport)/Scripts/blades/shopify-product-list.tpl.html',
-                            isClosingDisabled: true
-                        };
-                        bladeNavigationService.showBlade(blade);
-                    }
-                ]
-            });
-    }
-  ]
-)
 .run(
-  ['$rootScope', 'platformWebApp.mainMenuService', 'platformWebApp.widgetService', '$state', function ($rootScope, mainMenuService, widgetService, $state) {
-      //Register module in main menu
-      var menuItem = {
-          path: 'browse/shopifyImportModule',
-          icon: 'fa fa-cube',
-          title: 'Shopify import',
-          priority: 100,
-          action: function () { $state.go('workspace.shopifyImportModuleTemplate') },
-          permission: 'shopifyImportModulePermission'
-      };
-      mainMenuService.addMenuItem(menuItem);
+  ['$rootScope', '$state', 'platformWebApp.notificationTemplateResolver', 'virtoCommerce.catalogModule.catalogImportService', function ($rootScope, $state, notificationTemplateResolver, catalogImportService) {
+      //Notifications
+
+      //Import
+      var menuImportTemplate =
+		{
+		    priority: 900,
+		    satisfy: function (notify, place) { return place == 'menu' && notify.notifyType == 'CatalogShopifyImport'; },
+		    template: 'Modules/$(Altsoft.ShopifyImport)/Scripts/blades/notifications/menuImport.tpl.html',
+		    action: function (notify) { $state.go('notificationsHistory', notify) }
+		};
+      notificationTemplateResolver.register(menuImportTemplate);
+
+      var historyImportTemplate =
+		{
+		    priority: 900,
+		    satisfy: function (notify, place) { return place == 'history' && notify.notifyType == 'CatalogShopifyImport'; },
+		    template: 'Modules/$(Altsoft.ShopifyImport)/Scripts/blades/notifications/historyImport.tpl.html',
+		    action: function (notify) {
+		        var blade = {
+		            id: 'CatalogShopifyImportDetail',
+		            title: 'shopify import detail',
+		            subtitle: 'detail',
+		            template: 'Modules/$(Altsoft.ShopifyImport)/Scripts/blades/catalog-shopify-import.tpl.html',
+		            controller: 'altsoft.shopifyImportModule.catalogShopifyImportController',
+		            notification: notify
+		        };
+		        bladeNavigationService.showBlade(blade);
+		    }
+		};
+      notificationTemplateResolver.register(historyImportTemplate);
+
+      //Import module registring 
+      catalogImportService.register({
+          name: 'Shopify import',
+          description: 'Native catalog data import from Shopify',
+          icon: 'fa fa-file-archive-o',
+          controller: 'altsoft.shopifyImportModule.catalogShopifyImportWizardController',
+          template: 'Modules/$(Altsoft.ShopifyImport)/Scripts/blades/wizard/catalog-shopify-import-wizard.tpl.html'
+      });
+
   }]);
 
