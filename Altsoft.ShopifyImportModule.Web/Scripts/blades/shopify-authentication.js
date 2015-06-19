@@ -20,10 +20,10 @@
             {
                 var newBlade = {
                     id: "virtoTargetCatalog",
-                    title: 'Shopify Import — Step 2',
-                    subtitle: 'Virto Target Catalog',
-                    template: 'Modules/$(Altsoft.ShopifyImport)/Scripts/blades/virto-target-catalog.tpl.html',
-                    selectedProductIds: $scope.selectedProductIds
+                    title : 'Shopify import parameters',
+                    subtitle : 'Please select what data you want  import',
+                    headIcon : 'fa-list',
+                    template: 'Modules/$(Altsoft.ShopifyImport)/Scripts/blades/shopify-import-params.tpl.html'
                 };
 
                 bladeNavigationService.showBlade(newBlade, blade.parentBlade);

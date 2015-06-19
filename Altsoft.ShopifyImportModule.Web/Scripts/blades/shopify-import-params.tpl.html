@@ -1,0 +1,61 @@
+﻿<div class="blade-content" ng-controller="altsoft.shopifyImportModule.shopifyImportParamsController">
+    <div class="blade-inner">
+        <div class="inner-block">
+            <div class="list __items">
+                <label class="list-item">
+                    <input type="checkbox" ng-model="importParams.importProducts">
+                    <span class="switch"></span>
+                    <span class="list-name">Products</span>
+                </label>
+                <label class="list-item">
+                    <input type="checkbox" ng-model="importParams.importCollections">
+                    <span class="switch"></span>
+                    <span class="list-name">Collections</span>
+                </label>
+                <label class="list-item">
+                    <input type="checkbox" ng-model="importParams.importImages">
+                    <span class="switch"></span>
+                    <span class="list-name">Images</span>
+                </label>
+                <label class="list-item">
+                    <input type="checkbox" ng-model="importParams.importProperties">
+                    <span class="switch"></span>
+                    <span class="list-name">Properties</span>
+                </label>
+                <label class="list-item">
+                    <input type="checkbox" ng-model="importParams.Customers">
+                    <span class="switch"></span>
+                    <span class="list-name">Customers</span>
+                </label>
+                <label class="list-item">
+                    <input type="checkbox" ng-model="importParams.importOrders">
+                    <span class="switch"></span>
+                    <span class="list-name">Orders</span>
+                </label>
+                <label class="list-item">
+                    <input type="checkbox" ng-model="importParams.importThemes">
+                    <span class="switch"></span>
+                    <span class="list-name">Themes</span>
+                </label>
+                <label class="list-item" ng-show="importParams.importThemes">
+                    <span class="list-t">Store</span>
+                    <span class="list-descr">
+                        Please, select the store where you want to import themes:
+                    </span>
+                    <ui-select ng-model="importParams.storeId" required="importParams.importThemes">
+                        <ui-select-match placeholder="Select...">{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="x.id as x in availableShops | filter: { name: $select.search }">
+                            <span ng-bind-html="x.name | highlight: $select.search"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="blade-static __bottom">
+        <button class="btn" ng-click="startImport(importParams)" ng-disabled="!isValid()">
+            <span>Start import</span>
+        </button>
+    </div>
+</div>
+

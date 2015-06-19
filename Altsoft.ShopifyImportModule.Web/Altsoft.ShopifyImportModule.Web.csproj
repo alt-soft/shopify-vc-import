@@ -101,7 +101,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\blades\shopify-import-params.js" />
     <Content Include="Scripts\blades\shopify-authentication.js" />
+    <Content Include="Scripts\blades\shopify-import-params.tpl.html" />
     <Content Include="Scripts\blades\shopify-import-progress.js" />
     <Content Include="Scripts\blades\shopify-authentication.tpl.html" />
     <Content Include="Scripts\blades\virto-target-catalog.js" />
