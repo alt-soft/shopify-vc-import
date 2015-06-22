@@ -19,7 +19,7 @@
             if(result.isAuthenticated)
             {
                 var newBlade = {
-                    id: "virtoTargetCatalog",
+                    id: "shopifyImportParams",
                     title : 'Shopify import parameters',
                     subtitle : 'Please select what data you want  import',
                     headIcon : 'fa-list',

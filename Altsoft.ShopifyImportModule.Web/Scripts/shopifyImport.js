@@ -7,7 +7,7 @@ if (AppDependencies != undefined) {
 
 angular.module(moduleTemplateName,[])
 .run(
-  ['$rootScope', '$state', 'platformWebApp.notificationTemplateResolver', 'virtoCommerce.catalogModule.catalogImportService', function ($rootScope, $state, notificationTemplateResolver, catalogImportService) {
+  ['$rootScope', '$state', 'platformWebApp.notificationTemplateResolver', 'virtoCommerce.catalogModule.catalogImportService', 'platformWebApp.bladeNavigationService', function ($rootScope, $state, notificationTemplateResolver, catalogImportService, bladeNavigationService) {
       //Notifications
 
       //Import
@@ -30,8 +30,8 @@ angular.module(moduleTemplateName,[])
 		            id: 'CatalogShopifyImportDetail',
 		            title: 'shopify import detail',
 		            subtitle: 'detail',
-		            template: 'Modules/$(Altsoft.ShopifyImport)/Scripts/blades/catalog-shopify-import.tpl.html',
-		            controller: 'altsoft.shopifyImportModule.catalogShopifyImportController',
+		            template: 'Modules/$(Altsoft.ShopifyImport)/Scripts/blades/shopify-import-progress.tpl.html',
+		            controller: 'altsoft.shopifyImportModule.shopifyImportProgressController',
 		            notification: notify
 		        };
 		        bladeNavigationService.showBlade(blade);

@@ -2,7 +2,6 @@
 .factory('shopifyImportResources', ['$resource', function ($resource) {
     return $resource('api/shopifyImport/', {}, {
         startImport: { method: 'POST', url: 'api/shopifyImport/start-import/' },
-        getProgress: { method: 'GET', url: 'api/shopifyImport/get-progress/' }
     });
 }])
 .factory('shopifyAuthenticationResources', ['$resource', function ($resource) {

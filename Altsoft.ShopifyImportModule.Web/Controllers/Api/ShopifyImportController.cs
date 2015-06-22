@@ -3,20 +3,22 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Altsoft.ShopifyImportModule.Data.Interfaces;
 using Altsoft.ShopifyImportModule.Data.Models;
+using Altsoft.ShopifyImportModule.Web.BackgroundJobs;
+using Altsoft.ShopifyImportModule.Web.Models;
+using Hangfire;
+using VirtoCommerce.CatalogModule.Web.BackgroundJobs;
+using VirtoCommerce.Platform.Core.Common;
+using VirtoCommerce.Platform.Core.Notification;
 
 namespace Altsoft.ShopifyImportModule.Web.Controllers.Api
 {
     [RoutePrefix("api/shopifyImport")]
     public class ShopifyImportController : ApiController
     {
-        private readonly IShopifyImportService _shopifyImportService;
-        private readonly IShopifyImportProgressService _shopifyImportProgressService;
-        private readonly ILoggerFacade _loggerFacade;
-        public ShopifyImportController(IShopifyImportService shopifyImportService, ILoggerFacade loggerFacade, IShopifyImportProgressService shopifyImportProgressService)
+        private readonly INotifier _notifier;
+        public ShopifyImportController(INotifier notifier)
         {
-            _shopifyImportService = shopifyImportService;
-            _loggerFacade = loggerFacade;
-            _shopifyImportProgressService = shopifyImportProgressService;
+            _notifier = notifier;
         }
 
         [HttpPost]
@@ -24,33 +26,17 @@ namespace Altsoft.ShopifyImportModule.Web.Controllers.Api
         [Route("start-import")]
         public IHttpActionResult StartImport(ShopifyImportParams importParams)
         {
-            try
+            var notification = new ShopifyImportNotification(CurrentPrincipal.GetCurrentUserName())
             {
-                var result = _shopifyImportService.Import(importParams);
-                return Ok(result);
-            }
-            catch (Exception e)
-            {
-                _loggerFacade.Log(e.Message + e.StackTrace, LogCategory.Exception, LogPriority.High);
-                return InternalServerError(e);
-            }
-        }
+                Title = "Import catalog from Shopify",
+                Description = "starting import...."
+            };
+            _notifier.Upsert(notification);
 
-        [HttpGet]
-        [ResponseType(typeof(ShopifyImportProgressResult))]
-        [Route("get-progress")]
-        public IHttpActionResult GetProgress()
-        {
-            try
-            {
-                var result = _shopifyImportProgressService.GetCurrentProgress();
-                return Ok(result);
-            }
-            catch (Exception e)
-            {
-                _loggerFacade.Log(e.Message + e.StackTrace, LogCategory.Exception, LogPriority.High);
-                return InternalServerError(e);
-            }
+            var importJob = new ShopifyCatalogImportJob();
+            BackgroundJob.Enqueue(() => importJob.DoImport(importParams, notification));
+
+            return Ok(notification);
         }
     }
 }
