@@ -23,7 +23,8 @@
                     title : 'Shopify import parameters',
                     subtitle : 'Please select what data you want  import',
                     headIcon : 'fa-list',
-                    template: 'Modules/$(Altsoft.ShopifyImport)/Scripts/blades/shopify-import-params.tpl.html'
+                    template: 'Modules/$(Altsoft.ShopifyImport)/Scripts/blades/shopify-import-params.tpl.html',
+                    catalog: blade.catalog
                 };
 
                 bladeNavigationService.showBlade(newBlade, blade.parentBlade);

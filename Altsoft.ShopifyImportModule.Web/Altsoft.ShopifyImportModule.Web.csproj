@@ -106,11 +106,7 @@
     <Content Include="Scripts\blades\shopify-import-params.tpl.html" />
     <Content Include="Scripts\blades\shopify-import-progress.js" />
     <Content Include="Scripts\blades\shopify-authentication.tpl.html" />
-    <Content Include="Scripts\blades\virto-target-catalog.js" />
-    <Content Include="Scripts\blades\shopify-product-list.js" />
     <Content Include="Scripts\blades\shopify-import-progress.tpl.html" />
-    <Content Include="Scripts\blades\virto-target-catalog.tpl.html" />
-    <Content Include="Scripts\blades\shopify-product-list.tpl.html" />
     <Content Include="Scripts\home\home.tpl.html" />
     <Content Include="Scripts\resources\shopifyImportResources.js" />
     <Content Include="Scripts\shopifyImport.js" />
@@ -121,8 +117,6 @@
   <ItemGroup>
     <Compile Include="Controllers\Api\ShopifyAuthenticationController.cs" />
     <Compile Include="Controllers\Api\ShopifyImportController.cs" />
-    <Compile Include="Controllers\Api\ShopifyCatalogController.cs" />
-    <Compile Include="Controllers\Api\VirtoCatalogController.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,12 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace Altsoft.ShopifyImportModule.Data.Models
+﻿namespace Altsoft.ShopifyImportModule.Data.Models
 {
     public class ShopifyImportParams
     {
         public string VirtoCatalogId { get; set; }
-
-        public string VirtoCategoryId { get; set; }
 
         public bool ImportProducts { get; set; }
 

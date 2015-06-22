@@ -11,8 +11,7 @@
     ];
 
     $scope.importParams = {
-        virtoCatalogId: blade.virtoCatalogId,
-        virtoCategoryId: blade.virtoCategoryId,
+        virtoCatalogId: blade.catalog.id,
         importProducts: false,
         importImages: false,
         importProperties: false,
@@ -26,7 +25,6 @@
         var importParams = $scope.importParams;
         var valid =
             importParams.virtoCatalogId &&
-            importParams.virtoCategoryId &&
             (importParams.importProducts ||
             importParams.importImages ||
             importParams.importProperties ||
@@ -35,7 +33,7 @@
             importParams.importThemes);
 
         if (valid && importParams.importThemes)
-            valid = !importParams.storeId;
+            valid = importParams.storeId != null;
 
         return valid;
     }

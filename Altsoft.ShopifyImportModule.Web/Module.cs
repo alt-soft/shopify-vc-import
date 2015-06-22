@@ -26,7 +26,6 @@ namespace Altsoft.ShopifyImportModule.Web
 
             _container.RegisterType<IShopifyRepository, ShopifyRepository>();
             _container.RegisterType<IShopifyService, ShopifyService>();
-            _container.RegisterType<IVirtoCatalogService, VirtoCatalogService>();
             _container.RegisterType<IShopifyImportService, ShopifyImportService>();
             _container.RegisterType<IShopifyConverter, ShopifyConverter>();
             _container.RegisterType<IShopifyAuthenticationService, ShopifyAuthenticationService>();
