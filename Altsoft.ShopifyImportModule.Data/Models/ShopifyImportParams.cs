@@ -17,7 +17,5 @@
         public bool ImportOrders { get; set; }
 
         public bool ImportThemes { get; set; }
-
-        public string StoreId { get; set; }
     }
 }

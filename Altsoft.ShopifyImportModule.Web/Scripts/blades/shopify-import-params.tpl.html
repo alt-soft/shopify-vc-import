@@ -40,18 +40,6 @@
                     <span class="switch"></span>
                     <span class="list-name">Themes</span>
                 </label>
-                <label class="list-item" ng-show="blade.importConfiguration.importThemes">
-                    <span class="list-t">Store</span>
-                    <span class="list-descr">
-                        Please, select the store where you want to import themes:
-                    </span>
-                    <ui-select ng-model="blade.importConfiguration.storeId" required="blade.importConfiguration.importThemes">
-                        <ui-select-match placeholder="Select...">{{$select.selected.name}}</ui-select-match>
-                        <ui-select-choices repeat="x.id as x in availableShops | filter: { name: $select.search }">
-                            <span ng-bind-html="x.name | highlight: $select.search"></span>
-                        </ui-select-choices>
-                    </ui-select>
-                </label>
             </div>
         </div>
     </div>

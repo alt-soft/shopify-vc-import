@@ -4,12 +4,6 @@
     var blade = $scope.blade;
     blade.isLoading = false;
 
-    $scope.availableShops = [
-        { id: 0, name: 'Apple' },
-        { id: 1, name: 'Sony' },
-        { id: 2, name: 'Abibas' }
-    ];
-
     blade.importConfiguration = {
         virtoCatalogId: blade.catalog.id,
         importProducts: false,
@@ -18,8 +12,7 @@
         importProperties: true,
         importCustomers: false,
         importOrders: false,
-        importThemes: false,
-        storeId: null
+        importThemes: false
     }
 
     $scope.isValid = function () {
@@ -33,10 +26,7 @@
             importParams.importCustomers ||
             importParams.importOrders ||
             importParams.importThemes);
-
-        if (valid && importParams.importThemes)
-            valid = importParams.storeId != null;
-
+  
         return valid;
     }
 
