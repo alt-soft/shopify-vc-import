@@ -3,21 +3,24 @@
         <div class="inner-block">
             <div class="list __items">
                 <label class="list-item">
-                    <input type="checkbox" ng-model="blade.importConfiguration.importProducts">
-                    <span class="switch"></span>
-                    <span class="list-name">Products</span>
-                </label>
-                <label class="list-item">
                     <input type="checkbox" ng-model="blade.importConfiguration.importCollections">
                     <span class="switch"></span>
                     <span class="list-name">Collections</span>
                 </label>
+
                 <label class="list-item">
+                    <input type="checkbox" ng-model="blade.importConfiguration.importProducts">
+                    <span class="switch"></span>
+                    <span class="list-name">Products</span>
+                </label>
+
+                <label class="list-item" ng-show="blade.importConfiguration.importProducts">
                     <input type="checkbox" ng-model="blade.importConfiguration.importImages">
                     <span class="switch"></span>
                     <span class="list-name">Images</span>
                 </label>
-                <label class="list-item">
+
+                <label class="list-item" ng-show="blade.importConfiguration.importProducts">
                     <input type="checkbox" ng-model="blade.importConfiguration.importProperties">
                     <span class="switch"></span>
                     <span class="list-name">Properties</span>

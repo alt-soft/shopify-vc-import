@@ -56,12 +56,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\ShopifyConverter.cs" />
-    <Compile Include="Interfaces\ILoggerFacade.cs" />
     <Compile Include="Interfaces\IShopifyAuthenticationService.cs" />
     <Compile Include="Interfaces\IShopifyConverter.cs" />
     <Compile Include="Interfaces\IShopifyImportService.cs" />
     <Compile Include="Interfaces\IShopifyRepository.cs" />
-    <Compile Include="Log\DebugLoggerFacade.cs" />
     <Compile Include="Models\ShopifyImportParams.cs" />
     <Compile Include="Models\Shopify\Base\ShopifyCreatableEntity.cs" />
     <Compile Include="Models\Shopify\Base\ShopifyUpdatableEntity.cs" />

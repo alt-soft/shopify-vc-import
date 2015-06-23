@@ -17,7 +17,7 @@ namespace Altsoft.ShopifyImportModule.Test.RepositoryTests
         {
             var shopifyAuthenticationService = GetAuthService();
 
-            var repository = new ShopifyRepository(null,shopifyAuthenticationService);
+            var repository = new ShopifyRepository(shopifyAuthenticationService);
 
             var collects = repository.GetShopifyCollects();
 
@@ -31,7 +31,7 @@ namespace Altsoft.ShopifyImportModule.Test.RepositoryTests
         {
             var shopifyAuthenticationService = GetAuthService();
 
-            var repository = new ShopifyRepository(null, shopifyAuthenticationService);
+            var repository = new ShopifyRepository(shopifyAuthenticationService);
 
             var collections = repository.GetShopifyCollections();
 
@@ -46,7 +46,7 @@ namespace Altsoft.ShopifyImportModule.Test.RepositoryTests
         {
             var shopifyAuthenticationService = GetAuthService();
 
-            var repository = new ShopifyRepository(null, shopifyAuthenticationService);
+            var repository = new ShopifyRepository(shopifyAuthenticationService);
 
             var products = repository.GetShopifyProducts();
 
