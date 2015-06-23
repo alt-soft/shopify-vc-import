@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Net;
 using Altsoft.ShopifyImportModule.Data.Interfaces;
 using Altsoft.ShopifyImportModule.Data.Models.Shopify;
@@ -45,6 +47,37 @@ namespace Altsoft.ShopifyImportModule.Data.Repositories
         {
             var result = GetShopifyList<ShopifyAsset, ShopifyAssetList>(string.Format("themes/{0}/assets.json",themeId), list => list.Assets);
             return result;
+        }
+
+        public ZipArchive GetShopifyThemeZip(long themeId)
+        {
+            //TODO make parallel downloading
+            var assets = GetShopifyAssets(themeId);
+            var stream = new MemoryStream();
+            var zipArchive = new ZipArchive(stream, ZipArchiveMode.Create, true);
+
+            var cridentials = _shopifyAuthenticationService.GetCridentials();
+            using (var webClient = new WebClient())
+            {
+                webClient.Credentials = cridentials;
+                foreach (var asset in assets)
+                {
+                    var url = asset.PublicUrl ?? asset.Src;
+                    if (url != null)
+                    {
+                        var data = webClient.DownloadData(url);
+
+                        var entry = zipArchive.CreateEntry(asset.Key);
+                        using (var entryStream = entry.Open())
+                        {
+                            entryStream.Write(data, 0, data.Length);
+                        }
+                    }
+                }
+               
+            }
+
+            return zipArchive;
         }
 
 

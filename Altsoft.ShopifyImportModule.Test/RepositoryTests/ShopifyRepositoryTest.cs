@@ -85,6 +85,20 @@ namespace Altsoft.ShopifyImportModule.Test.RepositoryTests
 
         }
 
+        [TestMethod]
+        public void GetShopifyThemeZip()
+        {
+            var shopifyAuthenticationService = GetAuthService();
+
+            var repository = new ShopifyRepository(shopifyAuthenticationService);
+
+            var theme = repository.GetShopifyThemes().First();
+
+            var zip = repository.GetShopifyThemeZip(theme.Id);
+
+            zip.Dispose();
+
+        }
         private IShopifyAuthenticationService GetAuthService()
         {
             var settingsManagerMock = GetSettingsServiceMock();

@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using Altsoft.ShopifyImportModule.Data.Models.Shopify;
 
 namespace Altsoft.ShopifyImportModule.Data.Interfaces
@@ -16,6 +18,8 @@ namespace Altsoft.ShopifyImportModule.Data.Interfaces
         IEnumerable<ShopifyTheme> GetShopifyThemes();
 
         IEnumerable<ShopifyAsset> GetShopifyAssets(long themeId);
+
+        ZipArchive GetShopifyThemeZip(long themeId);
 
         #endregion
     }
