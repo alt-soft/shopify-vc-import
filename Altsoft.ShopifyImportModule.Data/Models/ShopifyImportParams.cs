@@ -6,6 +6,8 @@
 
         public bool ImportProducts { get; set; }
 
+        public bool ImportCollections { get; set; }
+
         public bool ImportImages { get; set; }
 
         public bool ImportProperties { get; set; }

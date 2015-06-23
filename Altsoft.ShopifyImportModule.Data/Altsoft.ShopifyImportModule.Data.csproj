@@ -56,21 +56,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\ShopifyConverter.cs" />
-    <Compile Include="Converters\ShopifyProductItemConverter.cs" />
     <Compile Include="Interfaces\ILoggerFacade.cs" />
     <Compile Include="Interfaces\IShopifyAuthenticationService.cs" />
     <Compile Include="Interfaces\IShopifyConverter.cs" />
-    <Compile Include="Interfaces\IShopifyImportProgressService.cs" />
     <Compile Include="Interfaces\IShopifyImportService.cs" />
     <Compile Include="Interfaces\IShopifyRepository.cs" />
-    <Compile Include="Interfaces\IShopifyService.cs" />
     <Compile Include="Log\DebugLoggerFacade.cs" />
-    <Compile Include="Models\LoginModel.cs" />
-    <Compile Include="Models\PaginationResult.cs" />
-    <Compile Include="Models\ServiceResponseBase.cs" />
     <Compile Include="Models\ShopifyImportParams.cs" />
-    <Compile Include="Models\ShopifyImportProgress.cs" />
-    <Compile Include="Models\ShopifyImportProgressResult.cs" />
     <Compile Include="Models\Shopify\Base\ShopifyCreatableEntity.cs" />
     <Compile Include="Models\Shopify\Base\ShopifyUpdatableEntity.cs" />
     <Compile Include="Models\Shopify\ShopifyCollect.cs" />
@@ -78,22 +70,20 @@
     <Compile Include="Models\Shopify\ShopifyCustomCollection.cs" />
     <Compile Include="Models\Shopify\ShopifyCustomCollectionList.cs" />
     <Compile Include="Models\Shopify\Base\ShopifyEntity.cs" />
+    <Compile Include="Models\Shopify\ShopifyData.cs" />
     <Compile Include="Models\Shopify\ShopifyImage.cs" />
+    <Compile Include="Models\ShopifyImportNotification.cs" />
     <Compile Include="Models\Shopify\ShopifyMetafield.cs" />
     <Compile Include="Models\Shopify\ShopifyOption.cs" />
     <Compile Include="Models\Shopify\ShopifyProduct.cs" />
     <Compile Include="Models\Shopify\ShopifyProductItem.cs" />
     <Compile Include="Models\Shopify\ShopifyProductList.cs" />
-    <Compile Include="Models\Shopify\ShopifyProductSearchCriteria.cs" />
     <Compile Include="Models\Shopify\ShopifyVariant.cs" />
-    <Compile Include="Models\VirtoCategory.cs" />
-    <Compile Include="Models\VirtoCategorySearchCriteria.cs" />
+    <Compile Include="Models\VirtoData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ShopifyRepository.cs" />
     <Compile Include="Services\ShopifyAuthenticationService.cs" />
-    <Compile Include="Services\ShopifyImportProgressService.cs" />
     <Compile Include="Services\ShopifyImportService.cs" />
-    <Compile Include="Services\ShopifyService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

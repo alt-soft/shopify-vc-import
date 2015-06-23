@@ -48,7 +48,7 @@ namespace Altsoft.ShopifyImportModule.Test.RepositoryTests
 
             var repository = new ShopifyRepository(null, shopifyAuthenticationService);
 
-            var products = repository.GetShopifyProductsFromSource(new ShopifyProductSearchCriteria());
+            var products = repository.GetShopifyProducts();
 
             Assert.IsNotNull(products);
             Assert.IsTrue(products.Any());

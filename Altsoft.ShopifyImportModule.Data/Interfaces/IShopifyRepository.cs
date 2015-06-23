@@ -7,7 +7,7 @@ namespace Altsoft.ShopifyImportModule.Data.Interfaces
     {
         #region Public Methods
 
-        IEnumerable<ShopifyProduct> GetShopifyProductsFromSource(ShopifyProductSearchCriteria searchCriteria);
+        IEnumerable<ShopifyProduct> GetShopifyProducts();
 
         IEnumerable<ShopifyCustomCollection> GetShopifyCollections();
 

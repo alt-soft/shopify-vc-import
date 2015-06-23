@@ -1,15 +1,12 @@
 ﻿using Altsoft.ShopifyImportModule.Data.Models;
 using Altsoft.ShopifyImportModule.Data.Models.Shopify;
-using VirtoCommerce.CatalogModule.Data.Model;
+using VirtoCommerce.Domain.Catalog.Model;
 
 namespace Altsoft.ShopifyImportModule.Data.Interfaces
 {
     public interface IShopifyConverter
     {
-        //ShopifyProduct Convert(catalogProductEntity product);
-        Product Convert(ShopifyProduct product);
-
-        //ShopifyCategory Convert(catalogCategoryEntity category);
-        VirtoCategory Convert(ShopifyCustomCollection category);
+        Category Convert(ShopifyCustomCollection category, ShopifyImportParams importParams);
+        CatalogProduct Convert(ShopifyProduct category, ShopifyImportParams importParams, ShopifyData shopifyData);
     }
 }

@@ -4,6 +4,6 @@ namespace Altsoft.ShopifyImportModule.Data.Interfaces
 {
     public interface IShopifyImportService
     {
-        ServiceResponseBase Import(ShopifyImportParams importParams);
+        ShopifyImportNotification Import(ShopifyImportParams importParams, ShopifyImportNotification notification);
     }
 }

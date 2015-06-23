@@ -17,7 +17,7 @@ namespace Altsoft.ShopifyImportModule.Data.Repositories
             _shopifyAuthenticationService = shopifyAuthenticationService;
         }
 
-        public IEnumerable<ShopifyProduct> GetShopifyProductsFromSource(ShopifyProductSearchCriteria searchCriteria)
+        public IEnumerable<ShopifyProduct> GetShopifyProducts()
         {
             try
             {

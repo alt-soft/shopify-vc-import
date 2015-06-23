@@ -1,12 +1,8 @@
-﻿using System;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Http.Description;
 using Altsoft.ShopifyImportModule.Data.Interfaces;
 using Altsoft.ShopifyImportModule.Data.Models;
-using Altsoft.ShopifyImportModule.Web.BackgroundJobs;
-using Altsoft.ShopifyImportModule.Web.Models;
 using Hangfire;
-using VirtoCommerce.CatalogModule.Web.BackgroundJobs;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Notification;
 
@@ -16,13 +12,15 @@ namespace Altsoft.ShopifyImportModule.Web.Controllers.Api
     public class ShopifyImportController : ApiController
     {
         private readonly INotifier _notifier;
-        public ShopifyImportController(INotifier notifier)
+        private readonly IShopifyImportService _shopifyImportService;
+        public ShopifyImportController(INotifier notifier, IShopifyImportService shopifyImportService)
         {
             _notifier = notifier;
+            _shopifyImportService = shopifyImportService;
         }
 
         [HttpPost]
-        [ResponseType(typeof(ServiceResponseBase))]
+        [ResponseType(typeof(ShopifyImportNotification))]
         [Route("start-import")]
         public IHttpActionResult StartImport(ShopifyImportParams importParams)
         {
@@ -33,8 +31,7 @@ namespace Altsoft.ShopifyImportModule.Web.Controllers.Api
             };
             _notifier.Upsert(notification);
 
-            var importJob = new ShopifyCatalogImportJob();
-            BackgroundJob.Enqueue(() => importJob.DoImport(importParams, notification));
+            BackgroundJob.Enqueue(() => _shopifyImportService.Import(importParams, notification));
 
             return Ok(notification);
         }
