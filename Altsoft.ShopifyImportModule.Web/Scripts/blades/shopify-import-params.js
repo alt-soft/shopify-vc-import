@@ -21,8 +21,6 @@
             importParams.virtoCatalogId &&
             (importParams.importProducts ||
             importParams.importCollections ||
-            importParams.importImages ||
-            importParams.importProperties ||
             importParams.importCustomers ||
             importParams.importOrders ||
             importParams.importThemes);

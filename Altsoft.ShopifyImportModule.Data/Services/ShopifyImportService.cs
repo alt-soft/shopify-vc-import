@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Compression;
 using System.Linq;
 using Altsoft.ShopifyImportModule.Data.Interfaces;
 using Altsoft.ShopifyImportModule.Data.Models;
 using Altsoft.ShopifyImportModule.Data.Models.Shopify;
+using VirtoCommerce.Content.Data.Services;
 using VirtoCommerce.Domain.Catalog.Services;
 using VirtoCommerce.Platform.Core.Notification;
 using coreModel = VirtoCommerce.Domain.Catalog.Model;
@@ -22,7 +24,7 @@ namespace Altsoft.ShopifyImportModule.Data.Services
         private readonly IItemService _productService;
         private readonly ICategoryService _categoryService;
         private readonly ICatalogSearchService _searchService;
-
+        //private readonly IThemeService _themeService;
 
         #endregion
 
@@ -34,7 +36,9 @@ namespace Altsoft.ShopifyImportModule.Data.Services
             INotifier notifier,
             IItemService productService,
             ICategoryService categoryService,
-            ICatalogSearchService searchService)
+            ICatalogSearchService searchService
+            //, IThemeService themeService
+            )
         {
 
             _shopifyRepository = shopifyRepository;
@@ -43,6 +47,7 @@ namespace Altsoft.ShopifyImportModule.Data.Services
             _productService = productService;
             _categoryService = categoryService;
             _searchService = searchService;
+            //_themeService = themeService;
         }
 
         #endregion
@@ -82,6 +87,26 @@ namespace Altsoft.ShopifyImportModule.Data.Services
             if (importParams.ImportProducts)
             {
                 SaveProducts(virtoData, importParams, notification);
+            }
+
+            if (importParams.ImportThemes)
+            {
+                SaveThemes(virtoData, importParams, notification);
+            }
+        }
+
+        private void SaveThemes(VirtoData virtoData, ShopifyImportParams importParams, ShopifyImportNotification notification)
+        {
+            notification.TotalCount = virtoData.Themes.Count;
+            notification.ProcessedCount = 0;
+            notification.Description = "Saving themes";
+            _notifier.Upsert(notification);
+
+            foreach (var theme in virtoData.Themes)
+            {
+                //_themeService.UploadTheme("SonyStore", theme.Key.Name, theme.Value);
+                notification.ProcessedCount++;
+                _notifier.Upsert(notification);
             }
         }
 
@@ -281,6 +306,11 @@ namespace Altsoft.ShopifyImportModule.Data.Services
                     shopifyData.Products.Select(product => _shopifyConverter.Convert(product, importParams, shopifyData)).ToList();
             }
 
+            if (importParams.ImportThemes)
+            {
+                virtoData.Themes = shopifyData.Themes;
+            }
+
             return virtoData;
         }
 
@@ -304,6 +334,25 @@ namespace Altsoft.ShopifyImportModule.Data.Services
                 notification.Description = "Reading collections from shopify...";
                 _notifier.Upsert(notification);
                 result.Collections = _shopifyRepository.GetShopifyCollections();
+            }
+
+            if (importParams.ImportThemes)
+            {
+                result.Themes = new Dictionary<ShopifyTheme, ZipArchive>();
+                notification.Description = "Reading themes from shopify...";
+                _notifier.Upsert(notification);
+                var themes = _shopifyRepository.GetShopifyThemes().ToList();
+
+                notification.ProcessedCount = 0;
+                notification.TotalCount = themes.Count();
+                foreach (var theme in themes)
+                {
+                    notification.Description = string.Format("Reading theme '{0}' assets from shopify...",theme.Name );
+                    _notifier.Upsert(notification);
+                    var zip = _shopifyRepository.GetShopifyThemeZip(theme.Id);
+                    notification.ProcessedCount++;
+                    result.Themes.Add(theme,zip);
+                }
             }
 
             //TODO read another data

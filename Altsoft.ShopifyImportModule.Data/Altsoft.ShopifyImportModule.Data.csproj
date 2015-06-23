@@ -88,6 +88,10 @@
       <Project>{B8C758D7-822F-40D8-B28C-EF21C873AF49}</Project>
       <Name>VirtoCommerce.CatalogModule.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\vc-community\PLATFORM\Modules\CMS\VirtoCommerce.Content.Data\VirtoCommerce.Content.Data.csproj">
+      <Project>{E55E08B5-3AF9-467D-8F90-4BEF27BAFA28}</Project>
+      <Name>VirtoCommerce.Content.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\vc-community\PLATFORM\Modules\Core\VirtoCommerce.Domain\VirtoCommerce.Domain.csproj">
       <Project>{67c58a78-ddea-4fa3-a969-1cab582918e4}</Project>
       <Name>VirtoCommerce.Domain</Name>
