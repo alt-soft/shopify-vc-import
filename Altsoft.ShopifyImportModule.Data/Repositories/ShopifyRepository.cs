@@ -19,16 +19,47 @@ namespace Altsoft.ShopifyImportModule.Data.Repositories
 
         public IEnumerable<ShopifyProduct> GetShopifyProducts()
         {
-            var requestUrl = GetRequestUrl("products.json");
+            var result = GetShopifyList<ShopifyProduct,ShopifyProductList>("products.json", list => list.Products);
+            return result;
+        }
+
+        public IEnumerable<ShopifyCustomCollection> GetShopifyCollections()
+        {
+            var result = GetShopifyList<ShopifyCustomCollection, ShopifyCustomCollectionList>("custom_collections.json", list => list.CustomCollections);
+            return result;
+        }
+
+        public IEnumerable<ShopifyCollect> GetShopifyCollects()
+        {
+            var result = GetShopifyList<ShopifyCollect, ShopifyCollectList>("collects.json", list => list.Collects);
+            return result;
+        }
+
+        public IEnumerable<ShopifyTheme> GetShopifyThemes()
+        {
+            var result = GetShopifyList<ShopifyTheme,ShopifyThemeList>("themes.json", list => list.Themes);
+            return result;
+        }
+
+        public IEnumerable<ShopifyAsset> GetShopifyAssets(long themeId)
+        {
+            var result = GetShopifyList<ShopifyAsset, ShopifyAssetList>(string.Format("themes/{0}/assets.json",themeId), list => list.Assets);
+            return result;
+        }
+
+
+        private IEnumerable<TItem> GetShopifyList<TItem,TList>(string endpoint,Func<TList,IEnumerable<TItem>> getCollection)
+        {
+            var requestUrl = GetRequestUrl(endpoint);
             var cridentials = _shopifyAuthenticationService.GetCridentials();
             using (var webClient = new WebClient())
             {
                 webClient.Credentials = cridentials;
 
                 var json = webClient.DownloadString(requestUrl);
-                var result = JsonConvert.DeserializeObject<ShopifyProductList>(json);
+                var result = JsonConvert.DeserializeObject<TList>(json);
 
-                return result.Products;
+                return getCollection(result);
             }
         }
 
@@ -43,35 +74,6 @@ namespace Altsoft.ShopifyImportModule.Data.Repositories
             return initialUrl;
         }
 
-        public IEnumerable<ShopifyCustomCollection> GetShopifyCollections()
-        {
-            var requestUrl = GetRequestUrl("custom_collections.json");
-            var cridentials = _shopifyAuthenticationService.GetCridentials();
-            using (var webClient = new WebClient())
-            {
-                webClient.Credentials = cridentials;
-
-                var json = webClient.DownloadString(requestUrl);
-                var result = JsonConvert.DeserializeObject<ShopifyCustomCollectionList>(json);
-
-                return result.CustomCollections;
-            }
-        }
-
-        public IEnumerable<ShopifyCollect> GetShopifyCollects()
-        {
-
-            var requestUrl = GetRequestUrl("collects.json");
-            var cridentials = _shopifyAuthenticationService.GetCridentials();
-            using (var webClient = new WebClient())
-            {
-                webClient.Credentials = cridentials;
-
-                var json = webClient.DownloadString(requestUrl);
-                var result = JsonConvert.DeserializeObject<ShopifyCollectList>(json);
-
-                return result.Collects;
-            }
-        }
+       
     }
 }

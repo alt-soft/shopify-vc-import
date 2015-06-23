@@ -21,4 +21,11 @@ namespace Altsoft.ShopifyImportModule.Data.Models.Shopify
         [DataMember(Name = "sort_value")]
         public string SortValue { get; set; }
     }
+
+    [DataContract]
+    public class ShopifyCollectList
+    {
+        [DataMember(Name = "collects")]
+        public ShopifyCollect[] Collects { get; set; }
+    }
 }

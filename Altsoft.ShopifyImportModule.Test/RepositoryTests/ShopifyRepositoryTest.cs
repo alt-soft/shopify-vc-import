@@ -42,7 +42,7 @@ namespace Altsoft.ShopifyImportModule.Test.RepositoryTests
       
 
         [TestMethod]
-        public void GetShopifyProductsFromSource()
+        public void GetShopifyProductsTest()
         {
             var shopifyAuthenticationService = GetAuthService();
 
@@ -54,6 +54,37 @@ namespace Altsoft.ShopifyImportModule.Test.RepositoryTests
             Assert.IsTrue(products.Any());
 
         }
+
+        [TestMethod]
+        public void GetShopifyThemesTest()
+        {
+            var shopifyAuthenticationService = GetAuthService();
+
+            var repository = new ShopifyRepository(shopifyAuthenticationService);
+
+            var themes = repository.GetShopifyThemes();
+
+            Assert.IsNotNull(themes);
+            Assert.IsTrue(themes.Any());
+
+        }
+
+        [TestMethod]
+        public void GetShopifyAssetsTest()
+        {
+            var shopifyAuthenticationService = GetAuthService();
+
+            var repository = new ShopifyRepository(shopifyAuthenticationService);
+
+            var theme = repository.GetShopifyThemes().First();
+
+            var assets = repository.GetShopifyAssets(theme.Id);
+
+            Assert.IsNotNull(assets);
+            Assert.IsTrue(assets.Any());
+
+        }
+
         private IShopifyAuthenticationService GetAuthService()
         {
             var settingsManagerMock = GetSettingsServiceMock();

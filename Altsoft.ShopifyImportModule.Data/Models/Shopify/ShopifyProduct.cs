@@ -45,7 +45,12 @@ namespace Altsoft.ShopifyImportModule.Data.Models.Shopify
 
         [DataMember(Name = "vendor")]
         public string Vendor { get; set; }
+    }
 
-        public bool IsImported { get; set; }
+    [DataContract]
+    public class ShopifyProductList
+    {
+        [DataMember(Name = "products")]
+        public ShopifyProduct[] Products { get; set; }
     }
 }

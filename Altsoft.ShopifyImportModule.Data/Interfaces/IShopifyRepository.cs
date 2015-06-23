@@ -13,6 +13,10 @@ namespace Altsoft.ShopifyImportModule.Data.Interfaces
 
         IEnumerable<ShopifyCollect> GetShopifyCollects();
 
+        IEnumerable<ShopifyTheme> GetShopifyThemes();
+
+        IEnumerable<ShopifyAsset> GetShopifyAssets(long themeId);
+
         #endregion
     }
 }

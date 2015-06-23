@@ -63,10 +63,9 @@
     <Compile Include="Models\ShopifyImportParams.cs" />
     <Compile Include="Models\Shopify\Base\ShopifyCreatableEntity.cs" />
     <Compile Include="Models\Shopify\Base\ShopifyUpdatableEntity.cs" />
+    <Compile Include="Models\Shopify\ShopifyAsset.cs" />
     <Compile Include="Models\Shopify\ShopifyCollect.cs" />
-    <Compile Include="Models\Shopify\ShopifyCollectList.cs" />
     <Compile Include="Models\Shopify\ShopifyCustomCollection.cs" />
-    <Compile Include="Models\Shopify\ShopifyCustomCollectionList.cs" />
     <Compile Include="Models\Shopify\Base\ShopifyEntity.cs" />
     <Compile Include="Models\Shopify\ShopifyData.cs" />
     <Compile Include="Models\Shopify\ShopifyImage.cs" />
@@ -74,8 +73,7 @@
     <Compile Include="Models\Shopify\ShopifyMetafield.cs" />
     <Compile Include="Models\Shopify\ShopifyOption.cs" />
     <Compile Include="Models\Shopify\ShopifyProduct.cs" />
-    <Compile Include="Models\Shopify\ShopifyProductItem.cs" />
-    <Compile Include="Models\Shopify\ShopifyProductList.cs" />
+    <Compile Include="Models\Shopify\ShopifyTheme.cs" />
     <Compile Include="Models\Shopify\ShopifyVariant.cs" />
     <Compile Include="Models\VirtoData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

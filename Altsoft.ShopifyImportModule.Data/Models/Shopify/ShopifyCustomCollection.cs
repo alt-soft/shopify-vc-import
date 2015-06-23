@@ -37,4 +37,11 @@ namespace Altsoft.ShopifyImportModule.Data.Models.Shopify
         [DataMember(Name = "title")]
         public string Title { get; set; }
     }
+
+    [DataContract]
+    public class ShopifyCustomCollectionList
+    {
+        [DataMember(Name = "custom_collections")]
+        public ShopifyCustomCollection[] CustomCollections { get; set; }
+    }
 }
