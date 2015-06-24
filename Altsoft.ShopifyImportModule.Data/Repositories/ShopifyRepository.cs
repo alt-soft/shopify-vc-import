@@ -62,19 +62,34 @@ namespace Altsoft.ShopifyImportModule.Data.Repositories
                 webClient.Credentials = cridentials;
                 foreach (var asset in assets)
                 {
-                    var url = asset.PublicUrl ?? asset.Src;
-                    if (url != null)
-                    {
-                        var data = webClient.DownloadData(url);
+                    var url =
+                        GetRequestUrl(string.Format("themes/{0}/assets.json?asset[key]={1}&theme_id={0}", themeId,
+                            asset.Key));
 
-                        var entry = zipArchive.CreateEntry(asset.Key);
-                        using (var entryStream = entry.Open())
+                    var json = webClient.DownloadString(url);
+                    var downloadedAssetContainer = JsonConvert.DeserializeObject<ShopifyAssetContainer>(json);
+                    var downloadedAsset = downloadedAssetContainer.Asset;
+                    var entry = zipArchive.CreateEntry(string.Format("{0}/{1}",themeId,asset.Key));
+                    using (var entryStream = entry.Open())
+                    {
+                        if (downloadedAsset.Value != null)
                         {
-                            entryStream.Write(data, 0, data.Length);
+                            using (var writer = new StreamWriter(entryStream))
+                            {
+                                writer.Write(downloadedAsset.Value);
+                            }
+                        }
+                        else
+                        {
+                            if (downloadedAsset.Attachment != null)
+                            {
+                                var data = Convert.FromBase64String(downloadedAsset.Attachment);
+                                entryStream.Write(data, 0, data.Length);
+                            }
                         }
                     }
+
                 }
-               
             }
 
             return zipArchive;

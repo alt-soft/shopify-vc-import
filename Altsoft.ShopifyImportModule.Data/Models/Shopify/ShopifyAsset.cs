@@ -40,4 +40,11 @@ namespace Altsoft.ShopifyImportModule.Data.Models.Shopify
         [DataMember(Name="assets")]
         public ShopifyAsset[] Assets { get; set; }
     }
+
+    [DataContract]
+    public class ShopifyAssetContainer
+    {
+        [DataMember(Name = "asset")]
+        public ShopifyAsset Asset { get; set; }
+    }
 }
