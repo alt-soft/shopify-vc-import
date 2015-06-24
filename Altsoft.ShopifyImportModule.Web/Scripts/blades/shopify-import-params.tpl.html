@@ -1,4 +1,9 @@
-﻿<div class="blade-content" ng-controller="altsoft.shopifyImportModule.shopifyImportParamsController">
+﻿<div class="blade-static __collapsed">
+    <p class="shopify-header">
+        Please choose shopify object types for import
+    </p>
+</div>
+<div class="blade-content" ng-controller="altsoft.shopifyImportModule.shopifyImportParamsController">
     <div class="blade-inner">
         <div class="inner-block">
             <div class="list __items">
@@ -47,6 +52,7 @@
         <button class="btn" ng-click="startImport(blade.importConfiguration)" ng-disabled="!isValid()">
             <span>Start import</span>
         </button>
+      
     </div>
 </div>
 
