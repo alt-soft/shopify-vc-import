@@ -24,6 +24,10 @@
                         </div>
                     </div>
 
+                    <div ng-show="isValid() && wrongCridentials" class="error">
+                        Provided cridentials is not valid!
+                    </div>
+
                     <div class="form-group">
                         <button class="btn" ng-disabled="!isValid()" ng-click="save()">Save</button>
                     </div>

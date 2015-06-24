@@ -61,6 +61,7 @@
     <Compile Include="Interfaces\IShopifyConverter.cs" />
     <Compile Include="Interfaces\IShopifyImportService.cs" />
     <Compile Include="Interfaces\IShopifyRepository.cs" />
+    <Compile Include="Models\AuthenticationModel.cs" />
     <Compile Include="Models\ShopifyImportParams.cs" />
     <Compile Include="Models\Shopify\Base\ShopifyCreatableEntity.cs" />
     <Compile Include="Models\Shopify\Base\ShopifyUpdatableEntity.cs" />

@@ -8,8 +8,7 @@ namespace Alt_soft.ShopifyImportModule.Web.Controllers.Api
     [RoutePrefix("api/shopifyAuthentication")]
     public class ShopifyAuthenticationController : ApiController
     {
-        private IShopifyAuthenticationService _shopifyAuthenticationService;
-
+        private readonly IShopifyAuthenticationService _shopifyAuthenticationService;
         public ShopifyAuthenticationController(IShopifyAuthenticationService shopifyAuthenticationService)
         {
             _shopifyAuthenticationService = shopifyAuthenticationService;
@@ -31,6 +30,16 @@ namespace Alt_soft.ShopifyImportModule.Web.Controllers.Api
             _shopifyAuthenticationService.Authenticate(model.ApiKey, model.Password, model.ShopName);
 
             return Ok();
+        }
+
+        [HttpGet]
+        [ResponseType(typeof(AuthenticationModel))]
+        [Route("get-cridentials")]
+        public IHttpActionResult GetCridentials()
+        {
+            var result = _shopifyAuthenticationService.GetSavedCridentials();
+
+            return Ok(result);
         }
     }
 }
