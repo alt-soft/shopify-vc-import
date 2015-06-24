@@ -1,3 +1,5 @@
-﻿.already-imported {
-    background-color: lightgray
+﻿.shopify-icon {
+    background-image: url('../images/shopify.png');
+    background-size: contain;
+    background-repeat: no-repeat;
 }

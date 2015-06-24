@@ -10,7 +10,7 @@
     blade.isLoading = false;
     blade.title = 'Shopify authentication';
     blade.subtitle = 'Please enter shopify cridentials';
-    blade.headIcon = 'fa-key';
+    blade.headIcon = 'shopify-icon';
 
     $scope.refresh = function () {
         blade.isLoading = true;
@@ -22,7 +22,7 @@
                     id: "shopifyImportParams",
                     title : 'Shopify import parameters',
                     subtitle : 'Please select what data you want  import',
-                    headIcon : 'fa-list',
+                    headIcon : 'shopify-icon',
                     template: 'Modules/$(Altsoft.ShopifyImport)/Scripts/blades/shopify-import-params.tpl.html',
                     catalog: blade.catalog
                 };

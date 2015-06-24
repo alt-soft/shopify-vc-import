@@ -43,7 +43,7 @@ angular.module(moduleTemplateName,[])
       catalogImportService.register({
           name: 'Shopify import',
           description: 'Native catalog data import from Shopify',
-          icon: 'fa fa-file-archive-o',
+          icon: 'fa shopify-icon',
           template: 'Modules/$(Altsoft.ShopifyImport)/Scripts/blades/shopify-authentication.tpl.html'
       });
 

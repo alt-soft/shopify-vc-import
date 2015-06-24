@@ -98,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\shopifyImport.css" />
+    <Content Include="Content\images\shopify.png" />
     <Content Include="packages.config" />
     <Content Include="module.manifest" />
     <None Include="Web.Debug.config">
