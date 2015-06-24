@@ -24,7 +24,9 @@
                     subtitle: 'Please choose shopify object types for import',
                     headIcon : 'shopify-icon',
                     template: 'Modules/$(Altsoft.ShopifyImport)/Scripts/blades/shopify-import-params.tpl.html',
-                    catalog: blade.catalog
+                    catalog: blade.catalog,
+                    controller: 'altsoft.shopifyImportModule.shopifyImportParamsController'
+                    
                 };
 
                 bladeNavigationService.showBlade(newBlade, blade.parentBlade);

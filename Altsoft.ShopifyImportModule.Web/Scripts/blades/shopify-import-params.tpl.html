@@ -3,7 +3,7 @@
         Please choose shopify object types for import
     </p>
 </div>
-<div class="blade-content" ng-controller="altsoft.shopifyImportModule.shopifyImportParamsController">
+<div class="blade-content" >
     <div class="blade-inner">
         <div class="inner-block">
             <div class="list __items">
@@ -40,7 +40,7 @@
                     <span class="list-descr">The main Variation. Can be used for targeted promotions.</span>
                 </label>
 
-                <label class="list-item">
+                <label class="list-item" >
                     <input type="checkbox" ng-model="blade.importConfiguration.importThemes">
                     <span class="switch"></span>
                     <i class="list-ico fa fa-picture-o"></i>
@@ -54,7 +54,6 @@
         <button class="btn" ng-click="startImport(blade.importConfiguration)" ng-disabled="!isValid()">
             <span>Start import</span>
         </button>
-      
     </div>
 </div>
 

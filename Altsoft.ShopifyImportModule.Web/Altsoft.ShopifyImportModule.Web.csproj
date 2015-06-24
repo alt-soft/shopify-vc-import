@@ -111,6 +111,8 @@
   <ItemGroup>
     <Content Include="Scripts\blades\notifications\historyImport.tpl.html" />
     <Content Include="Scripts\blades\notifications\menuImport.tpl.html" />
+    <Content Include="Scripts\blades\virto-stores.js" />
+    <Content Include="Scripts\blades\virto-stores.tpl.html" />
     <Content Include="Scripts\blades\shopify-import-params.js" />
     <Content Include="Scripts\blades\shopify-authentication.js" />
     <Content Include="Scripts\blades\shopify-import-params.tpl.html" />

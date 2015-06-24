@@ -10,7 +10,8 @@
         importCollections: false,
         importCustomers: false,
         importOrders: false,
-        importThemes: false
+        importThemes: false,
+        storeId:null
     }
 
     $scope.isValid = function () {
@@ -22,7 +23,10 @@
             importParams.importCustomers ||
             importParams.importOrders ||
             importParams.importThemes);
-  
+
+        if (importParams.importThemes)
+            valid = importParams.storeId != null;
+
         return valid;
     }
 
@@ -50,4 +54,26 @@
             bladeNavigationService.setError('Error ' + error.status, $scope.blade);
         });
     }
+
+    var selectStore = function () {
+        var newBlade = {
+            id: "virtoStoresSelection",
+            importConfiguration: blade.importConfiguration,
+            controller: 'altsoft.shopifyImportModule.virtoStoresController',
+            template: 'Modules/$(Altsoft.ShopifyImport)/Scripts/blades/virto-stores.tpl.html',
+            title: 'Select store',
+            subtitle: 'Please choose store for theme import',
+            headIcon: 'fa-archive'
+        };
+
+        bladeNavigationService.showBlade(newBlade, $scope.blade);
+    }
+
+    $scope.$watch('blade.importConfiguration.importThemes', function (newValue, oldValue) {
+        if (oldValue == newValue)
+            return;
+        if (newValue)
+            selectStore();
+
+    });
 }]);

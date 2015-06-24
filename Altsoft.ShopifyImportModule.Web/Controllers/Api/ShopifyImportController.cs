@@ -1,8 +1,10 @@
-﻿using System.Web.Http;
+﻿using System.Linq;
+using System.Web.Http;
 using System.Web.Http.Description;
 using Altsoft.ShopifyImportModule.Data.Interfaces;
 using Altsoft.ShopifyImportModule.Data.Models;
 using Hangfire;
+using VirtoCommerce.Domain.Store.Services;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Notification;
 
@@ -13,10 +15,12 @@ namespace Altsoft.ShopifyImportModule.Web.Controllers.Api
     {
         private readonly INotifier _notifier;
         private readonly IShopifyImportService _shopifyImportService;
-        public ShopifyImportController(INotifier notifier, IShopifyImportService shopifyImportService)
+        private readonly IStoreService _storeService;
+        public ShopifyImportController(INotifier notifier, IShopifyImportService shopifyImportService, IStoreService storeService)
         {
             _notifier = notifier;
             _shopifyImportService = shopifyImportService;
+            _storeService = storeService;
         }
 
         [HttpPost]
