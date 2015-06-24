@@ -37,6 +37,7 @@
                 catalog: blade.catalog,
                 notification: notification,
                 importParams: blade.importConfiguration,
+                headIcon: 'shopify-icon',
                 controller: 'altsoft.shopifyImportModule.shopifyImportProgressController',
                 template: 'Modules/$(Altsoft.ShopifyImport)/Scripts/blades/shopify-import-progress.tpl.html'
             };
@@ -62,8 +63,8 @@
             controller: 'altsoft.shopifyImportModule.virtoStoresController',
             template: 'Modules/$(Altsoft.ShopifyImport)/Scripts/blades/virto-stores.tpl.html',
             title: 'Select store',
-            subtitle: 'Please choose store for theme import',
-            headIcon: 'fa-archive'
+            headIcon: 'shopify-icon',
+            subtitle: 'Please choose store for theme import'
         };
 
         bladeNavigationService.showBlade(newBlade, $scope.blade);
