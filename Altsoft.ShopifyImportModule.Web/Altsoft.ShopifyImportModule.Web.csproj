@@ -126,6 +126,7 @@
   <ItemGroup>
     <Compile Include="Controllers\Api\ShopifyAuthenticationController.cs" />
     <Compile Include="Controllers\Api\ShopifyImportController.cs" />
+    <Compile Include="Models\AuthenticationModel.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -155,9 +156,7 @@
       <Name>VirtoCommerce.Platform.Data</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

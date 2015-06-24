@@ -59,7 +59,7 @@ namespace Altsoft.ShopifyImportModule.Data.Services
         {
             _settingsManager.SetValue(ApiKeyKeyName, apiKey);
             _settingsManager.SetValue(PasswordKeyName, password);
-            _settingsManager.SetValue(shopName, shopName);
+            _settingsManager.SetValue(ShopNameKeyName, shopName);
         }
     }
 }

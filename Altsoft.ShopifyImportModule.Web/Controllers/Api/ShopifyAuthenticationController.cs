@@ -1,5 +1,7 @@
 ﻿using System.Web.Http;
+using System.Web.Http.Description;
 using Altsoft.ShopifyImportModule.Data.Interfaces;
+using Altsoft.ShopifyImportModule.Web.Models;
 
 namespace Alt_soft.ShopifyImportModule.Web.Controllers.Api
 {
@@ -24,9 +26,9 @@ namespace Alt_soft.ShopifyImportModule.Web.Controllers.Api
 
         [HttpPost]
         [Route("authenticate")]
-        public IHttpActionResult Authenticate(string apiKey, string password, string shopName)
+        public IHttpActionResult Authenticate(AuthenticationModel model)
         {
-            _shopifyAuthenticationService.Authenticate(apiKey, password, shopName);
+            _shopifyAuthenticationService.Authenticate(model.ApiKey, model.Password, model.ShopName);
 
             return Ok();
         }
