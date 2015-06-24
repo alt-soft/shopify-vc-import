@@ -8,8 +8,6 @@
         virtoCatalogId: blade.catalog.id,
         importProducts: false,
         importCollections: false,
-        importImages: true,
-        importProperties: true,
         importCustomers: false,
         importOrders: false,
         importThemes: false

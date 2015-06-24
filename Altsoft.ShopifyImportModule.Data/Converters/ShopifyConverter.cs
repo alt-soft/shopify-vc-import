@@ -51,7 +51,7 @@ namespace Altsoft.ShopifyImportModule.Data.Converters
                 CatalogId = importParams.VirtoCatalogId
             };
 
-            if (importParams.ImportImages && product.Images != null)
+            if (product.Images != null)
             {
                 result.Assets = new List<ItemAsset>();
                 result.Assets.AddRange(product.Images.Select(image => Convert(image, result, false)));

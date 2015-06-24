@@ -8,10 +8,6 @@
 
         public bool ImportCollections { get; set; }
 
-        public bool ImportImages { get; set; }
-
-        public bool ImportProperties { get; set; }
-
         public bool ImportCustomers { get; set; }
 
         public bool ImportOrders { get; set; }
