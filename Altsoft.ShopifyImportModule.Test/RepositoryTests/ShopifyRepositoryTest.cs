@@ -94,9 +94,6 @@ namespace Altsoft.ShopifyImportModule.Test.RepositoryTests
 
             var theme = repository.GetShopifyThemes().First();
 
-            var zip = repository.GetShopifyThemeZip(theme.Id);
-
-            zip.Dispose();
 
         }
         private IShopifyAuthenticationService GetAuthService()

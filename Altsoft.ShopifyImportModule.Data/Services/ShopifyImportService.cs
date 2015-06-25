@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using Altsoft.ShopifyImportModule.Data.Interfaces;
@@ -15,10 +16,10 @@ namespace Altsoft.ShopifyImportModule.Data.Services
 {
     public class ShopifyImportService : IShopifyImportService
     {
-        const int NotifyProductSizeLimit = 10;
-        private const string ProductsKey = "Products";
-        private const string CollectionsKey = "Collections";
-        private const string ThemesKey = "Themes";
+        const int NotifySizeLimit = 1;
+        private const string ProductsKey = "Products import";
+        private const string CollectionsKey = "Collections import";
+        private const string ThemesKey = "Themes import";
 
         #region Private Fields
 
@@ -207,6 +208,7 @@ namespace Altsoft.ShopifyImportModule.Data.Services
                 }
                 catch (Exception ex)
                 {
+                    productProgress.ErrorCount++;
                     notification.ErrorCount++;
                     notification.Errors.Add(ex.ToString());
                     _notifier.Upsert(notification);
@@ -218,7 +220,7 @@ namespace Altsoft.ShopifyImportModule.Data.Services
                     productProgress.ProcessedCount++;
                     notification.Description = string.Format("Creating products: {0} of {1} created",
                         productProgress.ProcessedCount, productProgress.TotalCount);
-                    if (productProgress.ProcessedCount % NotifyProductSizeLimit == 0 || productProgress.ProcessedCount + notification.ErrorCount == productProgress.TotalCount)
+                    if (productProgress.ProcessedCount % NotifySizeLimit == 0 || productProgress.ProcessedCount + productProgress.ErrorCount == productProgress.TotalCount)
                     {
                         _notifier.Upsert(notification);
                     }
@@ -234,6 +236,7 @@ namespace Altsoft.ShopifyImportModule.Data.Services
                 }
                 catch (Exception ex)
                 {
+                    productProgress.ErrorCount++;
                     notification.ErrorCount++;
                     notification.Errors.Add(ex.ToString());
                     _notifier.Upsert(notification);
@@ -292,6 +295,7 @@ namespace Altsoft.ShopifyImportModule.Data.Services
                 }
                 catch (Exception ex)
                 {
+                    categoriesProgress.ErrorCount++;
                     notification.ErrorCount++;
                     notification.Errors.Add(ex.ToString());
                     _notifier.Upsert(notification);
@@ -302,7 +306,7 @@ namespace Altsoft.ShopifyImportModule.Data.Services
                     categoriesProgress.ProcessedCount++;
                     notification.Description = string.Format("Creating categories: {0} of {1} created",
                         categoriesProgress.ProcessedCount, categoriesProgress.TotalCount);
-                    if (categoriesProgress.ProcessedCount % NotifyProductSizeLimit == 0 || categoriesProgress.ProcessedCount + notification.ErrorCount == categoriesProgress.TotalCount)
+                    if (categoriesProgress.ProcessedCount % NotifySizeLimit == 0 || categoriesProgress.ProcessedCount + categoriesProgress.ErrorCount == categoriesProgress.TotalCount)
                     {
                         _notifier.Upsert(notification);
                     }
@@ -386,14 +390,70 @@ namespace Altsoft.ShopifyImportModule.Data.Services
             {
                 result.Themes = new Dictionary<ShopifyTheme, ZipArchive>();
                 notification.Description = "Reading themes from shopify...";
+                  var themes = _shopifyRepository.GetShopifyThemes().ToList();
+
+                notification.Progresses.Clear();
                 _notifier.Upsert(notification);
-                var themes = _shopifyRepository.GetShopifyThemes().ToList();
+              
              
                 foreach (var theme in themes)
                 {
-                    notification.Description = string.Format("Reading theme '{0}' assets from shopify...", theme.Name);
+                    var assets = _shopifyRepository.GetShopifyAssets(theme.Id).ToList();
+
+                    var themeProgress = new ShopifyImportProgress()
+                    {
+                        TotalCount = assets.Count
+                    };
+                    notification.Progresses.Add(string.Format("{0} theme assets downloading ", theme.Name),themeProgress);
                     _notifier.Upsert(notification);
-                    var zip = _shopifyRepository.GetShopifyThemeZip(theme.Id);
+
+                    var stream = new MemoryStream();
+                    var zip = new ZipArchive(stream, ZipArchiveMode.Create, true);
+
+                    foreach (var asset in assets)
+                    {
+                        try
+                        {
+                            var downloadedAsset = _shopifyRepository.DownloadShopifyAsset(theme.Id, asset);
+                            var entry = zip.CreateEntry(string.Format("{0}/{1}", theme.Id, asset.Key));
+                            using (var entryStream = entry.Open())
+                            {
+                                if (downloadedAsset.Value != null)
+                                {
+                                    using (var writer = new StreamWriter(entryStream))
+                                    {
+                                        writer.Write(downloadedAsset.Value);
+                                    }
+                                }
+                                else
+                                {
+                                    if (downloadedAsset.Attachment != null)
+                                    {
+                                        var data = Convert.FromBase64String(downloadedAsset.Attachment);
+                                        entryStream.Write(data, 0, data.Length);
+                                    }
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            themeProgress.ErrorCount++;
+                            notification.ErrorCount++;
+                            notification.Errors.Add(ex.ToString());
+                            _notifier.Upsert(notification);
+                        }
+                        finally
+                        {
+                            //Raise notification each notifyProductSizeLimit category
+                            themeProgress.ProcessedCount++;
+
+                            if (themeProgress.ProcessedCount % NotifySizeLimit == 0 || themeProgress.ProcessedCount + themeProgress.ErrorCount == themeProgress.TotalCount)
+                            {
+                                _notifier.Upsert(notification);
+                            }
+                        }
+                    }
+                    
                     result.Themes.Add(theme, zip);
                 }
             }
