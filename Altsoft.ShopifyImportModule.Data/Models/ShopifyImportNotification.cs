@@ -12,21 +12,19 @@ namespace Altsoft.ShopifyImportModule.Data.Models
         {
             NotifyType = "CatalogShopifyImport";
             Errors = new List<string>();
+            Progresses = new Dictionary<string, ShopifyImportProgress>();
         }
         
 		[JsonProperty("finished")]
 		public DateTime? Finished { get; set; }
 
-		[JsonProperty("totalCount")]
-		public long TotalCount { get; set; }
+        [JsonProperty("progresses")]
+        public Dictionary<string, ShopifyImportProgress> Progresses { get; set; }
 
-		[JsonProperty("processedCount")]
-		public long ProcessedCount { get; set; }
-
-		[JsonProperty("errorCount")]
-		public long ErrorCount { get; set; }
-
-		[JsonProperty("errors")]
+        [JsonProperty("errors")]
 		public ICollection<string> Errors { get; set; }
+
+        [JsonProperty("errorCount")]
+        public int ErrorCount { get; set; }
     }
 }

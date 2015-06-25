@@ -16,6 +16,9 @@ namespace Altsoft.ShopifyImportModule.Data.Services
     public class ShopifyImportService : IShopifyImportService
     {
         const int NotifyProductSizeLimit = 10;
+        private const string ProductsKey = "Products";
+        private const string CollectionsKey = "Collections";
+        private const string ThemesKey = "Themes";
 
         #region Private Fields
 
@@ -59,6 +62,7 @@ namespace Altsoft.ShopifyImportModule.Data.Services
             try
             {
                 var shopifyData = ReadData(importParams, notification);
+                UpdateProgresses(importParams, notification, shopifyData);
                 var virtoData = ConvertData(shopifyData, importParams, notification);
                 SaveData(virtoData, importParams, notification);
             }
@@ -76,6 +80,36 @@ namespace Altsoft.ShopifyImportModule.Data.Services
             }
 
             return notification;
+        }
+
+        private void UpdateProgresses(ShopifyImportParams importParams, ShopifyImportNotification notification, ShopifyData shopifyData)
+        {
+            notification.Progresses.Clear();
+
+            if (importParams.ImportProducts)
+            {
+                notification.Progresses.Add(ProductsKey, new ShopifyImportProgress()
+                {
+                    TotalCount = shopifyData.Products.Count()
+                });
+            }
+            if (importParams.ImportCollections)
+            {
+                notification.Progresses.Add(CollectionsKey, new ShopifyImportProgress()
+                {
+                    TotalCount = shopifyData.Collections.Count()
+                });
+            }
+
+            if (importParams.ImportThemes)
+            {
+                notification.Progresses.Add(ThemesKey, new ShopifyImportProgress()
+                {
+                    TotalCount = shopifyData.Themes.Count()
+                });
+            }
+
+            _notifier.Upsert(notification);
         }
 
         private void SaveData(VirtoData virtoData, ShopifyImportParams importParams,
@@ -99,24 +133,20 @@ namespace Altsoft.ShopifyImportModule.Data.Services
 
         private void SaveThemes(VirtoData virtoData, ShopifyImportParams importParams, ShopifyImportNotification notification)
         {
-            notification.TotalCount = virtoData.Themes.Count;
-            notification.ProcessedCount = 0;
             notification.Description = "Saving themes";
             _notifier.Upsert(notification);
 
             foreach (var theme in virtoData.Themes)
             {
                 _themeService.UploadTheme(importParams.StoreId, theme.Key.Name, theme.Value);
-                notification.ProcessedCount++;
+                notification.Progresses[ThemesKey].ProcessedCount++;
                 _notifier.Upsert(notification);
             }
         }
 
         private void SaveProducts(VirtoData virtoData, ShopifyImportParams importParams, ShopifyImportNotification notification)
         {
-            notification.ProcessedCount = 0;
-            notification.TotalCount = virtoData.Products.Count;
-
+            var productProgress = notification.Progresses[ProductsKey];
             if (importParams.ImportCollections)
             {
                 //Update categories references
@@ -184,10 +214,11 @@ namespace Altsoft.ShopifyImportModule.Data.Services
                 finally
                 {
                     //Raise notification each notifyProductSizeLimit category
-                    notification.ProcessedCount++;
+                    
+                    productProgress.ProcessedCount++;
                     notification.Description = string.Format("Creating products: {0} of {1} created",
-                        notification.ProcessedCount, notification.TotalCount);
-                    if (notification.ProcessedCount % NotifyProductSizeLimit == 0 || notification.ProcessedCount + notification.ErrorCount == notification.TotalCount)
+                        productProgress.ProcessedCount, productProgress.TotalCount);
+                    if (productProgress.ProcessedCount % NotifyProductSizeLimit == 0 || productProgress.ProcessedCount + notification.ErrorCount == productProgress.TotalCount)
                     {
                         _notifier.Upsert(notification);
                     }
@@ -210,7 +241,7 @@ namespace Altsoft.ShopifyImportModule.Data.Services
                 finally
                 {
                     notification.Description = string.Format("Updating products: {0} updated",
-                     notification.ProcessedCount = notification.ProcessedCount + productsToUpdate.Count);
+                     productProgress.ProcessedCount = productProgress.ProcessedCount + productsToUpdate.Count);
                     _notifier.Upsert(notification);
                 }
             }
@@ -224,10 +255,7 @@ namespace Altsoft.ShopifyImportModule.Data.Services
         private void SaveCategories(VirtoData virtoData, ShopifyImportParams importParams,
             ShopifyImportNotification notification)
         {
-
-
-            notification.ProcessedCount = 0;
-            notification.TotalCount = virtoData.Categories.Count;
+            var categoriesProgress = notification.Progresses[CollectionsKey];
 
             notification.Description = "Saving categories";
             _notifier.Upsert(notification);
@@ -271,10 +299,10 @@ namespace Altsoft.ShopifyImportModule.Data.Services
                 finally
                 {
                     //Raise notification each notifyProductSizeLimit category
-                    notification.ProcessedCount++;
+                    categoriesProgress.ProcessedCount++;
                     notification.Description = string.Format("Creating categories: {0} of {1} created",
-                        notification.ProcessedCount, notification.TotalCount);
-                    if (notification.ProcessedCount % NotifyProductSizeLimit == 0 || notification.ProcessedCount + notification.ErrorCount == notification.TotalCount)
+                        categoriesProgress.ProcessedCount, categoriesProgress.TotalCount);
+                    if (categoriesProgress.ProcessedCount % NotifyProductSizeLimit == 0 || categoriesProgress.ProcessedCount + notification.ErrorCount == categoriesProgress.TotalCount)
                     {
                         _notifier.Upsert(notification);
                     }
@@ -284,10 +312,9 @@ namespace Altsoft.ShopifyImportModule.Data.Services
             if (categoriesToUpdate.Count > 0)
             {
                 _categoryService.Update(categoriesToUpdate.ToArray());
-                virtoData.Categories.AddRange(categoriesToUpdate);
 
                 notification.Description = string.Format("Updating categories: {0} updated",
-                    notification.ProcessedCount = notification.ProcessedCount + categoriesToUpdate.Count);
+                    categoriesProgress.ProcessedCount = categoriesProgress.ProcessedCount + categoriesToUpdate.Count);
                 _notifier.Upsert(notification);
             }
 
@@ -336,6 +363,7 @@ namespace Altsoft.ShopifyImportModule.Data.Services
                 notification.Description = "Reading products from shopify...";
                 _notifier.Upsert(notification);
                 result.Products = _shopifyRepository.GetShopifyProducts();
+
             }
 
             if (importParams.ImportCollections)
@@ -347,6 +375,11 @@ namespace Altsoft.ShopifyImportModule.Data.Services
                 notification.Description = "Reading collections from shopify...";
                 _notifier.Upsert(notification);
                 result.Collections = _shopifyRepository.GetShopifyCollections();
+
+                notification.Progresses.Add("Collections", new ShopifyImportProgress()
+                {
+                    TotalCount = result.Collections.Count()
+                });
             }
 
             if (importParams.ImportThemes)
@@ -355,15 +388,12 @@ namespace Altsoft.ShopifyImportModule.Data.Services
                 notification.Description = "Reading themes from shopify...";
                 _notifier.Upsert(notification);
                 var themes = _shopifyRepository.GetShopifyThemes().ToList();
-
-                notification.ProcessedCount = 0;
-                notification.TotalCount = themes.Count();
+             
                 foreach (var theme in themes)
                 {
                     notification.Description = string.Format("Reading theme '{0}' assets from shopify...", theme.Name);
                     _notifier.Upsert(notification);
                     var zip = _shopifyRepository.GetShopifyThemeZip(theme.Id);
-                    notification.ProcessedCount++;
                     result.Themes.Add(theme, zip);
                 }
             }
@@ -371,7 +401,5 @@ namespace Altsoft.ShopifyImportModule.Data.Services
             //TODO read another data
             return result;
         }
-
-
     }
 }
