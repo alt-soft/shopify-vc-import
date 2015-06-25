@@ -7,6 +7,7 @@ using Altsoft.ShopifyImportModule.Data.Models;
 using Altsoft.ShopifyImportModule.Data.Models.Shopify;
 using VirtoCommerce.Content.Data.Services;
 using VirtoCommerce.Domain.Catalog.Services;
+using VirtoCommerce.Domain.Pricing.Services;
 using VirtoCommerce.Platform.Core.Notification;
 using coreModel = VirtoCommerce.Domain.Catalog.Model;
 
@@ -24,7 +25,8 @@ namespace Altsoft.ShopifyImportModule.Data.Services
         private readonly IItemService _productService;
         private readonly ICategoryService _categoryService;
         private readonly ICatalogSearchService _searchService;
-        //private readonly IThemeService _themeService;
+        private readonly IThemeService _themeService;
+        private readonly IPricingService _pricingService;
 
         #endregion
 
@@ -36,9 +38,8 @@ namespace Altsoft.ShopifyImportModule.Data.Services
             INotifier notifier,
             IItemService productService,
             ICategoryService categoryService,
-            ICatalogSearchService searchService
-            //, IThemeService themeService
-            )
+            ICatalogSearchService searchService,
+            IThemeService themeService, IPricingService pricingService)
         {
 
             _shopifyRepository = shopifyRepository;
@@ -47,7 +48,8 @@ namespace Altsoft.ShopifyImportModule.Data.Services
             _productService = productService;
             _categoryService = categoryService;
             _searchService = searchService;
-            //_themeService = themeService;
+            _themeService = themeService;
+            _pricingService = pricingService;
         }
 
         #endregion
@@ -104,7 +106,7 @@ namespace Altsoft.ShopifyImportModule.Data.Services
 
             foreach (var theme in virtoData.Themes)
             {
-                //_themeService.UploadTheme("SonyStore", theme.Key.Name, theme.Value);
+                _themeService.UploadTheme(importParams.StoreId, theme.Key.Name, theme.Value);
                 notification.ProcessedCount++;
                 _notifier.Upsert(notification);
             }
@@ -164,6 +166,14 @@ namespace Altsoft.ShopifyImportModule.Data.Services
                 try
                 {
                     _productService.Create(product);
+
+                    //Create price in default price list
+                    if (product.Prices != null && product.Prices.Any())
+                    {
+                        var price = product.Prices.First();
+                        price.ProductId = product.Id;
+                        _pricingService.CreatePrice(price);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -214,6 +224,8 @@ namespace Altsoft.ShopifyImportModule.Data.Services
         private void SaveCategories(VirtoData virtoData, ShopifyImportParams importParams,
             ShopifyImportNotification notification)
         {
+
+
             notification.ProcessedCount = 0;
             notification.TotalCount = virtoData.Categories.Count;
 
@@ -272,6 +284,7 @@ namespace Altsoft.ShopifyImportModule.Data.Services
             if (categoriesToUpdate.Count > 0)
             {
                 _categoryService.Update(categoriesToUpdate.ToArray());
+                virtoData.Categories.AddRange(categoriesToUpdate);
 
                 notification.Description = string.Format("Updating categories: {0} updated",
                     notification.ProcessedCount = notification.ProcessedCount + categoriesToUpdate.Count);
@@ -347,11 +360,11 @@ namespace Altsoft.ShopifyImportModule.Data.Services
                 notification.TotalCount = themes.Count();
                 foreach (var theme in themes)
                 {
-                    notification.Description = string.Format("Reading theme '{0}' assets from shopify...",theme.Name );
+                    notification.Description = string.Format("Reading theme '{0}' assets from shopify...", theme.Name);
                     _notifier.Upsert(notification);
                     var zip = _shopifyRepository.GetShopifyThemeZip(theme.Id);
                     notification.ProcessedCount++;
-                    result.Themes.Add(theme,zip);
+                    result.Themes.Add(theme, zip);
                 }
             }
 
