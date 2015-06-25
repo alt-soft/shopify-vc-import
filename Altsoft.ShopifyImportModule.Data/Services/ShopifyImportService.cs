@@ -164,12 +164,6 @@ namespace Altsoft.ShopifyImportModule.Data.Services
             notification.Description = "Checking existing products";
             _notifier.Upsert(notification);
 
-            var existingProducts = _searchService.Search(new coreModel.SearchCriteria()
-            {
-                CatalogId = importParams.VirtoCatalogId,
-                GetAllCategories = true,
-                ResponseGroup = coreModel.ResponseGroup.WithProducts
-            }).Products;
 
             notification.Description = "Saving products";
             _notifier.Upsert(notification);
@@ -179,7 +173,14 @@ namespace Altsoft.ShopifyImportModule.Data.Services
 
             foreach (var product in virtoData.Products)
             {
-                var existingProduct = existingProducts.FirstOrDefault(p => p.Code == product.Code);
+                var existingProduct = _searchService.Search(new coreModel.SearchCriteria()
+                {
+                    CatalogId = importParams.VirtoCatalogId,
+                    GetAllCategories = true,
+                    ResponseGroup = coreModel.ResponseGroup.WithProducts,
+                    Count = int.MaxValue,
+                    Code = product.Code
+                }).Products.FirstOrDefault();
 
                 if (existingProduct != null)
                 {
