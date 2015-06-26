@@ -139,7 +139,12 @@ namespace Altsoft.ShopifyImportModule.Data.Services
 
             foreach (var theme in virtoData.Themes)
             {
-                _themeService.UploadTheme(importParams.StoreId, theme.Key.Name, theme.Value);
+                using (var zip = new ZipArchive(theme.Value,ZipArchiveMode.Read))
+                {
+                    _themeService.UploadTheme(importParams.StoreId, theme.Key.Name, zip);
+                }
+                
+                
                 notification.Progresses[ThemesKey].ProcessedCount++;
                 _notifier.Upsert(notification);
             }
@@ -389,9 +394,9 @@ namespace Altsoft.ShopifyImportModule.Data.Services
 
             if (importParams.ImportThemes)
             {
-                result.Themes = new Dictionary<ShopifyTheme, ZipArchive>();
+                result.Themes = new Dictionary<ShopifyTheme, Stream>();
                 notification.Description = "Reading themes from shopify...";
-                  var themes = _shopifyRepository.GetShopifyThemes().ToList();
+                var themes = _shopifyRepository.GetShopifyThemes().ToList();
 
                 notification.Progresses.Clear();
                 _notifier.Upsert(notification);
@@ -409,53 +414,55 @@ namespace Altsoft.ShopifyImportModule.Data.Services
                     _notifier.Upsert(notification);
 
                     var stream = new MemoryStream();
-                    var zip = new ZipArchive(stream, ZipArchiveMode.Create, true);
-
-                    foreach (var asset in assets)
+                    using (var zip = new ZipArchive(stream, ZipArchiveMode.Create,true))
                     {
-                        try
+                        foreach (var asset in assets)
                         {
-                            var downloadedAsset = _shopifyRepository.DownloadShopifyAsset(theme.Id, asset);
-                            var entry = zip.CreateEntry(string.Format("{0}/{1}", theme.Id, asset.Key));
-                            using (var entryStream = entry.Open())
+                            try
                             {
-                                if (downloadedAsset.Value != null)
+                                var downloadedAsset = _shopifyRepository.DownloadShopifyAsset(theme.Id, asset);
+                                var entry = zip.CreateEntry(string.Format("{0}/{1}", theme.Id, asset.Key));
+                                using (var entryStream = entry.Open())
                                 {
-                                    using (var writer = new StreamWriter(entryStream))
+                                    if (downloadedAsset.Value != null)
                                     {
-                                        writer.Write(downloadedAsset.Value);
+                                        using (var writer = new StreamWriter(entryStream))
+                                        {
+                                            writer.Write(downloadedAsset.Value);
+                                        }
                                     }
-                                }
-                                else
-                                {
-                                    if (downloadedAsset.Attachment != null)
+                                    else
                                     {
-                                        var data = Convert.FromBase64String(downloadedAsset.Attachment);
-                                        entryStream.Write(data, 0, data.Length);
+                                        if (downloadedAsset.Attachment != null)
+                                        {
+                                            var data = Convert.FromBase64String(downloadedAsset.Attachment);
+                                            entryStream.Write(data, 0, data.Length);
+                                        }
                                     }
                                 }
                             }
-                        }
-                        catch (Exception ex)
-                        {
-                            themeProgress.ErrorCount++;
-                            notification.ErrorCount++;
-                            notification.Errors.Add(ex.ToString());
-                            _notifier.Upsert(notification);
-                        }
-                        finally
-                        {
-                            //Raise notification each notifyProductSizeLimit category
-                            themeProgress.ProcessedCount++;
-
-                            if (themeProgress.ProcessedCount % NotifySizeLimit == 0 || themeProgress.ProcessedCount + themeProgress.ErrorCount == themeProgress.TotalCount)
+                            catch (Exception ex)
                             {
+                                themeProgress.ErrorCount++;
+                                notification.ErrorCount++;
+                                notification.Errors.Add(ex.ToString());
                                 _notifier.Upsert(notification);
+                            }
+                            finally
+                            {
+                                //Raise notification each notifyProductSizeLimit category
+                                themeProgress.ProcessedCount++;
+
+                                if (themeProgress.ProcessedCount%NotifySizeLimit == 0 ||
+                                    themeProgress.ProcessedCount + themeProgress.ErrorCount == themeProgress.TotalCount)
+                                {
+                                    _notifier.Upsert(notification);
+                                }
                             }
                         }
                     }
-                    
-                    result.Themes.Add(theme, zip);
+                    stream.Seek(0, SeekOrigin.Begin);
+                    result.Themes.Add(theme, stream);
                 }
             }
 
