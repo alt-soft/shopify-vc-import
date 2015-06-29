@@ -1,8 +1,7 @@
 ﻿using System.Linq;
-using Altsoft.ShopifyImportModule.Data.Interfaces;
-using Altsoft.ShopifyImportModule.Data.Models.Shopify;
-using Altsoft.ShopifyImportModule.Data.Repositories;
-using Altsoft.ShopifyImportModule.Data.Services;
+using Altsoft.ShopifyImportModule.Web.Interfaces;
+using Altsoft.ShopifyImportModule.Web.Repositories;
+using Altsoft.ShopifyImportModule.Web.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using VirtoCommerce.Platform.Core.Settings;

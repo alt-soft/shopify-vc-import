@@ -1,7 +1,7 @@
-﻿using Altsoft.ShopifyImportModule.Data.Converters;
-using Altsoft.ShopifyImportModule.Data.Interfaces;
-using Altsoft.ShopifyImportModule.Data.Repositories;
-using Altsoft.ShopifyImportModule.Data.Services;
+﻿using Altsoft.ShopifyImportModule.Web.Converters;
+using Altsoft.ShopifyImportModule.Web.Interfaces;
+using Altsoft.ShopifyImportModule.Web.Repositories;
+using Altsoft.ShopifyImportModule.Web.Services;
 using Microsoft.Practices.Unity;
 using VirtoCommerce.Platform.Core.Modularity;
 

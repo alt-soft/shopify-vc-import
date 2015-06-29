@@ -4,6 +4,7 @@
     <version>1.0.0.0</version>
     <dependencies>
       <dependency id="VirtoCommerce.Core" version="1.0.0" />
+      <dependency id="VirtoCommerce.Content" version="1.0.0" />
     </dependencies>
   
     <title>Import from Shopify module</title>

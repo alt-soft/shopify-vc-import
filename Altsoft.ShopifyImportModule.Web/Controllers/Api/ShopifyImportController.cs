@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Altsoft.ShopifyImportModule.Data.Interfaces;
-using Altsoft.ShopifyImportModule.Data.Models;
+using Altsoft.ShopifyImportModule.Web.Interfaces;
+using Altsoft.ShopifyImportModule.Web.Models;
 using Hangfire;
 using VirtoCommerce.Domain.Store.Services;
 using VirtoCommerce.Platform.Core.Common;

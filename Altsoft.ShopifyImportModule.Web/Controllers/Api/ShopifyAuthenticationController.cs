@@ -1,9 +1,9 @@
 ﻿using System.Web.Http;
 using System.Web.Http.Description;
-using Altsoft.ShopifyImportModule.Data.Interfaces;
+using Altsoft.ShopifyImportModule.Web.Interfaces;
 using Altsoft.ShopifyImportModule.Web.Models;
 
-namespace Alt_soft.ShopifyImportModule.Web.Controllers.Api
+namespace Altsoft.ShopifyImportModule.Web.Controllers.Api
 {
     [RoutePrefix("api/shopifyAuthentication")]
     public class ShopifyAuthenticationController : ApiController
