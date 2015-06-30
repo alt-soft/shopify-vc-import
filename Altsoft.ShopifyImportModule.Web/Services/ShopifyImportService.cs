@@ -101,7 +101,7 @@ namespace Altsoft.ShopifyImportModule.Web.Services
 
                 notification.Progresses.Add(PropertiesKey, new ShopifyImportProgress()
                 {
-                    TotalCount = shopifyData.Products.SelectMany(product=>product.Options).Count()
+                    TotalCount = shopifyData.Products.SelectMany(product=>product.Options).GroupBy(o=>o.Name).Count()
                 });
             }
             if (importParams.ImportCollections)
@@ -158,16 +158,21 @@ namespace Altsoft.ShopifyImportModule.Web.Services
 
             foreach (var property in virtoData.Properties)
             {
-                var existitngProperty = existingProperties.FirstOrDefault(c => c.Name == property.Name);
-                if (existitngProperty != null)
+                if (propertiesToCreate.All(p => p.Name != property.Name) &&
+                    propertiesToUpdate.All(p => p.Name != property.Name))
                 {
-                    property.Id = existitngProperty.Id;
-                    propertiesToUpdate.Add(property);
+                    var existitngProperty = existingProperties.FirstOrDefault(c => c.Name == property.Name);
+                    if (existitngProperty != null)
+                    {
+                        property.Id = existitngProperty.Id;
+                        propertiesToUpdate.Add(property);
+                    }
+                    else
+                    {
+                        propertiesToCreate.Add(property);
+                    }    
                 }
-                else
-                {
-                    propertiesToCreate.Add(property);
-                }
+                
             }
 
             foreach (var property in propertiesToCreate)
