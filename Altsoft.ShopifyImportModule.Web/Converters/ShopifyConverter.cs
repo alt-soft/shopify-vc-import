@@ -38,7 +38,7 @@ namespace Altsoft.ShopifyImportModule.Web.Converters
             return result;
         }
 
-        public CatalogProduct Convert(ShopifyProduct shopifyProduct, ShopifyImportParams importParams, ShopifyData shopifyData)
+        public CatalogProduct Convert(ShopifyProduct shopifyProduct, ShopifyImportParams importParams, ShopifyData shopifyData, VirtoData virtoData)
         {
 
             var retVal = new CatalogProduct
@@ -80,8 +80,7 @@ namespace Altsoft.ShopifyImportModule.Web.Converters
             };
             retVal.SeoInfos.Add(seoInfo);
 
-
-            //TODO: Inventory
+           //TODO: Inventory
 
             //Variation
             if (shopifyProduct.Variants != null)
@@ -125,32 +124,38 @@ namespace Altsoft.ShopifyImportModule.Web.Converters
 
                     //Properties (need refactor)
                     variation.PropertyValues = new List<PropertyValue>();
+
+                    var orderedProperties = shopifyProduct.Options.OrderBy(option => option.Position).ToArray();
+                  
                     if (shopifyVariant.Option1 != null)
                     {
                         var propValue = new PropertyValue
                         {
-                            PropertyName = shopifyProduct.Options[0].Name,
+                            PropertyName = orderedProperties[0].Name,
                             Value = shopifyVariant.Option1,
-                            ValueType = PropertyValueType.ShortText
+                            ValueType = PropertyValueType.ShortText,
                         };
+                        variation.PropertyValues.Add(propValue);
                     }
                     if (shopifyVariant.Option2 != null)
                     {
                         var propValue = new PropertyValue
                         {
-                            PropertyName = shopifyProduct.Options[1].Name,
+                            PropertyName = orderedProperties[1].Name,
                             Value = shopifyVariant.Option2,
                             ValueType = PropertyValueType.ShortText
                         };
+                        variation.PropertyValues.Add(propValue);
                     }
                     if (shopifyVariant.Option3 != null)
                     {
                         var propValue = new PropertyValue
                         {
-                            PropertyName = shopifyProduct.Options[2].Name,
+                            PropertyName = orderedProperties[2].Name,
                             Value = shopifyVariant.Option3,
                             ValueType = PropertyValueType.ShortText
                         };
+                        variation.PropertyValues.Add(propValue);
                     }
 
                     if (!isFirst)
@@ -175,6 +180,19 @@ namespace Altsoft.ShopifyImportModule.Web.Converters
                     };
                 }
             }
+
+            return retVal;
+        }
+
+        public Property Convert(ShopifyOption option, ShopifyImportParams importParams)
+        {
+            var retVal = new Property()
+            {
+                CatalogId = importParams.VirtoCatalogId,
+                CreatedDate = DateTime.Now,
+                Name = option.Name,
+                Type = PropertyType.Variation
+            };
 
             return retVal;
         }

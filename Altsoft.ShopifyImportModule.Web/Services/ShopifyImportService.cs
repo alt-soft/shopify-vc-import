@@ -19,6 +19,7 @@ namespace Altsoft.ShopifyImportModule.Web.Services
         const int NotifySizeLimit = 1;
         private const string ProductsKey = "Products import";
         private const string CollectionsKey = "Collections import";
+        private const string PropertiesKey = "Properties import";
         private const string ThemesKey = "Themes import";
 
         #region Private Fields
@@ -31,6 +32,7 @@ namespace Altsoft.ShopifyImportModule.Web.Services
         private readonly ICatalogSearchService _searchService;
         private readonly IThemeService _themeService;
         private readonly IPricingService _pricingService;
+        private readonly IPropertyService _propertyService;
 
         #endregion
 
@@ -43,7 +45,9 @@ namespace Altsoft.ShopifyImportModule.Web.Services
             IItemService productService,
             ICategoryService categoryService,
             ICatalogSearchService searchService,
-            IThemeService themeService, IPricingService pricingService)
+            IThemeService themeService, 
+            IPricingService pricingService, 
+            IPropertyService propertyService)
         {
 
             _shopifyRepository = shopifyRepository;
@@ -54,6 +58,7 @@ namespace Altsoft.ShopifyImportModule.Web.Services
             _searchService = searchService;
             _themeService = themeService;
             _pricingService = pricingService;
+            _propertyService = propertyService;
         }
 
         #endregion
@@ -93,6 +98,11 @@ namespace Altsoft.ShopifyImportModule.Web.Services
                 {
                     TotalCount = shopifyData.Products.Count()
                 });
+
+                notification.Progresses.Add(PropertiesKey, new ShopifyImportProgress()
+                {
+                    TotalCount = shopifyData.Products.SelectMany(product=>product.Options).Count()
+                });
             }
             if (importParams.ImportCollections)
             {
@@ -123,6 +133,7 @@ namespace Altsoft.ShopifyImportModule.Web.Services
 
             if (importParams.ImportProducts)
             {
+                SaveProperties(virtoData, importParams, notification);
                 SaveProducts(virtoData, importParams, notification);
             }
 
@@ -130,6 +141,74 @@ namespace Altsoft.ShopifyImportModule.Web.Services
             {
                 SaveThemes(virtoData, importParams, notification);
             }
+        }
+
+        private void SaveProperties(VirtoData virtoData, ShopifyImportParams importParams,
+            ShopifyImportNotification notification)
+        {
+            var propertiesProgress = notification.Progresses[PropertiesKey];
+
+            notification.Description = "Saving properties";
+            _notifier.Upsert(notification);
+
+            var propertiesToCreate = new List<coreModel.Property>();
+            var propertiesToUpdate = new List<coreModel.Property>();
+
+            var existingProperties = _propertyService.GetCatalogProperties(importParams.VirtoCatalogId);
+
+            foreach (var property in virtoData.Properties)
+            {
+                var existitngProperty = existingProperties.FirstOrDefault(c => c.Name == property.Name);
+                if (existitngProperty != null)
+                {
+                    property.Id = existitngProperty.Id;
+                    propertiesToUpdate.Add(property);
+                }
+                else
+                {
+                    propertiesToCreate.Add(property);
+                }
+            }
+
+            foreach (var property in propertiesToCreate)
+            {
+                try
+                {
+                    _propertyService.Create(property);
+                }
+                catch (Exception ex)
+                {
+                    propertiesProgress.ErrorCount++;
+                    notification.ErrorCount++;
+                    notification.Errors.Add(ex.ToString());
+                    _notifier.Upsert(notification);
+                }
+                finally
+                {
+                    //Raise notification each notifyProductSizeLimit property
+                    propertiesProgress.ProcessedCount++;
+                    notification.Description = string.Format("Creating properties: {0} of {1} created",
+                        propertiesProgress.ProcessedCount, propertiesProgress.TotalCount);
+                    if (propertiesProgress.ProcessedCount%NotifySizeLimit == 0 ||
+                        propertiesProgress.ProcessedCount + propertiesProgress.ErrorCount ==
+                        propertiesProgress.TotalCount)
+                    {
+                        _notifier.Upsert(notification);
+                    }
+                }
+            }
+
+            if (propertiesToUpdate.Count > 0)
+            {
+                _propertyService.Update(propertiesToUpdate.ToArray());
+
+                notification.Description = string.Format("Updating properties: {0} updated",
+                    propertiesProgress.ProcessedCount = propertiesProgress.ProcessedCount + propertiesToUpdate.Count);
+                _notifier.Upsert(notification);
+            }
+            virtoData.Properties.Clear();
+            virtoData.Properties.AddRange(propertiesToCreate);
+            virtoData.Properties.AddRange(propertiesToUpdate);
         }
 
         private void SaveThemes(VirtoData virtoData, ShopifyImportParams importParams, ShopifyImportNotification notification)
@@ -349,11 +428,20 @@ namespace Altsoft.ShopifyImportModule.Web.Services
 
             if (importParams.ImportProducts)
             {
+                notification.Description = "Converting product properties";
+                _notifier.Upsert(notification);
+
+                virtoData.Properties =
+                    shopifyData.Products.SelectMany(product => product.Options)
+                        .Select(option => _shopifyConverter.Convert(option, importParams))
+                        .ToList();
+
                 notification.Description = "Converting products";
                 _notifier.Upsert(notification);
 
                 virtoData.Products =
-                    shopifyData.Products.Select(product => _shopifyConverter.Convert(product, importParams, shopifyData)).ToList();
+                    shopifyData.Products.Select(
+                        product => _shopifyConverter.Convert(product, importParams, shopifyData, virtoData)).ToList();
             }
 
             if (importParams.ImportThemes)

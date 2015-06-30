@@ -10,5 +10,6 @@ namespace Altsoft.ShopifyImportModule.Web.Models
         public List<CatalogProduct> Products { get; set; }
         public List<Category> Categories { get; set; }
         public Dictionary<ShopifyTheme, Stream> Themes { get; set; }
+        public List<Property> Properties{ get; set; }
     }
 }
