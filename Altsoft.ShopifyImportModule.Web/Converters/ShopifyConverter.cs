@@ -13,15 +13,14 @@ namespace Altsoft.ShopifyImportModule.Web.Converters
 {
     public class ShopifyConverter : IShopifyConverter
     {
-        private ItemAsset Convert(ShopifyImage image, bool isMain)
+        private Image Convert(ShopifyImage image, bool isMain)
         {
-            var retVal = new ItemAsset
+            var retVal = new Image
             {
                 CreatedDate = image.CreatedAt,
                 ModifiedDate = image.UpdatedAt,
                 Group = isMain ? "primaryimage" : "images",
-                Url = image.Src,
-                Type = ItemAssetType.Image,
+                Url = image.Src
             };
 
             return retVal;
@@ -56,8 +55,8 @@ namespace Altsoft.ShopifyImportModule.Web.Converters
             //Images
             if (shopifyProduct.Image != null)
             {
-                retVal.Assets = new List<ItemAsset>();
-                retVal.Assets.Add(Convert(shopifyProduct.Image, true));
+                retVal.Images = new List<Image>();
+                retVal.Images.Add(Convert(shopifyProduct.Image, true));
             }
 
             //Review
@@ -106,11 +105,11 @@ namespace Altsoft.ShopifyImportModule.Web.Converters
 
                     if (shopifyVariant.ImageId != null && shopifyProduct.Images != null)
                     {
-                        variation.Assets = new List<ItemAsset>();
+                        variation.Images= new List<Image>();
                         var image = shopifyProduct.Images.Where(x => x.Id == shopifyVariant.ImageId).Select(x => Convert(x, true)).FirstOrDefault();
                         if (image != null)
                         {
-                            variation.Assets.Add(image);
+                            variation.Images.Add(image);
                         }
                     }
 
