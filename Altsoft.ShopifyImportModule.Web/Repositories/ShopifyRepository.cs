@@ -42,6 +42,12 @@ namespace Altsoft.ShopifyImportModule.Web.Repositories
             return result;
         }
 
+        public IEnumerable<ShopifyPage> GetShopifyPages()
+        {
+            var result = GetShopifyList<ShopifyPage, ShopifyPageList>("pages.json", list => list.Pages);
+            return result;
+        }
+
         public IEnumerable<ShopifyAsset> GetShopifyAssets(long themeId)
         {
             var result = GetShopifyList<ShopifyAsset, ShopifyAssetList>(

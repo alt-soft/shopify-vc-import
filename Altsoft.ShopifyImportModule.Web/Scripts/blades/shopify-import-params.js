@@ -11,6 +11,8 @@
         importCustomers: false,
         importOrders: false,
         importThemes: false,
+        importPages: false,
+        importBlogs: false,
         storeId:null
     }
 
@@ -22,6 +24,8 @@
             importParams.importCollections ||
             importParams.importCustomers ||
             importParams.importOrders ||
+            importParams.importPages ||
+            importParams.importBlogs ||
             importParams.importThemes);
 
         if (importParams.importThemes)
@@ -56,25 +60,26 @@
         });
     }
 
-    var selectStore = function () {
-        var newBlade = {
-            id: "virtoStoresSelection",
-            importConfiguration: blade.importConfiguration,
-            controller: 'altsoft.shopifyImportModule.virtoStoresController',
-            template: 'Modules/$(Altsoft.ShopifyImport)/Scripts/blades/virto-stores.tpl.html',
-            title: 'Select store',
-            headIcon: 'shopify-icon',
-            subtitle: 'Please choose store for theme import'
-        };
-
-        bladeNavigationService.showBlade(newBlade, $scope.blade);
-    }
-
-    $scope.$watch('blade.importConfiguration.importThemes', function (newValue, oldValue) {
+    var selectStore = function (newValue, oldValue) {
         if (oldValue == newValue)
             return;
-        if (newValue)
-            selectStore();
+        if (newValue) {
+            var newBlade = {
+                id: "virtoStoresSelection",
+                importConfiguration: blade.importConfiguration,
+                controller: 'altsoft.shopifyImportModule.virtoStoresController',
+                template: 'Modules/$(Altsoft.ShopifyImport)/Scripts/blades/virto-stores.tpl.html',
+                title: 'Select store',
+                headIcon: 'shopify-icon',
+                subtitle: 'Please choose store for theme import'
+            };
 
-    });
+            bladeNavigationService.showBlade(newBlade, $scope.blade);
+        }
+    }
+
+    $scope.$watch('blade.importConfiguration.importThemes', selectStore);
+    $scope.$watch('blade.importConfiguration.importPages', selectStore);
+
+
 }]);

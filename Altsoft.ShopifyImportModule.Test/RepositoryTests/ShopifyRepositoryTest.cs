@@ -55,6 +55,20 @@ namespace Altsoft.ShopifyImportModule.Test.RepositoryTests
         }
 
         [TestMethod]
+        public void GetShopifyPagesTest()
+        {
+            var shopifyAuthenticationService = GetAuthService();
+
+            var repository = new ShopifyRepository(shopifyAuthenticationService);
+
+            var pages = repository.GetShopifyPages();
+
+            Assert.IsNotNull(pages);
+            Assert.IsTrue(pages.Any());
+
+        }
+
+        [TestMethod]
         public void GetShopifyThemesTest()
         {
             var shopifyAuthenticationService = GetAuthService();

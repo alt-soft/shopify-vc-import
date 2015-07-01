@@ -21,6 +21,8 @@ namespace Altsoft.ShopifyImportModule.Web.Services
         private const string CollectionsKey = "Collections import";
         private const string PropertiesKey = "Properties import";
         private const string ThemesKey = "Themes import";
+        private const string PagesKey = "Pages import";
+        private const string BlogsKey = "Blogs import";
 
         #region Private Fields
 
@@ -31,6 +33,7 @@ namespace Altsoft.ShopifyImportModule.Web.Services
         private readonly ICategoryService _categoryService;
         private readonly ICatalogSearchService _searchService;
         private readonly IThemeService _themeService;
+        private readonly IPagesService _pagesService;
         private readonly IPricingService _pricingService;
         private readonly IPropertyService _propertyService;
 
@@ -47,7 +50,8 @@ namespace Altsoft.ShopifyImportModule.Web.Services
             ICatalogSearchService searchService,
             IThemeService themeService, 
             IPricingService pricingService, 
-            IPropertyService propertyService)
+            IPropertyService propertyService, 
+            IPagesService pagesService)
         {
 
             _shopifyRepository = shopifyRepository;
@@ -59,6 +63,7 @@ namespace Altsoft.ShopifyImportModule.Web.Services
             _themeService = themeService;
             _pricingService = pricingService;
             _propertyService = propertyService;
+            _pagesService = pagesService;
         }
 
         #endregion
@@ -120,6 +125,14 @@ namespace Altsoft.ShopifyImportModule.Web.Services
                 });
             }
 
+            if (importParams.ImportPages)
+            {
+                notification.Progresses.Add(PagesKey, new ShopifyImportProgress()
+                {
+                    TotalCount = shopifyData.Pages.Count()
+                });
+            }
+
             _notifier.Upsert(notification);
         }
 
@@ -140,6 +153,25 @@ namespace Altsoft.ShopifyImportModule.Web.Services
             if (importParams.ImportThemes)
             {
                 SaveThemes(virtoData, importParams, notification);
+            }
+
+            if (importParams.ImportPages)
+            {
+                SavePages(virtoData, importParams, notification);
+            }
+        }
+
+        private void SavePages(VirtoData virtoData, ShopifyImportParams importParams, ShopifyImportNotification notification)
+        {
+            notification.Description = "Saving pages";
+            _notifier.Upsert(notification);
+
+            foreach (var page in virtoData.Pages)
+            {
+               _pagesService.SavePage(importParams.StoreId,page);
+
+                notification.Progresses[PagesKey].ProcessedCount++;
+                _notifier.Upsert(notification);
             }
         }
 
@@ -454,6 +486,11 @@ namespace Altsoft.ShopifyImportModule.Web.Services
                 virtoData.Themes = shopifyData.Themes;
             }
 
+            if (importParams.ImportPages)
+            {
+                virtoData.Pages = shopifyData.Pages.Select(page=>_shopifyConverter.Convert(page)).ToList();
+            }
+
             return virtoData;
         }
 
@@ -463,104 +500,130 @@ namespace Altsoft.ShopifyImportModule.Web.Services
 
             if (importParams.ImportProducts)
             {
-                notification.Description = "Reading products from shopify...";
-                _notifier.Upsert(notification);
-                result.Products = _shopifyRepository.GetShopifyProducts();
-
+                ReadProducts(notification, result);
             }
 
             if (importParams.ImportCollections)
             {
-                notification.Description = "Reading collects from shopify...";
-                _notifier.Upsert(notification);
-                result.Collects = _shopifyRepository.GetShopifyCollects();
-
-                notification.Description = "Reading collections from shopify...";
-                _notifier.Upsert(notification);
-                result.Collections = _shopifyRepository.GetShopifyCollections();
-
-                notification.Progresses.Add("Collections", new ShopifyImportProgress()
-                {
-                    TotalCount = result.Collections.Count()
-                });
+                ReadCollections(notification, result);
             }
 
             if (importParams.ImportThemes)
             {
-                result.Themes = new Dictionary<ShopifyTheme, Stream>();
-                notification.Description = "Reading themes from shopify...";
-                var themes = _shopifyRepository.GetShopifyThemes().ToList();
+                ReadThemes(notification, result);
+            }
 
-                notification.Progresses.Clear();
-                _notifier.Upsert(notification);
-              
-             
-                foreach (var theme in themes)
-                {
-                    var assets = _shopifyRepository.GetShopifyAssets(theme.Id).ToList();
-
-                    var themeProgress = new ShopifyImportProgress()
-                    {
-                        TotalCount = assets.Count
-                    };
-                    notification.Progresses.Add(string.Format("{0} theme assets downloading ", theme.Name),themeProgress);
-                    _notifier.Upsert(notification);
-
-                    var stream = new MemoryStream();
-                    using (var zip = new ZipArchive(stream, ZipArchiveMode.Create,true))
-                    {
-                        foreach (var asset in assets)
-                        {
-                            try
-                            {
-                                var downloadedAsset = _shopifyRepository.DownloadShopifyAsset(theme.Id, asset);
-                                var entry = zip.CreateEntry(string.Format("{0}/{1}", theme.Id, asset.Key));
-                                using (var entryStream = entry.Open())
-                                {
-                                    if (downloadedAsset.Value != null)
-                                    {
-                                        using (var writer = new StreamWriter(entryStream))
-                                        {
-                                            writer.Write(downloadedAsset.Value);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (downloadedAsset.Attachment != null)
-                                        {
-                                            var data = Convert.FromBase64String(downloadedAsset.Attachment);
-                                            entryStream.Write(data, 0, data.Length);
-                                        }
-                                    }
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                themeProgress.ErrorCount++;
-                                notification.ErrorCount++;
-                                notification.Errors.Add(ex.ToString());
-                                _notifier.Upsert(notification);
-                            }
-                            finally
-                            {
-                                //Raise notification each notifyProductSizeLimit category
-                                themeProgress.ProcessedCount++;
-
-                                if (themeProgress.ProcessedCount%NotifySizeLimit == 0 ||
-                                    themeProgress.ProcessedCount + themeProgress.ErrorCount == themeProgress.TotalCount)
-                                {
-                                    _notifier.Upsert(notification);
-                                }
-                            }
-                        }
-                    }
-                    stream.Seek(0, SeekOrigin.Begin);
-                    result.Themes.Add(theme, stream);
-                }
+            if (importParams.ImportPages)
+            {
+                ReadPages(notification, result);
             }
 
             //TODO read another data
             return result;
+        }
+
+        private void ReadPages(ShopifyImportNotification notification, ShopifyData result)
+        {
+            notification.Description = "Reading pages from shopify...";
+            _notifier.Upsert(notification);
+            result.Pages = _shopifyRepository.GetShopifyPages();
+        }
+
+        private void ReadThemes(ShopifyImportNotification notification, ShopifyData result)
+        {
+            result.Themes = new Dictionary<ShopifyTheme, Stream>();
+            notification.Description = "Reading themes from shopify...";
+            var themes = _shopifyRepository.GetShopifyThemes().ToList();
+
+            notification.Progresses.Clear();
+            _notifier.Upsert(notification);
+
+
+            foreach (var theme in themes)
+            {
+                var assets = _shopifyRepository.GetShopifyAssets(theme.Id).ToList();
+
+                var themeProgress = new ShopifyImportProgress()
+                {
+                    TotalCount = assets.Count
+                };
+                notification.Progresses.Add(string.Format("{0} theme assets downloading ", theme.Name), themeProgress);
+                _notifier.Upsert(notification);
+
+                var stream = new MemoryStream();
+                using (var zip = new ZipArchive(stream, ZipArchiveMode.Create, true))
+                {
+                    foreach (var asset in assets)
+                    {
+                        try
+                        {
+                            var downloadedAsset = _shopifyRepository.DownloadShopifyAsset(theme.Id, asset);
+                            var entry = zip.CreateEntry(string.Format("{0}/{1}", theme.Id, asset.Key));
+                            using (var entryStream = entry.Open())
+                            {
+                                if (downloadedAsset.Value != null)
+                                {
+                                    using (var writer = new StreamWriter(entryStream))
+                                    {
+                                        writer.Write(downloadedAsset.Value);
+                                    }
+                                }
+                                else
+                                {
+                                    if (downloadedAsset.Attachment != null)
+                                    {
+                                        var data = Convert.FromBase64String(downloadedAsset.Attachment);
+                                        entryStream.Write(data, 0, data.Length);
+                                    }
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            themeProgress.ErrorCount++;
+                            notification.ErrorCount++;
+                            notification.Errors.Add(ex.ToString());
+                            _notifier.Upsert(notification);
+                        }
+                        finally
+                        {
+                            //Raise notification each notifyProductSizeLimit category
+                            themeProgress.ProcessedCount++;
+
+                            if (themeProgress.ProcessedCount%NotifySizeLimit == 0 ||
+                                themeProgress.ProcessedCount + themeProgress.ErrorCount == themeProgress.TotalCount)
+                            {
+                                _notifier.Upsert(notification);
+                            }
+                        }
+                    }
+                }
+                stream.Seek(0, SeekOrigin.Begin);
+                result.Themes.Add(theme, stream);
+            }
+        }
+
+        private void ReadCollections(ShopifyImportNotification notification, ShopifyData result)
+        {
+            notification.Description = "Reading collects from shopify...";
+            _notifier.Upsert(notification);
+            result.Collects = _shopifyRepository.GetShopifyCollects();
+
+            notification.Description = "Reading collections from shopify...";
+            _notifier.Upsert(notification);
+            result.Collections = _shopifyRepository.GetShopifyCollections();
+
+            notification.Progresses.Add("Collections", new ShopifyImportProgress()
+            {
+                TotalCount = result.Collections.Count()
+            });
+        }
+
+        private void ReadProducts(ShopifyImportNotification notification, ShopifyData result)
+        {
+            notification.Description = "Reading products from shopify...";
+            _notifier.Upsert(notification);
+            result.Products = _shopifyRepository.GetShopifyProducts();
         }
     }
 }

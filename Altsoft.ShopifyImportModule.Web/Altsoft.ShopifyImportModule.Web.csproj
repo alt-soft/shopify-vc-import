@@ -108,6 +108,7 @@
     <Compile Include="Models\ShopifyImportNotification.cs" />
     <Compile Include="Models\ShopifyImportParams.cs" />
     <Compile Include="Models\ShopifyImportProgress.cs" />
+    <Compile Include="Models\Shopify\ShopifyPage.cs" />
     <Compile Include="Models\Shopify\Base\ShopifyCreatableEntity.cs" />
     <Compile Include="Models\Shopify\Base\ShopifyEntity.cs" />
     <Compile Include="Models\Shopify\Base\ShopifyUpdatableEntity.cs" />

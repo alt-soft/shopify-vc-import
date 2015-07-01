@@ -46,6 +46,8 @@
                     <i class="list-ico fa fa-picture-o"></i>
                     <span class="list-t">Themes</span>
                     <span class="list-descr">The main Variation. Can be used for targeted promotions.</span>
+                    <span class="list-descr" ng-show="blade.importConfiguration.storeId">Themes will be imported to '{{blade.importConfiguration.storeId}}'</span>
+
                 </label>
 
                 <label class="list-item">
@@ -54,6 +56,7 @@
                     <i class="list-ico fa fa-sitemap"></i>
                     <span class="list-t">Pages</span>
                     <span class="list-descr">The main Variation. Can be used for targeted promotions.</span>
+                    <span class="list-descr" ng-show="blade.importConfiguration.storeId">Pages will be imported to '{{blade.importConfiguration.storeId}}'</span>
                 </label>
 
                 <label class="list-item">

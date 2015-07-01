@@ -17,6 +17,8 @@ namespace Altsoft.ShopifyImportModule.Web.Interfaces
 
         IEnumerable<ShopifyAsset> GetShopifyAssets(long themeId);
 
+        IEnumerable<ShopifyPage> GetShopifyPages();
+
         ShopifyAsset DownloadShopifyAsset(long themeId, ShopifyAsset asset);
 
         #endregion

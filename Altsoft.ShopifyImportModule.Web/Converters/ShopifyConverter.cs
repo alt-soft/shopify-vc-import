@@ -4,6 +4,7 @@ using System.Linq;
 using Altsoft.ShopifyImportModule.Web.Interfaces;
 using Altsoft.ShopifyImportModule.Web.Models;
 using Altsoft.ShopifyImportModule.Web.Models.Shopify;
+using VirtoCommerce.Content.Data.Models;
 using VirtoCommerce.Domain.Catalog.Model;
 using VirtoCommerce.Domain.Commerce.Model;
 using VirtoCommerce.Domain.Pricing.Model;
@@ -192,6 +193,20 @@ namespace Altsoft.ShopifyImportModule.Web.Converters
                 CreatedDate = DateTime.Now,
                 Name = option.Name,
                 Type = PropertyType.Variation
+            };
+
+            return retVal;
+        }
+
+        public Page Convert(ShopifyPage shopifyPage)
+        {
+            var retVal = new Page
+            {
+                ContentType = "text/html",
+                Language = "en-us",
+                PageName = shopifyPage.Title,
+                Updated = shopifyPage.UpdatedAt,
+                ByteContent = System.Text.Encoding.UTF8.GetBytes(shopifyPage.BodyHtml)
             };
 
             return retVal;

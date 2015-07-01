@@ -14,6 +14,10 @@
 
         public bool ImportThemes { get; set; }
 
+        public bool ImportPages { get; set; }
+
+        public bool ImportBlogs { get; set; }
+
         public string StoreId { get; set; }
     }
 }
