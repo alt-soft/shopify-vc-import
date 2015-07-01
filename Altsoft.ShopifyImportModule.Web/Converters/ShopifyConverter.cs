@@ -67,7 +67,7 @@ namespace Altsoft.ShopifyImportModule.Web.Converters
                 var review = new EditorialReview
                 {
                     Content = shopifyProduct.BodyHtml,
-                    LanguageCode = "en-us",
+                    LanguageCode = "en-US",
                 };
                 retVal.Reviews.Add(review);
             }
@@ -77,7 +77,7 @@ namespace Altsoft.ShopifyImportModule.Web.Converters
             var seoInfo = new SeoInfo
             {
                 SemanticUrl = shopifyProduct.Title.GenerateSlug(),
-                LanguageCode = "en-us"
+                LanguageCode = "en-US"
             };
             retVal.SeoInfos.Add(seoInfo);
 
@@ -99,7 +99,7 @@ namespace Altsoft.ShopifyImportModule.Web.Converters
                     seoInfo = new SeoInfo
                     {
                         SemanticUrl = variation.Name.GenerateSlug(),
-                        LanguageCode = "en-us"
+                        LanguageCode = "en-US"
                     };
                     retVal.SeoInfos.Add(seoInfo);
 
@@ -203,8 +203,8 @@ namespace Altsoft.ShopifyImportModule.Web.Converters
             var retVal = new Page
             {
                 ContentType = "text/html",
-                Language = "en-us",
-                PageName = shopifyPage.Title,
+                Language = "en-US",
+                PageName = string.Format("{0}.html",shopifyPage.Title),
                 Updated = shopifyPage.UpdatedAt,
                 ByteContent = System.Text.Encoding.UTF8.GetBytes(shopifyPage.BodyHtml)
             };
