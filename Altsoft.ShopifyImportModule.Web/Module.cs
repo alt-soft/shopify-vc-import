@@ -30,5 +30,10 @@ namespace Altsoft.ShopifyImportModule.Web
         public void PostInitialize()
         {
         }
+
+        public void Uninstall()
+        {
+            
+        }
     }
 }
