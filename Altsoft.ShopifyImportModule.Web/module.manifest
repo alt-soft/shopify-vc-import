@@ -16,7 +16,7 @@
         <owner>Altsoft</owner>
     </owners>
     <projectUrl>https://github.com/alt-soft/shopify-vc-import</projectUrl>
-    <iconUrl>http://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
+    <iconUrl>https://www.alt-soft.com/index/wp-content/uploads/2013/04/new-logo.png</iconUrl>
     <licenseUrl>http://virtocommerce.com/terms</licenseUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <releaseNotes>First version.</releaseNotes>
