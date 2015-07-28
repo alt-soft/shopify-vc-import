@@ -1,2 +1,2 @@
 # shopify-vc-import
-Shopify-vc-import is a module for [Virto Commerce 2](https://github.com/VirtoCommerce/vc-community) which allows you to easily import existing Products,Collections and Themes from your [Shopify store](www.shopify.com) to the Virto Commerce platform.
+**Shopify-vc-import** is a module for [Virto Commerce 2](https://github.com/VirtoCommerce/vc-community) which allows you to easily import existing Products,Collections and Themes from your [Shopify store](www.shopify.com) to the Virto Commerce platform.
