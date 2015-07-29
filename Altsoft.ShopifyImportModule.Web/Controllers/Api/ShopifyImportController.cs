@@ -7,16 +7,17 @@ using Hangfire;
 using VirtoCommerce.Domain.Store.Services;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Notification;
+using VirtoCommerce.Platform.Core.PushNotification;
 
 namespace Altsoft.ShopifyImportModule.Web.Controllers.Api
 {
     [RoutePrefix("api/shopifyImport")]
     public class ShopifyImportController : ApiController
     {
-        private readonly INotifier _notifier;
+        private readonly IPushNotificationManager _notifier;
         private readonly IShopifyImportService _shopifyImportService;
         private readonly IStoreService _storeService;
-        public ShopifyImportController(INotifier notifier, IShopifyImportService shopifyImportService, IStoreService storeService)
+        public ShopifyImportController(IPushNotificationManager notifier, IShopifyImportService shopifyImportService, IStoreService storeService)
         {
             _notifier = notifier;
             _shopifyImportService = shopifyImportService;

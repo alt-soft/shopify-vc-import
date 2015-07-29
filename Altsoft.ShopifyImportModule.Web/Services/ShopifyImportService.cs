@@ -10,6 +10,7 @@ using VirtoCommerce.Content.Data.Services;
 using VirtoCommerce.Domain.Catalog.Services;
 using VirtoCommerce.Domain.Pricing.Services;
 using VirtoCommerce.Platform.Core.Notification;
+using VirtoCommerce.Platform.Core.PushNotification;
 using coreModel = VirtoCommerce.Domain.Catalog.Model;
 
 namespace Altsoft.ShopifyImportModule.Web.Services
@@ -28,7 +29,7 @@ namespace Altsoft.ShopifyImportModule.Web.Services
 
         private readonly IShopifyRepository _shopifyRepository;
         private readonly IShopifyConverter _shopifyConverter;
-        private readonly INotifier _notifier;
+        private readonly IPushNotificationManager _notifier;
         private readonly IItemService _productService;
         private readonly ICategoryService _categoryService;
         private readonly ICatalogSearchService _searchService;
@@ -44,7 +45,7 @@ namespace Altsoft.ShopifyImportModule.Web.Services
         public ShopifyImportService(
             IShopifyRepository shopifyRepository,
             IShopifyConverter shopifyConverter,
-            INotifier notifier,
+            IPushNotificationManager notifier,
             IItemService productService,
             ICategoryService categoryService,
             ICatalogSearchService searchService,

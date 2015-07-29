@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using VirtoCommerce.Platform.Core.Notification;
+using VirtoCommerce.Platform.Core.PushNotification;
 
 namespace Altsoft.ShopifyImportModule.Web.Models
 {
-    public class ShopifyImportNotification : NotifyEvent
+    public class ShopifyImportNotification : PushNotification
     {
         public ShopifyImportNotification(string creator)
             : base(creator)

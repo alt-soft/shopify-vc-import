@@ -7,7 +7,7 @@ if (AppDependencies != undefined) {
 
 angular.module(moduleTemplateName,[])
 .run(
-  ['$rootScope', '$state', 'platformWebApp.notificationTemplateResolver', 'virtoCommerce.catalogModule.catalogImportService', 'platformWebApp.bladeNavigationService', function ($rootScope, $state, notificationTemplateResolver, catalogImportService, bladeNavigationService) {
+  ['$rootScope', '$state', 'platformWebApp.pushNotificationTemplateResolver', 'virtoCommerce.catalogModule.catalogImportService', 'platformWebApp.bladeNavigationService', function ($rootScope, $state, notificationTemplateResolver, catalogImportService, bladeNavigationService) {
       //Notifications
 
       //Import
