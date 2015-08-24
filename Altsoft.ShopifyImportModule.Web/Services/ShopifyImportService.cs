@@ -9,8 +9,7 @@ using Altsoft.ShopifyImportModule.Web.Models.Shopify;
 using VirtoCommerce.Content.Data.Services;
 using VirtoCommerce.Domain.Catalog.Services;
 using VirtoCommerce.Domain.Pricing.Services;
-using VirtoCommerce.Platform.Core.Notification;
-using VirtoCommerce.Platform.Core.PushNotification;
+using VirtoCommerce.Platform.Core.PushNotifications;
 using coreModel = VirtoCommerce.Domain.Catalog.Model;
 
 namespace Altsoft.ShopifyImportModule.Web.Services

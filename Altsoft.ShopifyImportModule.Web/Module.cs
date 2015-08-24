@@ -15,7 +15,7 @@ namespace Altsoft.ShopifyImportModule.Web
             _container = container;
         }
 
-        public void SetupDatabase(SampleDataLevel sampleDataLevel)
+        public void SetupDatabase()
         {
         }
 

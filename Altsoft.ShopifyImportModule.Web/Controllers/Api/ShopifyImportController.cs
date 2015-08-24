@@ -6,8 +6,7 @@ using Altsoft.ShopifyImportModule.Web.Models;
 using Hangfire;
 using VirtoCommerce.Domain.Store.Services;
 using VirtoCommerce.Platform.Core.Common;
-using VirtoCommerce.Platform.Core.Notification;
-using VirtoCommerce.Platform.Core.PushNotification;
+using VirtoCommerce.Platform.Core.PushNotifications;
 
 namespace Altsoft.ShopifyImportModule.Web.Controllers.Api
 {
